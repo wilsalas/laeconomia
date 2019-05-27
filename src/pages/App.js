@@ -1,8 +1,8 @@
 import React from 'react';
-import HeaderComponent from '../../components/Header';
+import HeaderComponent from '../components/Header';
 import { Container } from 'reactstrap';
-import FooterComponent from '../../components/Footer';
-import '../../styles/styles.css';
+import FooterComponent from '../components/Footer';
+import '../styles/styles.css';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Container >
         <HeaderComponent />
       </Container>
-      {/* <div id="loader-wrapper">
+      <div id="loader-wrapper">
         <div id="loader">
           <div className="dot"></div>
           <div className="dot"></div>
@@ -21,31 +21,7 @@ function App() {
           <div className="dot"></div>
           <div className="dot"></div>
         </div>
-      </div> */}
-
-      {/* -------- */}
-
-      {/* <div className="tt-promo-fixed">
-        <button className="tt-btn-close"></button>
-        <div className="tt-img">
-          <a href="product.html"><img src="images/loader.svg" data-src="images/product/product-14.jpg" alt="29" /></a>
-        </div>
-        <div className="tt-description">
-          <div className="tt-box-top">
-            <p>
-              Someone purchsed a
-			      </p>
-            <p>
-              <a href="/">
-                Lorem ipsum dolor sit amet conse ctetur adipisicing elit...
-				      </a>
-            </p>
-          </div>
-          <div className="tt-info">
-            14 Minutes ago from  New York, USA
-		      </div>
-        </div>
-      </div> */}
+      </div>
 
       {/* ---HEADER---- */}
       <header>
@@ -55,47 +31,7 @@ function App() {
           <ul>
             <li>
               <a href="index.html">INICIO</a>
-              <ul>
-                <li>
-                  <a href="index.html">HOME STYLES</a>
-                  <ul>
-                    <li><a href="index.html">Home — Example 1 <span className="tt-badge tt-fatured">Popular</span></a></li>
-                    <li><a href="index-02.html">Home — Example 2</a></li>
-                    <li><a href="index-03.html">Home — Example 3</a></li>
-                    <li><a href="index-04.html">Home — Example 4 <span className="tt-badge tt-fatured">Popular</span></a></li>
-                    <li><a href="index-05.html">Home — Example 5</a></li>
-                    <li><a href="index-06.html">Home — Example 6</a></li>
-                    <li><a href="index-07.html">Home — Example 7</a></li>
-                    <li><a href="index-08.html">Home — Example 8</a></li>
-                    <li><a href="index-09.html">Home — Example 9</a></li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="index.html">HOME STYLES</a>
-                  <ul>
-                    <li><a href="index-10.html">Home — Example 10</a></li>
-                    <li><a href="index-11.html">Home — Example 11</a></li>
-                    <li><a href="index-12.html">Home — Example 12</a></li>
-                    <li><a href="index-13.html">Home — Example 13</a></li>
-                    <li><a href="index-14.html">Home — Example 14</a></li>
-                    <li><a href="index-15.html">Home — Example 15</a></li>
-                    <li><a href="index-16.html">Home — Example 16 <span className="tt-badge tt-fatured">Popular</span></a></li>
-                    <li><a href="index-17.html">Home — Example 17</a></li>
-                    <li><a href="index-18.html">Home — Example 18</a></li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="index.html">HOME SKINS <span className="tt-badge tt-sale">HOT</span></a>
-                  <ul>
-                    <li><a href="index-skin-snowboards.html">Snowboards Shop <span className="tt-badge tt-fatured">Popular</span></a></li>
-                    <li><a href="index-skin-phones.html">Phones Shop <span className="tt-badge tt-fatured">Popular</span></a></li>
-                    <li><a href="index-skin-bikes.html">Bikes Shop <span className="tt-badge tt-fatured">Popular</span></a></li>
-                    <li><a href="index-skin-lingerie.html">Lingerie Shop</a></li>
-                    <li><a href="index-skin-furniture.html">Furniture Shop</a></li>
-                    <li><a href="index-skin-books.html">Books Shop <span className="tt-badge tt-new">New</span></a></li>
-                  </ul>
-                </li>
-              </ul>
+              
             </li>
             <li>
               <a href="listing-left-column.html">SHOP</a>
@@ -486,11 +422,6 @@ function App() {
         <div className="tt-desktop-header">
           <div className="container">
             <div className="tt-header-holder">
-              <div className="tt-col-obj tt-obj-logo">
-                {/* <!-- logo --> */}
-                <a className="tt-logo tt-logo-alignment" href="index.html"><img src="images/custom/logo.png" alt="31" /></a>
-                {/* <!-- /logo --> */}
-              </div>
               <div className="tt-col-obj tt-obj-menu">
                 {/* <!-- tt-menu --> */}
                 <div className="tt-desctop-parent-menu tt-parent-box">
@@ -499,76 +430,10 @@ function App() {
                       <ul>
                         <li className="dropdown tt-megamenu-col-02 selected">
                           <a href="index.html">INICIO</a>
-                          <div className="dropdown-menu">
-                            <div className="row tt-col-list">
-                              <div className="col">
-                                <h6 className="tt-title-submenu"><a href="index.html">HOME STYLES</a></h6>
-                                <ul className="tt-megamenu-submenu">
-                                  <li><a href="index.html">Home — Example 1
-															<img src="images/loader.svg" data-src="images/custom/tt-layout-img-01.png" alt="Example 1" />
-                                    <span className="tt-badge tt-fatured">Popular</span>
-                                  </a></li>
-                                  <li><a href="index-02.html">Home — Example 2 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-02.png" alt="Example 2" /></a></li>
-                                  <li><a href="index-03.html">Home — Example 3 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-03.png" alt="Example 3" /></a></li>
-                                  <li><a href="index-04.html">Home — Example 4
-															<img src="images/loader.svg" data-src="images/custom/tt-layout-img-04.png" alt="Example 4" />
-                                    <span className="tt-badge tt-fatured">Popular</span>
-                                  </a></li>
-                                  <li><a href="index-05.html">Home — Example 5 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-05.png" alt="Example 5" /></a></li>
-                                  <li><a href="index-06.html">Home — Example 6 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-06.png" alt="Example 6" /></a></li>
-                                  <li><a href="index-07.html">Home — Example 7 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-07.png" alt="Example 7" /></a></li>
-                                  <li><a href="index-08.html">Home — Example 8 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-08.png" alt="Example 8" /></a></li>
-                                  <li><a href="index-09.html">Home — Example 9 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-09.png" alt="Example 9" /></a></li>
-                                </ul>
-                              </div>
-                              <div className="col">
-                                <h6 className="tt-title-submenu"><a href="index.html">HOME STYLES</a></h6>
-                                <ul className="tt-megamenu-submenu">
-                                  <li><a href="index-10.html">Home — Example 10 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-10.png" alt="Example 10" /></a></li>
-                                  <li><a href="index-11.html">Home — Example 11 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-11.png" alt="Example 11" /></a></li>
-                                  <li><a href="index-12.html">Home — Example 12 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-12.png" alt="Example 12" /></a></li>
-                                  <li><a href="index-13.html">Home — Example 13 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-13.png" alt="Example 13" /></a></li>
-                                  <li><a href="index-14.html">Home — Example 14 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-14.png" alt="Example 14" /></a></li>
-                                  <li><a href="index-15.html">Home — Example 15 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-15.png" alt="Example 15" /></a></li>
-                                  <li><a href="index-16.html">Home — Example 16
-															<img src="images/loader.svg" data-src="images/custom/tt-layout-img-16.png" alt="Example 16" />
-                                    <span className="tt-badge tt-fatured">Popular</span>
-                                  </a></li>
-                                  <li><a href="index-17.html">Home — Example 17 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-17.png" alt="Example 17" /></a></li>
-                                  <li><a href="index-18.html">Home — Example 18 <img src="images/loader.svg" data-src="images/custom/tt-layout-img-18.png" alt="Example 18" /></a></li>
-                                </ul>
-                              </div>
-                              <div className="col">
-                                <h6 className="tt-title-submenu"><a href="index-skin-snowboards.html">
-                                  <span>HOME SKINS</span>
-                                  <span className="tt-badge tt-sale">HOT</span>
-                                </a></h6>
-                                <ul className="tt-megamenu-submenu">
-                                  <li><a href="index-skin-snowboards.html">Snowboards Shop
-															<img src="images/loader.svg" data-src="images/custom/tt-skins-img-01.png" alt="Snowboards Shop" />
-                                    <span className="tt-badge tt-fatured">Popular</span>
-                                  </a></li>
-                                  <li><a href="index-skin-phones.html">Phones Shop
-															<img src="images/loader.svg" data-src="images/custom/tt-skins-img-02.png" alt="Phones Shop" />
-                                    <span className="tt-badge tt-fatured">Popular</span>
-                                  </a></li>
-                                  <li><a href="index-skin-bikes.html">Bikes Shop
-															<img src="images/loader.svg" data-src="images/custom/tt-skins-img-03.png" alt="Bikes Shop" />
-                                    <span className="tt-badge tt-fatured">Popular</span>
-                                  </a></li>
-                                  <li><a href="index-skin-lingerie.html">Lingerie Shop <img src="images/loader.svg" data-src="images/custom/tt-skins-img-04.png" alt="Lingerie Shop" /></a></li>
-                                  <li><a href="index-skin-furniture.html">Furniture Shop <img src="images/loader.svg" data-src="images/custom/tt-skins-img-05.png" alt="Furniture Shop" /></a></li>
-                                  <li><a href="index-skin-books.html">Books shop
-															<img src="images/loader.svg" data-src="images/custom/tt-skins-img-06.png" alt="Books Shop" />
-                                    <span className="tt-badge tt-new">New</span>
-                                  </a></li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
+                         
                         </li>
                         <li className="dropdown megamenu">
-                          <a href="listing-collection.html">SHOP</a>
+                          <a href="listing-collection.html">DROGUERIA VIRTUAL</a>
                           <div className="dropdown-menu">
                             <div className="row tt-col-list">
                               <div className="col">
@@ -2394,7 +2259,7 @@ function App() {
       <a href="/" className="tt-back-to-top">BACK TO TOP</a>
 
       {/*  modal (AddToCartProduct) */}
-      <div className="modal  fade" id="modalAddToCartProduct" tabIndex={-1} role="dialog" aria-label="myModalLabel" aria-hidden="true">
+      <div className="modal  fade" id="modalAddToCartProduct"  tabIndex={-1} role="dialog" aria-label="myModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content ">
             <div className="modal-header">
@@ -2614,7 +2479,7 @@ function App() {
       </div>
 
       {/* Modal (newsletter) */}
-      <div className="modal  fade" id="Modalnewsletter" tabIndex={-1} role="dialog" aria-label="myModalLabel" aria-hidden="true" data-pause={2000}>
+      <div className="modal  fade" id="Modalnewsletter" data-backdrop="static" data-keyboard="false" tabIndex={-1} role="dialog" aria-label="myModalLabel" aria-hidden="true" data-pause={2000}>
         <div className="modal-dialog modal-sm">
           <div className="modal-content ">
             <div className="modal-header">
