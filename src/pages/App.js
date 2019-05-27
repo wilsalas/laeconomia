@@ -10,18 +10,23 @@ function App() {
     <div>
       <Container >
         <HeaderComponent />
-      </Container>
-      <div id="loader-wrapper">
-        <div id="loader">
-          <div className="dot"></div>
-          <div className="dot"></div>
-          <div className="dot"></div>
-          <div className="dot"></div>
-          <div className="dot"></div>
-          <div className="dot"></div>
-          <div className="dot"></div>
+
+        {/* loading part */}
+        <div id="loader-wrapper">
+          <div id="loader">
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+          </div>
         </div>
-      </div>
+
+
+      </Container>
+
 
       {/* ---HEADER---- */}
       <header>
@@ -31,56 +36,22 @@ function App() {
           <ul>
             <li>
               <a href="index.html">INICIO</a>
-              
             </li>
             <li>
-              <a href="listing-left-column.html">SHOP</a>
+              <a href="listing-left-column.html">DROGUERIA VIRTUAL</a>
               <ul>
-                <li>
-                  <a href="listing-left-column.html">LISTING STYLES</a>
-                  <ul>
-                    <li><a href="listing-left-column.html">Listing With Left Sidebar</a></li>
-                    <li><a href="listing-right-column.html">Listing With Right Sidebar</a></li>
-                    <li><a href="listing-not-sidebar.html">Listing Not Sidebar</a></li>
-                    <li><a href="listing-not-sidebar-full-width.html">Listing Not Sidebar Full Width</a></li>
-                    <li><a href="listing-metro.html">Listing Metro</a></li>
-                    <li><a href="listing-left-column-with-block.html">Listing With Custom HTML Block</a></li>
-                    <li><a href="listing-collection.html">Listing Collection</a></li>
-                    <li><a href="lookbook.html">Look Book</a></li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="product.html">PRODUCT PAGE STYLES</a>
-                  <ul>
-                    <li><a href="product.html">Product Example 1</a></li>
-                    <li><a href="product-02.html">Product Example 2</a></li>
-                    <li><a href="product-03.html">Product Example 3</a></li>
-                    <li><a href="product-04.html">Product Example 4</a></li>
-                    <li><a href="product-variable.html">Product Layout</a></li>
-                    <li><a href="product-three-columns.html">Three Columns</a></li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="product-variable.html">PRODUCT PAGE TYPES</a>
-                  <ul>
-                    <li><a href="product.html">Standard Product</a></li>
-                    <li><a href="product-variable.html">Variable Product</a></li>
-                    <li><a href="product-04.html">Grouped Product</a></li>
-                    <li><a href="product-label-new.html">New Product</a></li>
-                    <li><a href="product-label-sale.html">Sale Product</a></li>
-                    <li><a href="product-label-out-of-stock.html">Out Of Stock Product</a></li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="shopping_cart_02.html">OTHER PAGES</a>
-                  <ul>
-                    <li><a href="shopping_cart_02.html">Cart</a></li>
-                    <li><a href="shopping_cart_01.html">Cart With Right Col</a></li>
-                    <li><a href="account.html">Account</a></li>
-                    <li><a href="account_address.html">Account Address</a></li>
-                    <li><a href="account_address_fields.html">Account Address Fields</a></li>
-                  </ul>
-                </li>
+                {new Array(10).fill().map((value, i) => {
+                  return (
+                    <li key={i}>
+                      <a href="/">CATEGORÍA {i}</a>
+                      <ul>
+                        <li><a href="/">Item 1</a></li>
+                        <li><a href="/">Item 2</a></li>
+                        <li><a href="/">Item 3</a></li>
+                      </ul>
+                    </li>
+                  )
+                })}
               </ul>
             </li>
             <li>
@@ -430,533 +401,54 @@ function App() {
                       <ul>
                         <li className="dropdown tt-megamenu-col-02 selected">
                           <a href="index.html">INICIO</a>
-                         
+
                         </li>
                         <li className="dropdown megamenu">
                           <a href="listing-collection.html">DROGUERIA VIRTUAL</a>
                           <div className="dropdown-menu">
                             <div className="row tt-col-list">
-                              <div className="col">
-                                <h6 className="tt-title-submenu"><a href="listing-left-column.html">LISTING STYLES</a></h6>
-                                <ul className="tt-megamenu-submenu">
-                                  <li><a href="listing-left-column.html">Listing With Left Sidebar</a></li>
-                                  <li><a href="listing-right-column.html">Listing With Right Sidebar</a></li>
-                                  <li><a href="listing-not-sidebar.html">Listing Not Sidebar</a></li>
-                                  <li><a href="listing-not-sidebar-full-width.html">Listing Not Sidebar Full Width</a></li>
-                                  <li><a href="listing-metro.html">Listing Metro</a></li>
-                                  <li><a href="listing-left-column-with-block.html">Listing With Custom HTML Block</a></li>
-                                  <li><a href="listing-collection.html">Listing Collection</a></li>
-                                  <li><a href="lookbook.html">Look Book</a></li>
-                                </ul>
-                              </div>
-                              <div className="col">
-                                <h6 className="tt-title-submenu"><a href="product.html">PRODUCT PAGE STYLES</a></h6>
-                                <ul className="tt-megamenu-submenu">
-                                  <li><a href="product.html">Product Example 1</a></li>
-                                  <li><a href="product-02.html">Product Example 2</a></li>
-                                  <li><a href="product-03.html">Product Example 3</a></li>
-                                  <li><a href="product-04.html">Product Example 4</a></li>
-                                  <li><a href="product-variable.html">Product Layout</a></li>
-                                  <li><a href="product-three-columns.html">Three Columns</a></li>
-                                </ul>
-                              </div>
-                              <div className="col">
-                                <h6 className="tt-title-submenu"><a href="product-variable.html">PRODUCT PAGE TYPES</a></h6>
-                                <ul className="tt-megamenu-submenu">
-                                  <li><a href="product.html">Standard Product</a></li>
-                                  <li><a href="product-variable.html">Variable Product</a></li>
-                                  <li><a href="product-04.html">Grouped Product</a></li>
-                                  <li><a href="product-label-new.html">New Product</a></li>
-                                  <li><a href="product-label-sale.html">Sale Product</a></li>
-                                  <li><a href="product-label-out-of-stock.html">Out Of Stock Product</a></li>
-                                </ul>
-                              </div>
-                              <div className="col">
-                                <h6 className="tt-title-submenu"><a href="shopping_cart_02.html">OTHER PAGES</a></h6>
-                                <ul className="tt-megamenu-submenu">
-                                  <li><a href="shopping_cart_02.html">Cart</a></li>
-                                  <li><a href="shopping_cart_01.html">Cart With Right Col</a></li>
-                                  <li><a href="account.html">Account</a></li>
-                                  <li><a href="account_address.html">Account Address</a></li>
-                                  <li><a href="account_address_fields.html">Account Address Fields</a></li>
-                                </ul>
-                              </div>
+
+                              {new Array(10).fill().map((value, i) => {
+                                return (
+                                  <div className="col-md-2" key={i}>
+                                    <h6 className="tt-title-submenu"><a href="listing-left-column.html">CATEGORÍA {i}</a></h6>
+                                    <ul className="tt-megamenu-submenu">
+                                      <li><a href="/">Quíenes somos</a></li>
+                                      <li><a href="/">Quíenes somos</a></li>
+                                      <li><a href="/">Quíenes somos</a></li>
+                                    </ul>
+                                    <ul>
+                                      <li> <a href="/" style={{ fontWeight: 500 }}>Ver todo</a></li>
+                                    </ul>
+
+                                  </div>
+                                )
+                              })}
+
                             </div>
                           </div>
                         </li>
+
                         <li className="dropdown tt-megamenu-col-01">
-                          <a href="blog-listing-without-col.html">BLOG</a>
-                          <div className="dropdown-menu">
-                            <div className="row tt-col-list">
-                              <div className="col">
-                                <h6 className="tt-title-submenu"><a href="blog-listing-without-col.html">BLOG STYLES</a></h6>
-                                <ul className="tt-megamenu-submenu">
-                                  <li><a href="blog-listing-without-col.html">Standard Without Sidebar</a></li>
-                                  <li><a href="blog-listing-col-left.html">Standard With Left Sidebar</a></li>
-                                  <li><a href="blog-listing-col-right.html">Standard With Right Sidebar</a></li>
-                                  <li><a href="blog-masonry-col-2.html">Two Colums</a></li>
-                                  <li><a href="blog-masonry-col-3.html">Three Colums</a></li>
-                                  <li><a href="blog-masonry-col-3-filter.html">Three Colums With Filter</a></li>
-                                </ul>
-                              </div>
-                              <div className="col">
-                                <h6 className="tt-title-submenu"><a href="blog-single-post.html">POST TYPES</a></h6>
-                                <ul className="tt-megamenu-submenu">
-                                  <li><a href="blog-single-post.html">Standard</a></li>
-                                  <li><a href="blog-single-post-gallery.html">Gallery</a></li>
-                                  <li><a href="blog-single-post-link.html">Link</a></li>
-                                  <li><a href="blog-single-post-quote.html">Quote</a></li>
-                                  <li><a href="blog-single-post-video.html">Video</a></li>
-                                  <li><a href="blog-single-post-audio.html">Audio</a></li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
+                          <a href="blog-listing-without-col.html">CUIDADO DEL BEBÉ</a>
+
                         </li>
+
                         <li className="dropdown tt-megamenu-col-01">
-                          <a href="portfolio-col-wide-four.html">PORTFOLIO</a>
-                          <div className="dropdown-menu">
-                            <div className="row tt-col-list">
-                              <div className="col">
-                                <h6 className="tt-title-submenu"><a href="portfolio-col-grid-two.html">BOXED GRID</a></h6>
-                                <ul className="tt-megamenu-submenu">
-                                  <li><a href="portfolio-col-grid-two.html">Two Colums</a></li>
-                                  <li><a href="portfolio-col-grid-three.html">Three Colums</a></li>
-                                  <li><a href="portfolio-col-grid-four.html">Four Colums</a></li>
-                                  <li><a href="portfolio-col-grid-four-without-filter.html">Four Colums Without Filter</a></li>
-                                </ul>
-                              </div>
-                              <div className="col">
-                                <h6 className="tt-title-submenu"><a href="portfolio-col-wide-three.html">BOXED WIDE</a></h6>
-                                <ul className="tt-megamenu-submenu">
-                                  <li><a href="portfolio-col-wide-two.html">Two Colums</a></li>
-                                  <li><a href="portfolio-col-wide-three.html">Three Colums</a></li>
-                                  <li><a href="portfolio-col-wide-four.html">Four Colums</a></li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
+                          <a href="portfolio-col-wide-four.html">DICCIONARIO</a>
+
                         </li>
+
                         <li className="dropdown tt-megamenu-col-01">
-                          <a href="about.html">PAGES</a>
-                          <div className="dropdown-menu">
-                            <div className="row tt-col-list">
-                              <div className="col">
-                                <h6 className="tt-title-submenu"><a href="about.html">PAGES</a></h6>
-                                <ul className="tt-megamenu-submenu">
-                                  <li><a href="about.html">About Example 1</a>
-                                    <ul>
-                                      <li><a href="about.html">Link Level 1</a></li>
-                                      <li>
-                                        <a href="about.html">Link Level 1</a>
-                                        <ul>
-                                          <li><a href="about.html">Link Level 2</a></li>
-                                          <li>
-                                            <a href="about.html">Link Level 2</a>
-                                            <ul>
-                                              <li><a href="about.html">Link Level 3</a></li>
-                                              <li><a href="about.html">Link Level 3</a></li>
-                                              <li><a href="about.html">Link Level 3</a></li>
-                                              <li>
-                                                <a href="about.html">Link Level 3</a>
-                                                <ul>
-                                                  <li>
-                                                    <a href="about.html">Link Level 4</a>
-                                                    <ul>
-                                                      <li><a href="about.html">Link Level 5</a></li>
-                                                      <li><a href="about.html">Link Level 5</a></li>
-                                                      <li><a href="about.html">Link Level 5</a></li>
-                                                      <li><a href="about.html">Link Level 5</a></li>
-                                                      <li><a href="about.html">Link Level 5</a></li>
-                                                    </ul>
-                                                  </li>
-                                                  <li><a href="about.html">Link Level 4</a></li>
-                                                </ul>
-                                              </li>
-                                              <li><a href="about.html">Link Level 3</a></li>
-                                            </ul>
-                                          </li>
-                                          <li><a href="about.html">Link Level 2</a></li>
-                                          <li><a href="about.html">Link Level 2</a></li>
-                                        </ul>
-                                      </li>
-                                      <li><a href="about.html">Link Level 1</a></li>
-                                      <li><a href="about.html">Link Level 1</a></li>
-                                      <li><a href="about.html">Link Level 1</a></li>
-                                    </ul>
-                                  </li>
-                                  <li><a href="about-02.html">About Example 2</a></li>
-                                  <li><a href="contact.html">Contacts Example 1</a></li>
-                                  <li><a href="contact-02.html">Contacts Example 2</a></li>
-                                  <li><a href="services.html">Services</a></li>
-                                  <li><a href="faq.html">FAQ</a></li>
-                                  <li><a href="coming-soon.html">Coming Soon</a></li>
-                                  <li><a href="page404.html">Page 404</a></li>
-                                  <li><a href="typography.html">Typography</a></li>
-                                  <li><a href="gift-cart.html">Gift Cart</a></li>
-                                  <li>
-                                    <a href="compare.html">Compare</a>
-                                    <ul>
-                                      <li><a href="compare.html">Compare 01</a></li>
-                                      <li><a href="compare-02.html">Compare 02</a></li>
-                                    </ul>
-                                  </li>
-                                  <li><a href="wishlist.html">Wishlist</a></li>
-                                  <li>
-                                    <a href="account.html">Account</a>
-                                    <ul>
-                                      <li><a href="account.html">Account</a></li>
-                                      <li><a href="account_address.html">Account Address</a></li>
-                                      <li><a href="account_address_fields.html">Account Address Fields</a></li>
-                                    </ul>
-                                  </li>
-                                  <li>
-                                    <a href="empty-search.html">Empty</a>
-                                    <ul>
-                                      <li><a href="empty-cart.html">Empty Cart</a></li>
-                                      <li><a href="empty-search.html">Empty Search</a></li>
-                                      <li><a href="empty-wishlist.html">Empty Wishlist</a></li>
-                                    </ul>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
+                          <a href="about.html">SUCURSALES</a>
+
                         </li>
-                        <li className="dropdown megamenu">
-                          <a href="listing-left-column.html">WOMEN</a>
-                          <div className="dropdown-menu">
-                            <div className="row">
-                              <div className="col-sm-8">
-                                <div className="row tt-col-list">
-                                  <div className="col-sm-3">
-                                    <a className="tt-title-submenu" href="listing-left-column.html">
-                                      TOPS
-															</a>
-                                    <ul className="tt-megamenu-submenu">
-                                      <li><a href="listing-left-column.html">Blouses &amp; Shirts</a></li>
-                                      <li><a href="listing-left-column.html">Dresses <span className="tt-badge tt-new">New</span></a></li>
-                                      <li>
-                                        <a href="listing-left-column.html">Tops &amp; T-shirts</a>
-                                        <ul>
-                                          <li><a href="listing-left-column.html">Link Level 1</a></li>
-                                          <li>
-                                            <a href="listing-left-column.html">Link Level 1</a>
-                                            <ul>
-                                              <li><a href="listing-left-column.html">Link Level 2</a></li>
-                                              <li>
-                                                <a href="listing-left-column.html">Link Level 2</a>
-                                                <ul>
-                                                  <li><a href="listing-left-column.html">Link Level 3</a></li>
-                                                  <li><a href="listing-left-column.html">Link Level 3</a></li>
-                                                  <li><a href="listing-left-column.html">Link Level 3</a></li>
-                                                  <li>
-                                                    <a href="listing-left-column.html">Link Level 3</a>
-                                                    <ul>
-                                                      <li>
-                                                        <a href="listing-left-column.html">Link Level 4</a>
-                                                        <ul>
-                                                          <li><a href="listing-left-column.html">Link Level 5</a></li>
-                                                          <li><a href="listing-left-column.html">Link Level 5</a></li>
-                                                          <li><a href="listing-left-column.html">Link Level 5</a></li>
-                                                          <li><a href="listing-left-column.html">Link Level 5</a></li>
-                                                          <li><a href="listing-left-column.html">Link Level 5</a></li>
-                                                        </ul>
-                                                      </li>
-                                                      <li><a href="listing-left-column.html">Link Level 4</a></li>
-                                                    </ul>
-                                                  </li>
-                                                  <li><a href="listing-left-column.html">Link Level 3</a></li>
-                                                </ul>
-                                              </li>
-                                              <li><a href="listing-left-column.html">Link Level 2</a></li>
-                                              <li><a href="listing-left-column.html">Link Level 2</a></li>
-                                            </ul>
-                                          </li>
-                                          <li><a href="listing-left-column.html">Link Level 1</a></li>
-                                          <li><a href="listing-left-column.html">Link Level 1</a></li>
-                                          <li><a href="listing-left-column.html">Link Level 1</a></li>
-                                        </ul>
-                                      </li>
-                                      <li><a href="listing-left-column.html">Sleeveless Tops</a></li>
-                                      <li><a href="listing-left-column.html">Sweaters</a></li>
-                                      <li><a href="listing-left-column.html">Jackets</a></li>
-                                      <li><a href="listing-left-column.html">Outerwear</a></li>
-                                    </ul>
-                                  </div>
-                                  <div className="col-sm-3">
-                                    <a className="tt-title-submenu" href="listing-left-column.html">
-                                      BOTTOMS
-															</a>
-                                    <ul className="tt-megamenu-submenu">
-                                      <li><a href="listing-left-column.html">Trousers <span className="tt-badge tt-fatured">Fatured</span></a></li>
-                                      <li>
-                                        <a href="listing-left-column.html">Jeans</a>
-                                      </li>
-                                      <li><a href="listing-left-column.html">Leggings</a></li>
-                                      <li><a href="listing-left-column.html">Jumpsuit &amp; Shorts</a></li>
-                                      <li><a href="listing-left-column.html">Skirts</a></li>
-                                      <li><a href="listing-left-column.html">Tights</a></li>
-                                    </ul>
-                                  </div>
-                                  <div className="col-sm-3">
-                                    <a className="tt-title-submenu" href="listing-left-column.html">
-                                      ACCESSORIES
-															</a>
-                                    <ul className="tt-megamenu-submenu">
-                                      <li><a href="listing-left-column.html">Jewellery</a></li>
-                                      <li><a href="listing-left-column.html">Hats</a></li>
-                                      <li><a href="listing-left-column.html">Scarves &amp; Snoods</a></li>
-                                      <li><a href="listing-left-column.html">Belts</a></li>
-                                      <li><a href="listing-left-column.html">Bags</a></li>
-                                      <li><a href="listing-left-column.html">Shoes <span className="tt-badge tt-sale">Sale 15%</span></a></li>
-                                      <li><a href="listing-left-column.html">Sunglasses</a></li>
-                                    </ul>
-                                  </div>
-                                  <div className="col-sm-3">
-                                    <a className="tt-title-submenu" href="listing-left-column.html">
-                                      TOP BRANDS
-															</a>
-                                    <ul className="tt-listing-01">
-                                      <li><a href="/" target="_blank"><img src="images/loader.svg" data-src="images/custom/brand-img-01.png" alt="1" /></a></li>
-                                      <li><a href="/" target="_blank"><img src="images/loader.svg" data-src="images/custom/brand-img-02.png" alt="2" /></a></li>
-                                      <li><a href="/" target="_blank"><img src="images/loader.svg" data-src="images/custom/brand-img-03.png" alt="3" /></a></li>
-                                      <li><a href="/" target="_blank"><img src="images/loader.svg" data-src="images/custom/brand-img-04.png" alt="4" /></a></li>
-                                      <li><a href="/" target="_blank"><img src="images/loader.svg" data-src="images/custom/brand-img-05.png" alt="5" /></a></li>
-                                      <li><a href="/" target="_blank"><img src="images/loader.svg" data-src="images/custom/brand-img-06.png" alt="6" /></a></li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="col-sm-4">
-                                <a href="listing-left-column.html" className="tt-title-submenu">SPECIALS</a>
-                                <div className="tt-menu-slider header-menu-product arrow-location-03 row">
-                                  <div className="col-2">
-                                    <div className="tt-product thumbprod-center">
-                                      <a href="product.html">
-                                        <div className="tt-image-box">
-                                          <span className="tt-img"><img src="images/product/product-01.jpg" alt="7" /></span>
-                                          <span className="tt-img-roll-over"><img src="images/product/product-01-02.jpg" alt="8" /></span>
-                                        </div>
-                                        <div className="tt-description">
-                                          <h2 className="tt-title">Flared Shift Dress</h2>
-                                          <div className="tt-price">
-                                            <span className="new-price">$14</span>
-                                            <span className="old-price">$24</span>
-                                          </div>
-                                          <div className="tt-product-inside-hover">
-                                            <div className="tt-btn-addtocart" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</div>
-                                            <div className="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></div>
-                                          </div>
-                                        </div>
-                                      </a>
-                                    </div>
-                                  </div>
-                                  <div className="col-2">
-                                    <div className="tt-product thumbprod-center">
-                                      <a href="product.html">
-                                        <div className="tt-image-box">
-                                          <span className="tt-img"><img src="images/product/product-02.jpg" alt="9" /></span>
-                                          <span className="tt-img-roll-over"><img src="images/product/product-02-02.jpg" alt="10" /></span>
-                                        </div>
-                                        <div className="tt-description">
-                                          <h2 className="tt-title">Flared Shift Dress</h2>
-                                          <div className="tt-price">
-                                            $17
-                                          </div>
-                                          <div className="tt-product-inside-hover">
-                                            <div className="tt-btn-addtocart" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</div>
-                                            <div className="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView" />
-                                          </div>
-                                        </div>
-                                      </a>
-                                    </div>
-                                  </div>
-                                  <div className="col-2">
-                                    <div className="tt-product thumbprod-center">
-                                      <a href="product.html">
-                                        <div className="tt-image-box">
-                                          <span className="tt-img"><img src="images/product/product-04.jpg" alt="11" /></span>
-                                          <span className="tt-img-roll-over"><img src="images/product/product-04-01.jpg" alt="12" /></span>
-                                        </div>
-                                        <div className="tt-description">
-                                          <h2 className="tt-title">Flared Shift Dress</h2>
-                                          <div className="tt-price">
-                                            $14
-                                           </div>
-                                          <div className="tt-product-inside-hover">
-                                            <div className="tt-btn-addtocart" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</div>
-                                            <div className="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView" />
-                                          </div>
-                                        </div>
-                                      </a>
-                                    </div>
-                                  </div>
-                                  <div className="col-2">
-                                    <div className="tt-product thumbprod-center">
-                                      <a href="product.html">
-                                        <div className="tt-image-box">
-                                          <span className="tt-img"><img src="images/product/product-05.jpg" alt="13" /></span>
-                                          <span className="tt-img-roll-over"><img src="images/product/product-05-02.jpg" alt="14" /></span>
-                                        </div>
-                                        <div className="tt-description">
-                                          <h2 className="tt-title">Flared Shift Dress</h2>
-                                          <div className="tt-price">
-                                            <span className="new-price">$14</span>
-                                            <span className="old-price">$24</span>
-                                          </div>
-                                          <div className="tt-product-inside-hover">
-                                            <div className="tt-btn-addtocart" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</div>
-                                            <div className="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView" />
-                                          </div>
-                                        </div>
-                                      </a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="row">
-                              <div className="col-sm-6">
-                                <a href="listing-left-column.html" className="tt-promo-02">
-                                  <img src="images/custom/header-promo-01.jpg" alt="15" />
-                                  <div className="tt-description tt-point-h-l">
-                                    <div className="tt-description-wrapper">
-                                      <div className="tt-title-small">SUMMER <span className="tt-base-color">2018</span></div>
-                                      <div className="tt-title-large">NEW ARRIVALS</div>
-                                    </div>
-                                  </div>
-                                </a>
-                              </div>
-                              <div className="col-sm-6">
-                                <a href="listing-left-column.html" className="tt-promo-02">
-                                  <img src="images/custom/header-promo-02.jpg" alt="16" />
-                                  <div className="tt-description tt-point-h-l">
-                                    <div className="tt-description-wrapper">
-                                      <div className="tt-title-small"><span className="tt-white-color">CLEARANCE SALES</span></div>
-                                      <div className="tt-title-large"><span className="tt-white-color">GET UP TO 20% OFF</span></div>
-                                    </div>
-                                  </div>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li className="dropdown megamenu">
-                          <a href="listing-right-column.html">MEN</a>
-                          <div className="dropdown-menu">
-                            <div className="row">
-                              <div className="col-sm-9">
-                                <div className="row tt-col-list">
-                                  <div className="col-sm-4">
-                                    <a href="listing-right-column.html" className="tt-title-submenu">
-                                      TOPS
-                    <img src="images/loader.svg" data-src="images/custom/header-category-01.jpg" alt="17" />
-                                    </a>
-                                    <ul className="tt-megamenu-submenu">
-                                      <li><a href="listing-right-column.html">Shirts</a></li>
-                                      <li><a href="listing-right-column.html">Sweaters  <span className="tt-badge tt-new">New</span></a></li>
-                                      <li>
-                                        <a href="listing-right-column.html">Tops &amp; T-shirts</a>
-                                        <ul>
-                                          <li><a href="listing-right-column.html">Link Level 1</a></li>
-                                          <li>
-                                            <a href="listing-right-column.html">Link Level 1</a>
-                                            <ul>
-                                              <li><a href="listing-right-column.html">Link Level 2</a></li>
-                                              <li>
-                                                <a href="listing-right-column.html">Link Level 2</a>
-                                                <ul>
-                                                  <li><a href="listing-right-column.html">Link Level 3</a></li>
-                                                  <li><a href="listing-right-column.html">Link Level 3</a></li>
-                                                  <li><a href="listing-right-column.html">Link Level 3</a></li>
-                                                  <li>
-                                                    <a href="listing-right-column.html">Link Level 3</a>
-                                                    <ul>
-                                                      <li>
-                                                        <a href="listing-right-column.html">Link Level 4</a>
-                                                        <ul>
-                                                          <li><a href="listing-right-column.html">Link Level 5</a></li>
-                                                          <li><a href="listing-right-column.html">Link Level 5</a></li>
-                                                          <li><a href="listing-right-column.html">Link Level 5</a></li>
-                                                          <li><a href="listing-right-column.html">Link Level 5</a></li>
-                                                          <li><a href="listing-right-column.html">Link Level 5</a></li>
-                                                        </ul>
-                                                      </li>
-                                                      <li><a href="listing-right-column.html">Link Level 4</a></li>
-                                                      <li><a href="listing-right-column.html">Link Level 4</a></li>
-                                                      <li><a href="listing-right-column.html">Link Level 4</a></li>
-                                                      <li><a href="listing-right-column.html">Link Level 4</a></li>
-                                                    </ul>
-                                                  </li>
-                                                  <li><a href="listing-right-column.html">Link Level 3</a></li>
-                                                </ul>
-                                              </li>
-                                              <li><a href="listing-right-column.html">Link Level 2</a></li>
-                                              <li><a href="listing-right-column.html">Link Level 2</a></li>
-                                              <li><a href="listing-right-column.html">Link Level 2</a></li>
-                                            </ul>
-                                          </li>
-                                          <li><a href="listing-right-column.html">Link Level 1</a></li>
-                                          <li><a href="listing-right-column.html">Link Level 1</a></li>
-                                          <li><a href="listing-right-column.html">Link Level 1</a></li>
-                                        </ul>
-                                      </li>
-                                      <li><a href="listing-right-column.html">Sleeveless Tops</a></li>
-                                      <li><a href="listing-right-column.html">Jackets</a></li>
-                                      <li><a href="listing-right-column.html">Outerwear</a></li>
-                                    </ul>
-                                  </div>
-                                  <div className="col-sm-4">
-                                    <a className="tt-title-submenu" href="listing-right-column.html">
-                                      BOTTOMS
-                    <img src="images/loader.svg" data-src="images/custom/header-category-02.jpg" alt="18" />
-                                    </a>
-                                    <ul className="tt-megamenu-submenu">
-                                      <li><a href="listing-right-column.html">Trousers <span className="tt-badge tt-fatured">Fatured</span></a></li>
-                                      <li><a href="listing-right-column.html">Jeans</a></li>
-                                      <li><a href="listing-right-column.html">Jumpsuit &amp; Shorts</a></li>
-                                      <li><a href="listing-right-column.html">Skirts</a></li>
-                                      <li><a href="listing-right-column.html">Tights</a></li>
-                                    </ul>
-                                  </div>
-                                  <div className="col-sm-4">
-                                    <a className="tt-title-submenu" href="listing-right-column.html">
-                                      ACCESSORIES
-                    <img src="images/loader.svg" data-src="images/custom/header-category-03.jpg" alt="19" />
-                                    </a>
-                                    <ul className="tt-megamenu-submenu">
-                                      <li><a href="listing-right-column.html">Hats</a></li>
-                                      <li><a href="listing-right-column.html">Scarves &amp; Snoods</a></li>
-                                      <li><a href="listing-right-column.html">Belts</a></li>
-                                      <li><a href="listing-right-column.html">Bags</a></li>
-                                      <li><a href="listing-right-column.html">Shoes</a></li>
-                                      <li><a href="listing-right-column.html">Sunglasses <span className="tt-badge tt-sale">Sale 15%</span></a></li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="col-sm-3">
-                                <div className="tt-offset-7">
-                                  <a href="listing-left-column.html" className="tt-promo-02">
-                                    <img src="images/loader.svg" data-src="images/custom/header-promo-03.jpg" alt="20" />
-                                    <div className="tt-description tt-point-h-l tt-point-v-t">
-                                      <div className="tt-description-wrapper">
-                                        <div className="tt-title-small tt-white-color">SALE</div>
-                                        <div className="tt-title-xlarge tt-white-color">70% OFF</div>
-                                        <p className="tt-white-color">Free shipping on all US order or order above $99</p>
-                                        <span className="btn-underline tt-obj-bottom tt-white-color">SHOP NOW!</span>
-                                      </div>
-                                    </div>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li className="dropdown">
+
+                        <li >
                           <a href="index-rtl.html">RTL</a>
                         </li>
+
+
                       </ul>
                     </nav>
                   </div>
@@ -1206,8 +698,8 @@ function App() {
         </div>
 
       </header>
-      <div class="tt-breadcrumb">
-        <div class="container">
+      <div className="tt-breadcrumb">
+        <div className="container">
           <ul>
             <li><a href="index.html">Home</a></li>
             <li>Listing</li>
@@ -2259,7 +1751,7 @@ function App() {
       <a href="/" className="tt-back-to-top">BACK TO TOP</a>
 
       {/*  modal (AddToCartProduct) */}
-      <div className="modal  fade" id="modalAddToCartProduct"  tabIndex={-1} role="dialog" aria-label="myModalLabel" aria-hidden="true">
+      <div className="modal  fade" id="modalAddToCartProduct" tabIndex={-1} role="dialog" aria-label="myModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content ">
             <div className="modal-header">
