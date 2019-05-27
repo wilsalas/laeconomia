@@ -54,6 +54,8 @@ a:not([href]):not([tabindex]) {
 }
 
 .btn-club-vida {
+    border: 1px solid !important;
+    padding: 5px !important;
     border-color: rgb(255, 44, 110) !important;
     color: rgb(255, 44, 110) !important;
     border-radius: 50px !important;
@@ -61,14 +63,54 @@ a:not([href]):not([tabindex]) {
     font-weight: 700 !important
 }
 
-.btn-club-vida:hover{
-    background-color: rgba(255, 44, 110, 0.14) !important
+.tt-badge-cart {
+    background-color: rgb(255, 44, 110) !important;
 }
 
-.btn-contact{
+.btn-club-vida:hover {
+    background-color: #fd2f6f12 !important
+}
+
+.btn-contact {
     background-color: rgb(0, 24, 101) !important;
 }
 
-.tt-collapse-title-blue{
- color:rgb(3, 67, 208) !important;   
+.tt-collapse-title-blue {
+    color: rgb(3, 67, 208) !important;
 }
+
+header .tt-dropdown-obj .tt-dropdown-toggle {
+    color: #838a91
+}
+
+.selected_li>a {
+    font-weight: 500
+}
+
+.selected_li:hover>a {
+    background-color: #0140ce;
+    color: white !important;
+}
+
+header .tt-multi-obj .tt-dropdown-menu .tt-dropdown-inner {
+    padding: 0px 0px 0px 0px !important;
+    text-align: center !important;
+    color: white;
+}
+
+.imgs-cols-drogueria {
+    height: 200px !important;
+}
+
+.img-col-drogueria {
+    height: 420px !important;
+}
+
+.tt-title-small {
+    color: white !important;
+}
+
+.tt-title-small:hover {
+    color: black !important;
+ }
+

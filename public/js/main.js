@@ -108,6 +108,8 @@
         mainSliderSlick();
         dataBg('[data-bg]');
     };
+
+
     function mainSliderSlick() {
         var $el = blocks.mainSliderSlick;
         $el.find('.slide').first().imagesLoaded({
