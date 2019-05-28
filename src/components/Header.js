@@ -10,7 +10,7 @@ export default class HeaderComponent extends Component {
         return (
             <Row className="mt-5 mb-2">
                 <Col md={2} xs={12}>
-                    <img alt="la economia" src="/assets/business_logo.jpg" className="logo-header" />
+                    <img alt="la economia" src="/assets/logo_economia.png" className="logo-header" />
                 </Col>
                 <Col md={10} xs={12}>
                     <Form>

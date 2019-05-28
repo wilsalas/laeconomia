@@ -108,8 +108,6 @@
         mainSliderSlick();
         dataBg('[data-bg]');
     };
-
-
     function mainSliderSlick() {
         var $el = blocks.mainSliderSlick;
         $el.find('.slide').first().imagesLoaded({
@@ -134,7 +132,7 @@
             autoplay: true,
             autoplaySpeed: 5500,
             fade: true,
-            speed: 1000,
+            speed: 10000,
             pauseOnHover: false,
             pauseOnDotsHover: true,
             responsive: [{

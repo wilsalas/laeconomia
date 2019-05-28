@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import HeaderComponent from '../components/Header';
 import { Container } from 'reactstrap';
+import HeaderComponent from '../components/Header';
 import FooterComponent from '../components/Footer';
+import SliderComponent from '../components/Slider';
 import '../styles/styles.css';
 
 export default class App extends Component {
@@ -12,10 +13,10 @@ export default class App extends Component {
       seletedMenu: 0
     }
 
-    this.ChangeMenu = this.ChangeMenu.bind(this);
+    this.changeMenu = this.changeMenu.bind(this);
   }
 
-  ChangeMenu(seletedMenu) {
+  changeMenu(seletedMenu) {
     this.setState({ seletedMenu })
   }
 
@@ -52,8 +53,8 @@ export default class App extends Component {
           <nav className="panel-menu mobile-main-menu">
             <ul>
               <li>
-              <a href="listing-left-column.html">INICIO</a>
-              
+                <a href="listing-left-column.html">INICIO</a>
+
               </li>
               <li>
 
@@ -418,13 +419,13 @@ export default class App extends Component {
                     <div className="tt-desctop-menu">
                       <nav>
                         <ul>
-                          <li className="dropdown tt-megamenu-col-02 selected">
-                            <a href="/" onClick={(e) => {e.preventDefault(); this.ChangeMenu(0)}} >INICIO</a>
-                              {/* <button type="button" onClick={() => this.ChangeMenu(1)} class="btn btn-link">INICIO</button> */}
+                          <li className="dropdown tt-megamenu-col-02 selected ">
+                            <a href="/" onClick={(e) => { e.preventDefault(); this.changeMenu(0) }} >INICIO</a>
+                            {/* <button type="button" onClick={() => this.ChangeMenu(1)} class="btn btn-link">INICIO</button> */}
                           </li>
                           <li className="dropdown megamenu">
                             {/* <a href="listing-collection.html">DROGUERIA VIRTUAL</a> */}
-                            <a href="/" onClick={(e) => {e.preventDefault(); this.ChangeMenu(1)}} >DROGUERIA VIRTUAL</a>
+                            <a href="/" onClick={(e) => { e.preventDefault(); this.changeMenu(1) }} >DROGUERIA VIRTUAL</a>
                             <div className="dropdown-menu">
                               <div className="row tt-col-list">
 
@@ -481,7 +482,7 @@ export default class App extends Component {
                     <div className="tt-multi-obj tt-dropdown-obj">
                       <button className="tt-dropdown-toggle" data-tooltip="Ciudad" data-tposition="bottom">
                         {/* <i className="icon-f-79" /> */}
-                        Barranquilla
+                        Elije tu ciudad
                     </button>
                       <div className="tt-dropdown-menu">
                         <div className="tt-mobile-add">
@@ -505,8 +506,9 @@ export default class App extends Component {
                   <div className="tt-desctop-parent-search tt-parent-box">
                     <div className="tt-search tt-dropdown-obj">
                       <button className="tt-dropdown-toggle">
-                        {/* <i className="icon-f-85" /> */}
-                        <i className="fas fa-map-marker-alt"></i>
+                        <i className="icon-f-24" />
+                        {/* <i className="fas fa-map-marker-alt"></i> */}
+                        {/* <img src="assets/location.png" alt="location" className="icon-menu-user"/> */}
                       </button>
                       <div className="tt-dropdown-menu">
                         <div className="container">
@@ -606,6 +608,7 @@ export default class App extends Component {
                       <button className="tt-dropdown-toggle" data-tooltip="My Account" data-tposition="bottom">
                         {/* <i className="icon-f-94" /> */}
                         <i className="far fa-user-circle"></i>
+                      {/* <img src="assets/user.png" alt="user" className="icon-menu-user"/> */}
                       </button>
                       <div className="tt-dropdown-menu">
                         <div className="tt-mobile-add">
@@ -631,8 +634,9 @@ export default class App extends Component {
                   <div className="tt-desctop-parent-cart tt-parent-box">
                     <div className="tt-cart tt-dropdown-obj" data-tooltip="Cart" data-tposition="bottom">
                       <button className="tt-dropdown-toggle">
-                        {/* <i className="icon-f-39" /> */}
-                        <i className="fas fa-shopping-cart"></i>
+                        <i className="icon-f-47" />
+                        {/* <i className="fas fa-shopping-cart"></i> */}
+                        {/* <img src="assets/car.png" alt="car" className="icon-menu-user"/> */}
 
                         <span className="tt-badge-cart">2</span>
                       </button>
@@ -743,52 +747,22 @@ export default class App extends Component {
         {/* Sale */}
 
         <div id="tt-Sale">
-          <div className="container-indent nomargin">
-            <div className={this.state.seletedMenu < 1 ? "container-fluid" : "container"}>
+          <div className="container-indent nomargin" style={{backgroundColor:'#f4f4f4'}}>
+            <div className={this.state.seletedMenu < 1 ? "" : "container"}>
 
               {/* menu inicio */}
-              {this.state.seletedMenu === 0 &&
-                <div className="row">
-                  <div className="slider-revolution revolution-default">
-                    <div className="tp-banner-container">
-                      <div className="tp-banner revolution">
-                        <ul>
-                          <li data-thumb="images/slides/01/slide-01.jpg" data-transition="fade" data-slotamount={1} data-masterspeed={1000} data-saveperformance="off" data-title="Slide">
-                            <img src="images/slides/01/slide-01.jpg" alt="slide1" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" />
-                            <div className="tp-caption tp-caption1 lft stb" data-x="center" data-y="center" data-hoffset={0} data-voffset={0} data-speed={600} data-start={900} data-easing="Power4.easeOut" data-endeasing="Power4.easeIn">
-                              <div className="tp-caption1-wd-1 tt-base-color">Titulo 1</div>
-                              <div className="tp-caption1-wd-2">Premium<br />Html Template</div>
-                              <div className="tp-caption1-wd-3">30 skins, powerful features, great support, exclusive offer</div>
-                              <div className="tp-caption1-wd-4"><a href="listing-left-column.html" target="_blank" className="btn btn-xl" data-text="SHOP NOW!">SHOP NOW!</a></div>
-                            </div>
-                          </li>
-                          <li data-thumb="images/slides/01/slide-02.jpg" data-transition="fade" data-slotamount={1} data-masterspeed={1000} data-saveperformance="off" data-title="Slide">
-                            <img src="images/slides/01/slide-02.jpg" alt="slide1" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" />
-                            <div className="tp-caption tp-caption1 lft stb" data-x="center" data-y="center" data-hoffset={0} data-voffset={0} data-speed={600} data-start={900} data-easing="Power4.easeOut" data-endeasing="Power4.easeIn">
-                              <div className="tp-caption1-wd-1 tt-white-color">Ready To</div>
-                              <div className="tp-caption1-wd-2 tt-white-color">Use Unique<br />Demos</div>
-                              <div className="tp-caption1-wd-3 tt-white-color">Optimized for speed, website that sells</div>
-                              <div className="tp-caption1-wd-4"><a href="listing-left-column.html" target="_blank" className="btn btn-xl" data-text="SHOP NOW!">SHOP NOW!</a></div>
-                            </div>
-                          </li>
-                         
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              }
+              {this.state.seletedMenu === 0 && <SliderComponent view={0}/>}
 
               {/* menu drogueria */}
               {this.state.seletedMenu === 1 &&
                 <div className="row">
-                
+
                   <div className="col-md-6">
                     <a href="listing-left-column.html" className="tt-promo-box tt-one-child hover-type-2">
-                      <img  src="images/promo/index-promo-img-07.jpg" alt="img3" className="img-col-drogueria" />
+                      <img src="images/promo/index-promo-img-07.jpg" alt="img3" className="img-col-drogueria" />
                       <div className="tt-description">
                         <div className="tt-description-wrapper">
-                          <div className="tt-title-small">CUIDADO DEL BEBÉ</div>
+                          <div className="tt-title-small-drogueria ">CUIDADO DEL BEBÉ</div>
                         </div>
                       </div>
                     </a>
@@ -797,20 +771,20 @@ export default class App extends Component {
                     <div className="row">
                       <div className="col-md-12">
                         <a href="listing-left-column.html" className="tt-promo-box tt-one-child hover-type-2">
-                          <img  src="images/promo/index-promo-img-01.jpg" alt="img1" className="imgs-cols-drogueria" />
+                          <img src="images/promo/index-promo-img-01.jpg" alt="img1" className="imgs-cols-drogueria" />
                           <div className="tt-description">
                             <div className="tt-description-wrapper">
-                              <div className="tt-title-small">CUIDADO A LA SALUD 1</div>
+                              <div className="tt-title-small-drogueria ">CUIDADO DE LA PIEL</div>
                             </div>
                           </div>
                         </a>
                       </div>
-                      <div className="col-md-12">
+                      <div className="col-md-12" style={{ marginBottom: 20}}>
                         <a href="listing-left-column.html" className="tt-promo-box tt-one-child hover-type-2">
-                          <img  src="images/promo/index-promo-img-02.jpg" alt="img2" className="imgs-cols-drogueria" />
+                          <img src="images/promo/index-promo-img-02.jpg" alt="img2" className="imgs-cols-drogueria" />
                           <div className="tt-description">
                             <div className="tt-description-wrapper">
-                              <div className="tt-title-small">CUIDADO A LA SALUD 2</div>
+                              <div className="tt-title-small-drogueria ">CUIDADO!</div>
                             </div>
                           </div>
                         </a>
@@ -844,7 +818,7 @@ export default class App extends Component {
           {/* ----- */}
 
           <div className="container-indent0">
-            <div className="container-fluid">
+            <div className="container">
               <div className="row tt-layout-promo-box">
                 <div className="col-sm-12 col-md-6">
                   <div className="row">
@@ -1284,7 +1258,7 @@ export default class App extends Component {
           {/* ----- */}
 
           <div className="container-indent">
-            <div className="container-fluid-custom">
+            <div className="container">
               <div className="row tt-layout-promo-box">
                 <div className="col-sm-6 col-md-4">
                   <a href="listing-left-column.html" className="tt-promo-box">
@@ -1292,8 +1266,8 @@ export default class App extends Component {
                     <div className="tt-description">
                       <div className="tt-description-wrapper">
                         <div className="tt-background" />
-                        <div className="tt-title-small">FALL-WINTER CLEARANCE SALES</div>
-                        <div className="tt-title-large">GET UP TO <span className="tt-base-color">50% OFF</span></div>
+                        <div className="tt-title-small">DESCUENTOS</div>
+                        <div className="tt-title-large ">HASTA 50%</div>
                       </div>
                     </div>
                   </a>
@@ -1304,8 +1278,8 @@ export default class App extends Component {
                     <div className="tt-description">
                       <div className="tt-description-wrapper">
                         <div className="tt-background" />
-                        <div className="tt-title-small">SUMMER <span className="tt-base-color">2018</span></div>
-                        <div className="tt-title-large">NEW ARRIVALS</div>
+                        <div className="tt-title-small">PROMOCION </div>
+                        <div className="tt-title-large">DEL DÍA</div>
                       </div>
                     </div>
                   </a>
@@ -1317,8 +1291,8 @@ export default class App extends Component {
                       <div className="tt-background" />
                       <div className="tt-description-wrapper">
                         <div className="tt-background" />
-                        <div className="tt-title-small">NEW COLLECTION</div>
-                        <div className="tt-title-large"><span className="tt-base-color">HANDBAGS</span></div>
+                        <div className="tt-title-small">NUEVOS</div>
+                        <div className="tt-title-large">PRODUCTOS</div>
                       </div>
                     </div>
                   </a>
