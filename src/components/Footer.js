@@ -38,6 +38,8 @@ export default () => {
                     </div>
                 </div>
             </div>
+
+
             <div className="tt-footer-col tt-color-scheme-01">
                 <div className="container">
                     <div className="row">
@@ -59,7 +61,7 @@ export default () => {
                         <div className="col-md-6 col-lg-2 col-xl-3">
                             <div className="tt-mobile-collapse">
                                 <h4 className="tt-collapse-title tt-collapse-title-blue">
-                                   INFORMACIÓN
+                                    INFORMACIÓN
                                 </h4>
                                 <div className="tt-collapse-content">
                                     <ul className="tt-list">
@@ -76,8 +78,8 @@ export default () => {
                                     CLUB VIDA SANA
                                 </h4>
                                 <div className="tt-collapse-content">
-                                <ul className="tt-list">
-                                
+                                    <ul className="tt-list">
+
                                         <li><a href="account_order.html">¡Haz parte del club <span className="badge badge-primary">Registrarse</span></a></li>
                                         <li><a href="page404.html">Políticas y términos de uso</a></li>
                                         <li><a href="page404.html">Habeas data</a></li>
@@ -93,7 +95,7 @@ export default () => {
                                     </h4>
                                     <div className="tt-collapse-content">
                                         <address>
-                                            
+
                                             <p><span>Contactenos:</span> <a href="mailto:info@mydomain.com">hola@mydomain.com</a></p>
                                         </address>
                                     </div>
@@ -103,49 +105,36 @@ export default () => {
                     </div>
                 </div>
             </div>
+
+
             <div className="tt-footer-custom">
                 <div className="container">
-                    <div className="tt-row">
-                        <div className="tt-col-left">
-                            <div className="tt-col-item tt-logo-col">
-                                {/* logo */}
-                                <a className="tt-logo tt-logo-alignment" href="index.html">
+                    <div className="row">
+                        <div className="col-md-8">
+                            {/* <div className="tt-col-item tt-logo-col"> */}
+                            {/* logo */}
+                            {/* <a className="tt-logo tt-logo-alignment" href="index.html">
                                     <img src="images/custom/logo.png" alt="70" />
-                                </a>
-                                {/* /logo */}
-                            </div>
-                            <div className="tt-col-item">
-                                {/* copyright */}
-                                <div className="tt-box-copyright">
-                                    © Wokiee 2018. All Rights Reserved
+                                </a> */}
+                            {/* /logo */}
+                            {/* </div> */}
+
+                            {/* copyright */}
+                            <div className="tt-box-copyright">
+                                © Trixel S.A.S. 2019. Todos los derechos reservados
                                 </div>
-                                {/* /copyright */}
-                            </div>
+                            {/* /copyright */}
+
                         </div>
-                        <div className="tt-col-right">
-                            <div className="tt-col-item">
+                        <div className="col-md-4">
+                         
                                 {/* payment-list */}
-                                <ul className="tt-payment-list">
-                                    <li><a href="page404.html"><span className="icon-Stripe"><span className="path1" /><span className="path2" /><span className="path3" /><span className="path4" /><span className="path5" /><span className="path6" /><span className="path7" /><span className="path8" /><span className="path9" /><span className="path10" /><span className="path11" /><span className="path12" />
-                                    </span></a></li>
-                                    <li><a href="page404.html"> <span className="icon-paypal-2">
-                                        <span className="path1" /><span className="path2" /><span className="path3" /><span className="path4" /><span className="path5" /><span className="path6" />
-                                    </span></a></li>
-                                    <li><a href="page404.html"><span className="icon-visa">
-                                        <span className="path1" /><span className="path2" /><span className="path3" /><span className="path4" /><span className="path5" />
-                                    </span></a></li>
-                                    <li><a href="page404.html"><span className="icon-mastercard">
-                                        <span className="path1" /><span className="path2" /><span className="path3" /><span className="path4" /><span className="path5" /><span className="path6" /><span className="path7" /><span className="path8" /><span className="path9" /><span className="path10" /><span className="path11" /><span className="path12" /><span className="path13" />
-                                    </span></a></li>
-                                    <li><a href="page404.html"><span className="icon-discover">
-                                        <span className="path1" /><span className="path2" /><span className="path3" /><span className="path4" /><span className="path5" /><span className="path6" /><span className="path7" /><span className="path8" /><span className="path9" /><span className="path10" /><span className="path11" /><span className="path12" /><span className="path13" /><span className="path14" /><span className="path15" /><span className="path16" />
-                                    </span></a></li>
-                                    <li><a href="page404.html"><span className="icon-american-express">
-                                        <span className="path1" /><span className="path2" /><span className="path3" /><span className="path4" /><span className="path5" /><span className="path6" /><span className="path7" /><span className="path8" /><span className="path9" /><span className="path10" /><span className="path11" />
-                                    </span></a></li>
-                                </ul>
+                                <img className="icon-payments" src="assets/visa.png" alt="cobru" />
+                                <img className="icon-payments" src="assets/master_card.png" alt="cobru" />
+                                <img className="icon-payments" src="assets/cobru.png" alt="cobru" />
+                                <img className="icon-payments" src="assets/american_express.png" alt="cobru" />
                                 {/* /payment-list */}
-                            </div>
+                           
                         </div>
                     </div>
                 </div>

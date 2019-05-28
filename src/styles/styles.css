@@ -1,21 +1,76 @@
 /* Style for Header */
 
 .logo-header {
-    margin-top: -10px;
+    margin-top: -3px;
+    margin-bottom: 10px;
     width: 100%;
 }
 
 .header-input {
     border: none !important;
     border-radius: 20px 0px 0px 20px !important;
-    background-color: rgb(244, 244, 244) !important;
+    background-color: #f4f4f4 !important;
     font-weight: 500 !important;
+    color: #a5a5a5
+}
+
+.header-input::placeholder, .header-input:focus {
+    color: #a5a5a5 !important
 }
 
 .btn-search-header {
     border-radius: 0px 20px 20px 0px !important;
-    background-color: rgb(0, 64, 207) !important;
+    background-color: #1b42cb !important;
     width: 3.2rem !important;
+    height: 100%;
+}
+
+.icon-menu-user {
+    width: 40%;
+}
+
+.fa-user-circle {
+    font-size: 25px !important;
+}
+
+i[class*="icon-f"] {
+    font-size: 25px !important;
+    font-weight: 700 !important;
+}
+
+header .tt-dropdown-obj .tt-dropdown-toggle {
+    color: #b2c3c3
+}
+
+.selected_li>a {
+    font-weight: 500
+}
+
+.selected_li:hover>a {
+    background-color: #1b42cb;
+    color: white !important;
+}
+
+header .tt-multi-obj .tt-dropdown-menu .tt-dropdown-inner {
+    padding: 0px 0px 0px 0px !important;
+    text-align: center !important;
+    color: white;
+}
+
+.tt-desctop-menu:not(.tt-hover-02) li.dropdown>a {
+    color: #657272;
+    background: transparent;
+    font-weight: 500;
+}
+
+
+header .tt-cart .tt-dropdown-toggle .tt-badge-cart {
+    width: 15px !important;
+    height: 15px !important;
+    border-radius: 50% !important;
+    top: -3px !important;
+    right: -9px !important;
+    font-size: 9px !important;
 }
 
 /* Style for Tabs */
@@ -25,10 +80,10 @@
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    color: #0140ce !important;
-    border-bottom-color: #0140ce !important;
+    color: #1b42cb !important;
+    border-bottom-color: #1b42cb !important;
     background-color: transparent !important;
-    border-color: #0140ce !important;
+    border-color: #1b42cb !important;
     border-bottom-width: 2px !important;
     border-left: transparent !important;
     border-right: transparent !important;
@@ -43,17 +98,21 @@ a:not([href]):not([tabindex]) {
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover {
-    /* color: #0140ce !important; */
-    /* border-bottom-color: #0140ce !important; */
+    /* color: #1b42cb !important; */
+    /* border-bottom-color: #1b42cb !important; */
     background-color: transparent !important;
-    /* border-color: #0140ce !important; */
+    /* border-color: #1b42cb !important; */
     border-bottom-width: 2px !important;
     border-left: transparent !important;
     border-right: transparent !important;
     border-top: transparent !important;
 }
 
+/* Btn for club vida */
+
 .btn-club-vida {
+    border: 1px solid !important;
+    padding: 5px !important;
     border-color: rgb(255, 44, 110) !important;
     color: rgb(255, 44, 110) !important;
     border-radius: 50px !important;
@@ -61,14 +120,95 @@ a:not([href]):not([tabindex]) {
     font-weight: 700 !important
 }
 
-.btn-club-vida:hover{
-    background-color: rgba(255, 44, 110, 0.14) !important
+.btn-club-vida:hover {
+    background-color: #fd2f6f12 !important
 }
 
-.btn-contact{
+/* background for circle badge icon cart */
+
+.tt-badge-cart {
+    background-color: rgb(255, 44, 110) !important;
+}
+
+/* background color for btn contact */
+
+.btn-contact {
     background-color: rgb(0, 24, 101) !important;
 }
 
-.tt-collapse-title-blue{
- color:rgb(3, 67, 208) !important;   
+.tt-collapse-title-blue {
+    color: #1b42cb !important;
+}
+
+.imgs-cols-drogueria {
+    height: 200px !important;
+}
+
+.img-col-drogueria {
+    height: 420px !important;
+}
+
+.tt-title-small {
+    color: #657272 !important;
+}
+
+.tt-title-small-drogueria:hover {
+    color: white !important;
+}
+
+.tt-title-large {
+    color: #657272 !important;
+}
+
+.tt-title-large{
+color: #1b42cb !important;
+}
+
+.tt-title-small:hover {
+    color: black !important;
+}
+
+/* Style for Carousel -Slider */
+
+.carousel-indicators li {
+    box-sizing: content-box;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    width: 14px !important;
+    height: 13px !important;
+    margin-right: 3px;
+    margin-left: 3px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-top: 0px !important;
+    border-bottom: 0px !important;
+    opacity: .5;
+    transition: opacity .6 ease;
+    border-radius: 20px !important
+}
+
+/* icons payments for footer */
+
+.icon-payments {
+    width: 10%;
+    padding: 5px;
+    margin-top: 2%;
+}
+
+.icon-payments:nth-child(1) {
+    width: 20%;
+}
+
+.icon-payments:nth-child(2) {
+    width: 15%;
+}
+
+.icon-payments:nth-child(3) {
+    width: 25%;
+}
+
+.icon-payments:nth-child(4) {
+    width: 25%;
 }
