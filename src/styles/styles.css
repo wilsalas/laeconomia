@@ -112,13 +112,19 @@ a:not([href]):not([tabindex]) {
 
 .btn-club-vida {
     border: 1px solid !important;
-    padding: 5px !important;
+    padding: 3px !important;
     border-color: rgb(255, 44, 110) !important;
     color: rgb(255, 44, 110) !important;
     border-radius: 50px !important;
     font-size: 12px !important;
     font-weight: 700 !important
 }
+
+.btn-club-vida-mobile{
+    color: rgb(255, 44, 110) !important;
+    border: 0 !important;
+}
+
 
 .btn-club-vida:hover {
     background-color: #fd2f6f12 !important
@@ -187,6 +193,18 @@ color: #1b42cb !important;
     opacity: .5;
     transition: opacity .6 ease;
     border-radius: 20px !important
+}
+
+/* .tt-desctop-menu:not(.tt-hover-02) li.dropdown.selected > a {
+    color: #1b42cb ;
+    background: transparent;
+    border-bottom: 1px solid;
+} */
+
+
+.active:hover  {
+    color: #1b42cb !important;
+    border-bottom: 1px solid !important;
 }
 
 /* icons payments for footer */

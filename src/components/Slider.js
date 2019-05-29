@@ -69,11 +69,8 @@ class Slider extends Component {
 
   compareHeight = () => {
     let height = 500;
-
-    //console.log("ALTO", this.props.height)
-
-    if(this.props.height < 1){
-      height = 500
+    if(this.props.banner){
+      height = 200
     }
     return height;
   }
