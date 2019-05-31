@@ -51,6 +51,16 @@ header .tt-dropdown-obj .tt-dropdown-toggle {
     color: white !important;
 }
 
+.tt-desctop-menu>nav>ul>li:hover  {
+    color: #1b42cb !important;
+    border-bottom: 2px solid !important;
+}
+
+li{
+    cursor: pointer;
+}
+
+
 header .tt-multi-obj .tt-dropdown-menu .tt-dropdown-inner {
     padding: 0px 0px 0px 0px !important;
     text-align: center !important;
@@ -193,18 +203,6 @@ color: #1b42cb !important;
     opacity: .5;
     transition: opacity .6 ease;
     border-radius: 20px !important
-}
-
-/* .tt-desctop-menu:not(.tt-hover-02) li.dropdown.selected > a {
-    color: #1b42cb ;
-    background: transparent;
-    border-bottom: 1px solid;
-} */
-
-
-.active:hover  {
-    color: #1b42cb !important;
-    border-bottom: 1px solid !important;
 }
 
 /* icons payments for footer */
