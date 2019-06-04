@@ -1,9 +1,7 @@
 import React from 'react';
 
 export default () => (
-    <div className="container-indent0">
-        <div className="container">
-            <div className="row tt-layout-promo-box">
+            <div className="row tt-layout-promo-box mt-3">
                 <div className="col-sm-12 col-md-6">
                     <div className="row">
                         <div className="col-sm-6">
@@ -76,6 +74,4 @@ export default () => (
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>);
+            </div>);
