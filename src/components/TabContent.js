@@ -3,7 +3,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
 import Product from './Product';
 
-export default class TabProductsComponent extends Component {
+export default class TabContentComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -24,7 +24,7 @@ export default class TabProductsComponent extends Component {
 
     render() {
         return (
-            <div style={{ display: 'grid' , overflow:'scroll'}} className="mt-4">
+            <div style={{ display: 'grid', overflow: 'scroll' }} className="mt-4">
                 <Nav tabs className="justify-content-center">
                     <NavItem>
                         <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>

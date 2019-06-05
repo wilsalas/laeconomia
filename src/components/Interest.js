@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Container, Col, Row
+    Container, Col, Row, 
 } from 'reactstrap';
 import Product from './Product';
 
@@ -42,7 +42,8 @@ export default () => {
                     >{'>'}</button>
                 </Col>
                 <Col >
-                <Product listCount={12} col={3} />
+                    <Product listCount={12} col={3} horizontal={true}/>
+
                 </Col>
             </Row>
         </Container>

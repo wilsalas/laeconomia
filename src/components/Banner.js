@@ -5,8 +5,8 @@ import {
 
 export default () => (
     <Container>
-        <Row>
-            <Col md={12} style={{
+        <Row className="mt-3">
+            <Col  md={12} style={{
                 height:'20%'
                 // background: '#1babd9',
             }} className="d-flex justify-content-center">

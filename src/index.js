@@ -4,6 +4,8 @@ import './index.css';
 import App from './pages/App';
 import DrogueryVirtual from './pages/DrogueryVirtual';
 import BaCare from './pages/BaCare';
+import Dictionary from './pages/Dictionary';
+import Subsidiary from './pages/Subsidiary';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
@@ -38,6 +40,8 @@ ReactDOM.render(
                 <RouteProvider exact path='/' component={App} />
                 <RouteProvider path='/droguery' component={DrogueryVirtual} />
                 <RouteProvider path='/babycare' component={BaCare} />
+                <RouteProvider path='/dictionary' component={Dictionary} />
+                <RouteProvider path='/subsidiary' component={Subsidiary} />
                 <Route render={() => <Redirect to="/" />} />
             </Switch >
         </div>

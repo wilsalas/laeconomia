@@ -6,7 +6,7 @@ import SearchComponent from '../components/Search';
 import HeaderComponent from '../components/Header';
 import Content1Component from '../components/Content1';
 import CategoryComponent from '../components/Category';
-import TabProductsComponent from '../components/TabProducts';
+import TabContentComponent from '../components/TabContent';
 import BannerComponent from '../components/Banner';
 import FooterComponent from '../components/Footer';
 import '../styles/styles.css';
@@ -20,18 +20,17 @@ export default class App extends Component {
         <SearchComponent />
         <HeaderComponent />
 
-        <Content1Component seletedMenu={0} />
 
+        <Content1Component seletedMenu={0} />
         <Container>
           <CategoryComponent />
-          <TabProductsComponent />
+          <TabContentComponent />
           <PromoComponent />
           <InterestComponent />
           <BannerComponent />
         </Container>
-        
-        <FooterComponent />
 
+        <FooterComponent />
 
       </div>
     );

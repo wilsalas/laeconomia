@@ -12,11 +12,8 @@ export default class DrogueryVirtual extends Component {
             <div>
                 <SearchComponent />
                 <HeaderComponent />
-                <div id="tt-Sale">
-                    <Content1Component seletedMenu={1}/>
-                    <br />
-                </div>
-                <FooterComponent/>
+                <Content1Component seletedMenu={1} />
+                <FooterComponent />
             </div>
         );
     }
