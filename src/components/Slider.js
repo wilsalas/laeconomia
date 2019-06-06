@@ -11,21 +11,24 @@ import '../styles/styles.css';
 const items = [
   {
     id: 1,
-    altText: 'Slide 1',
-    caption: 'Slide 1',
-    path: 'images/slides/08/slide-01.jpg'
+    altText: '',
+    caption: '',
+    direction: 'https://www.droguerialaeconomia.com/economia/site/catalogo?s=LYQwzgxg9gLuQ===',
+    path: 'https://www.droguerialaeconomia.com/economia/site/img/BannerWeb-CampanaCopaAmerica.png'
   },
   {
     id: 2,
-    altText: 'Slide 2',
-    caption: 'Slide 2',
-    path: 'images/slides/08/slide-02.jpg'
+    altText: '',
+    caption: '',
+    direction: 'https://www.droguerialaeconomia.com/economia/site/catalogo?s=LYQwzgxg9gLuQ===',
+    path: 'https://www.droguerialaeconomia.com/economia/site/img/BannerWebAtopeelABR2019.png'
   },
   {
     id: 3,
-    altText: 'Slide 3',
-    caption: 'Slide 3',
-    path: 'images/slides/08/slide-03.jpg'
+    altText: '',
+    caption: '',
+    direction: 'https://www.droguerialaeconomia.com/economia/site/catalogo?s=LYQwzgxg9gLuQ===',
+    path: 'https://www.droguerialaeconomia.com/economia/site/img/Banner-web-favoritosTQ30jun.png'
   }
 ];
 
@@ -68,12 +71,9 @@ class Slider extends Component {
   }
 
   compareHeight = () => {
-    let height = 500;
-
-    //console.log("ALTO", this.props.height)
-
-    if(this.props.height < 1){
-      height = 500
+    let height = 100;
+    if (this.props.banner) {
+      height = 50
     }
     return height;
   }
@@ -84,13 +84,13 @@ class Slider extends Component {
     const slides = items.map((item) => {
       return (
         <CarouselItem
-          className="custom-tag"
+          className="custom-tag "
           tag="div"
           key={item.id}
           onExiting={this.onExiting}
           onExited={this.onExited}
         >
-          <img src={item.path} alt="img carousel" />
+          <a href={item.direction} target="_blank" rel="noopener noreferrer">  <img src={item.path} alt="img carousel" width="100%" /></a>
           <CarouselCaption className="text-danger" captionText={item.caption} captionHeader={item.caption} />
         </CarouselItem>
       );
@@ -106,7 +106,7 @@ class Slider extends Component {
           {
             `.custom-tag {
                 max-width: 100%;
-                height: ${this.compareHeight()}px;
+                height: ${this.compareHeight()}%;
                 background: black;
               }`
           }

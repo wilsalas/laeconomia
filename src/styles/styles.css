@@ -1,3 +1,31 @@
+p{
+    margin:  0px;
+}
+/* Color title  */
+
+h1, h2, h3, h4, h5, h6 , label{
+    color: #657272
+}
+
+/* Remove outline box-shadow input */
+
+textarea:focus, 
+textarea.form-control:focus, 
+input.form-control:focus, 
+input[type=text]:focus, 
+input[type=password]:focus, 
+input[type=email]:focus, 
+input[type=number]:focus, 
+[type=text].form-control:focus, 
+[type=password].form-control:focus, 
+[type=email].form-control:focus, 
+[type=tel].form-control:focus, 
+[contenteditable].form-control:focus {
+    outline: 0 !important;
+    box-shadow: inset 0 -1px 0 #f4f4f4;
+    border-color: #657272;
+}
+
 /* Style for Header */
 
 .logo-header {
@@ -11,11 +39,11 @@
     border-radius: 20px 0px 0px 20px !important;
     background-color: #f4f4f4 !important;
     font-weight: 500 !important;
-    color: #a5a5a5
+    color: #a5a5a5;
 }
 
 .header-input::placeholder, .header-input:focus {
-    color: #a5a5a5 !important
+    color: #a5a5a5 !important;
 }
 
 .btn-search-header {
@@ -39,7 +67,7 @@ i[class*="icon-f"] {
 }
 
 header .tt-dropdown-obj .tt-dropdown-toggle {
-    color: #b2c3c3
+    color: #b2c3c3;
 }
 
 .selected_li>a {
@@ -49,6 +77,15 @@ header .tt-dropdown-obj .tt-dropdown-toggle {
 .selected_li:hover>a {
     background-color: #1b42cb;
     color: white !important;
+}
+
+.tt-desctop-menu>nav>ul>li:hover {
+    color: #1b42cb !important;
+    border-bottom: 2px solid !important;
+}
+
+li {
+    cursor: pointer;
 }
 
 header .tt-multi-obj .tt-dropdown-menu .tt-dropdown-inner {
@@ -62,7 +99,6 @@ header .tt-multi-obj .tt-dropdown-menu .tt-dropdown-inner {
     background: transparent;
     font-weight: 500;
 }
-
 
 header .tt-cart .tt-dropdown-toggle .tt-badge-cart {
     width: 15px !important;
@@ -112,12 +148,17 @@ a:not([href]):not([tabindex]) {
 
 .btn-club-vida {
     border: 1px solid !important;
-    padding: 5px !important;
+    padding: 3px !important;
     border-color: rgb(255, 44, 110) !important;
     color: rgb(255, 44, 110) !important;
     border-radius: 50px !important;
     font-size: 12px !important;
     font-weight: 700 !important
+}
+
+.btn-club-vida-mobile {
+    color: rgb(255, 44, 110) !important;
+    border: 0 !important;
 }
 
 .btn-club-vida:hover {
@@ -140,6 +181,8 @@ a:not([href]):not([tabindex]) {
     color: #1b42cb !important;
 }
 
+/* Images Droguery */
+
 .imgs-cols-drogueria {
     height: 200px !important;
 }
@@ -160,8 +203,8 @@ a:not([href]):not([tabindex]) {
     color: #657272 !important;
 }
 
-.tt-title-large{
-color: #1b42cb !important;
+.tt-title-large {
+    color: #1b42cb !important;
 }
 
 .tt-title-small:hover {
@@ -180,16 +223,20 @@ color: #1b42cb !important;
     margin-left: 3px;
     text-indent: -999px;
     cursor: pointer;
-    background-color: #fff;
+    background-color: #1b42cb;
     background-clip: padding-box;
     border-top: 0px !important;
     border-bottom: 0px !important;
     opacity: .5;
     transition: opacity .6 ease;
-    border-radius: 20px !important
+    border-radius: 20px !important;
 }
 
-/* icons payments for footer */
+.carousel-indicators>.active {
+    background-color: white;
+}
+
+/* Icons payments for footer */
 
 .icon-payments {
     width: 10%;
@@ -211,4 +258,178 @@ color: #1b42cb !important;
 
 .icon-payments:nth-child(4) {
     width: 25%;
+}
+
+/* Btn TabProducts */
+
+.card-tab-products {
+    border: none;
+    border-radius: 0px !important;
+    display: flex;
+    justify-content: center;
+    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.16);
+}
+
+.div-percent {
+    width: 20%;
+    background-color: #ff2c6e;
+    position: absolute;
+    top: 3%;
+    left: 4%;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.div-cardbody>div:nth-child(1) {
+    font-weight: 600;
+    font-size: 17px;
+    margin-top: -15px;
+}
+
+.div-cardbody>div:nth-child(2) {
+    font-weight: 600;
+    font-size: 10px;
+    color: #b2c3c3;
+    text-decoration: line-through;
+    margin-top: -18px;
+}
+
+.div-cardbody>p:nth-child(3) {
+    font-weight: 600;
+    font-size: 12px;
+    color: #657272;
+    margin-top: -3px;
+}
+
+.div-cardbody>p:nth-child(4) {
+    font-weight: 600;
+    font-size: 10px;
+    color: #b2c3c3;
+    margin-top: 2px;
+}
+
+.tab-content-scroll {
+    overflow-y: scroll;
+    height: 360px;
+    cursor: ns-resize;
+}
+
+/* Product Slider Horizontal */
+
+@supports (display: grid) {
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto 1fr auto;
+    }
+    @media screen and (max-width: 500px) {
+        .grid-container {
+            grid-template-columns: 1fr;
+            grid-template-rows: 0.3fr 1fr auto 1fr;
+        }
+    }
+    .grid-item {
+        color: #fff;
+        background: skyblue;
+        padding: 3.5em 1em;
+        font-size: 1em;
+        font-weight: 700;
+    }
+    .header {
+        grid-area: header;
+        padding: 1em;
+    }
+    .main {
+        color: #959595;
+        background-color: white;
+        grid-area: main;
+        padding: 0;
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+    .items {
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        transition: all 0.2s;
+        will-change: transform;
+        user-select: none;
+        cursor: pointer;
+    }
+    .items.active {
+        cursor: grabbing;
+        cursor: -webkit-grabbing;
+    }
+    .item {
+        display: inline-block;
+        min-height: 200px;
+        min-width: 200px;
+        margin: 1em 1em;
+    }
+    @media screen and (max-width: 500px) {
+        .item {
+            min-height: 200px;
+            min-width: 200px;
+        }
+    }
+}
+
+/* Style for Dictionary */
+
+.medicine-input {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-radius: 0px !important;
+    font-weight: 500 !important;
+    color: #657272;
+    border-color: #657272;
+}
+
+.medicine-input::placeholder, .medicine-input:focus {
+    color: #657272 !important;
+}
+
+.btn-search-medicine {
+    background-color: transparent !important;
+    color: black !important;
+}
+
+.ico-search-medicine {
+    font-size: 20px;
+    margin-left: -22px;
+    top: 10px;
+    position: absolute;
+    z-index: 3;
+}
+
+/* Style for account */
+
+.account-input {
+    border: none !important;
+    background-color: #f4f4f4 !important;
+    font-weight: 500 !important;
+    color: #a5a5a5 !important;
+    border-radius: 11px !important;
+}
+
+.account-input::placeholder, .account-input:focus {
+    color: #a5a5a5 !important;
+}
+
+.content-conditions{
+    background: #f4f4f4;
+    padding: 2%;
+    text-align: center;
+}
+
+.conditions-link{
+    color: #1b42cb !important;
+    font-weight: 500
+}
+
+.tt-item-register{
+    height: 93% !important;
 }
