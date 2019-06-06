@@ -15978,7 +15978,7 @@ html.ie .tt-header-holder .tt-desctop-menu.tt-menu-small {
 */
 
 footer {
-  margin-top: 60px;
+  margin-top: 30px;
   /*
         Color schemes desctope
     */
@@ -32801,16 +32801,17 @@ a:active, a:visited, a:focus {
 .btn.btn-border {
   background: transparent;
   color: #1b42cb;
-  border: 2px solid #1b42cb;
+  border: 1px solid #1b42cb;
   height: 40px;
   padding-left: 29px;
   padding-right: 29px;
+  border-radius: 10px ;
 }
 
 .btn.btn-border:hover {
-  background: #191919;
+  background: #1b42cb;
   color: #ffffff;
-  border-color: #191919;
+  border-color: #1b42cb;
 }
 
 .btn.btn-border01 {
@@ -34629,8 +34630,7 @@ textarea:focus:-ms-input-placeholder {
 
 .form-default .form-group label:not(.error) {
   font-size: 14px;
-  color: #191919;
-  font-family: "Hind", sans-serif;
+  font-family:  sans-serif;
   font-weight: 500;
   padding-bottom: 4px;
   letter-spacing: 0.02em;
@@ -35688,7 +35688,7 @@ input[type=checkbox]:checked~label .check {
 }
 
 .tt-login-form .tt-item .additional-links a:hover {
-  color: #191919;
+  /* color: #191919; */
 }
 
 @media (max-width: 789px) {

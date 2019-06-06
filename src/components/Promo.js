@@ -6,7 +6,7 @@ export default () => (
             <div className="row tt-layout-promo-box">
                 <div className="col-sm-6 col-md-4">
                     <a href="listing-left-column.html" className="tt-promo-box">
-                        <img src="images/loader.svg" data-src="images/promo/index-promo-img-07.jpg" alt="46" />
+                        <img src="/images/loader.svg" data-src="/images/promo/index-promo-img-07.jpg" alt="46" />
                         <div className="tt-description">
                             <div className="tt-description-wrapper">
                                 <div className="tt-background" />
@@ -18,7 +18,7 @@ export default () => (
                 </div>
                 <div className="col-sm-6 col-md-4">
                     <a href="listing-left-column.html" className="tt-promo-box">
-                        <img src="images/loader.svg" data-src="images/promo/index-promo-img-08.jpg" alt="47" />
+                        <img src="/images/loader.svg" data-src="/images/promo/index-promo-img-08.jpg" alt="47" />
                         <div className="tt-description">
                             <div className="tt-description-wrapper">
                                 <div className="tt-background" />
@@ -30,7 +30,7 @@ export default () => (
                 </div>
                 <div className="col-sm-6 col-md-4">
                     <a href="listing-left-column.html" className="tt-promo-box">
-                        <img src="images/loader.svg" data-src="images/promo/index-promo-img-09.jpg" alt="48" />
+                        <img src="/images/loader.svg" data-src="/images/promo/index-promo-img-09.jpg" alt="48" />
                         <div className="tt-description">
                             <div className="tt-background" />
                             <div className="tt-description-wrapper">

@@ -3,7 +3,7 @@ p{
 }
 /* Color title  */
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 , label{
     color: #657272
 }
 
@@ -405,3 +405,31 @@ a:not([href]):not([tabindex]) {
     z-index: 3;
 }
 
+/* Style for account */
+
+.account-input {
+    border: none !important;
+    background-color: #f4f4f4 !important;
+    font-weight: 500 !important;
+    color: #a5a5a5 !important;
+    border-radius: 11px !important;
+}
+
+.account-input::placeholder, .account-input:focus {
+    color: #a5a5a5 !important;
+}
+
+.content-conditions{
+    background: #f4f4f4;
+    padding: 2%;
+    text-align: center;
+}
+
+.conditions-link{
+    color: #1b42cb !important;
+    font-weight: 500
+}
+
+.tt-item-register{
+    height: 93% !important;
+}

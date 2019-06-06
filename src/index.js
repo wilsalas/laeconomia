@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './pages/App';
+import Account from './pages/Account';
 import DrogueryVirtual from './pages/DrogueryVirtual';
 import BaCare from './pages/BaCare';
 import Dictionary from './pages/Dictionary';
@@ -42,6 +43,7 @@ ReactDOM.render(
                 <RouteProvider path='/babycare' component={BaCare} />
                 <RouteProvider path='/dictionary' component={Dictionary} />
                 <RouteProvider path='/subsidiary' component={Subsidiary} />
+                <RouteProvider path='/account/:page' component={Account} />
                 <Route render={() => <Redirect to="/" />} />
             </Switch >
         </div>

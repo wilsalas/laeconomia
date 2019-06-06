@@ -36,7 +36,7 @@ export default class HeaderComponent extends Component {
                             <a href="/dictionary" >DICCIONARIO</a>
                         </li>
                         <li>
-                            <a href="/subsidiary">SUCURSALES</a>
+                            <a href="/">SUCURSALES</a>
                         </li>
                         <li>
                             <a href="http://clubvidasana.co/" target="_blank" rel="noopener noreferrer" className="btn-club-vida-mobile">
@@ -123,7 +123,7 @@ export default class HeaderComponent extends Component {
                                                 </li>
 
                                                 <li className="dropdown tt-megamenu-col-01">
-                                                    <a href="/subsidiary">SUCURSALES</a>
+                                                    <a href="/">SUCURSALES</a>
                                                 </li>
 
                                                 <a href="http://clubvidasana.co/" target="_blank" rel="noopener noreferrer" className="btn-club-vida ">CLUB VIDA SANA</a>
@@ -174,7 +174,7 @@ export default class HeaderComponent extends Component {
                                 {/* tt-account */}
                                 <div className="tt-desctop-parent-account tt-parent-box">
                                     <div className="tt-account tt-dropdown-obj">
-                                        <button className="tt-dropdown-toggle" data-tooltip="Mi cuenta" data-tposition="bottom">
+                                        <button className="tt-dropdown-toggle" data-tooltip={'Wilfan'} data-tposition="bottom">
                                             <i className="far fa-user-circle"></i>
                                         </button>
                                         <div className="tt-dropdown-menu">
@@ -183,13 +183,10 @@ export default class HeaderComponent extends Component {
                                             </div>
                                             <div className="tt-dropdown-inner">
                                                 <ul>
-                                                    <li><a href="login.html"><i className="icon-f-94" />Account</a></li>
-                                                    <li><a href="wishlist.html"><i className="icon-n-072" />Wishlist</a></li>
-                                                    <li><a href="compare.html"><i className="icon-n-08" />Compare</a></li>
-                                                    <li><a href="page404.html"><i className="icon-f-68" />Check Out</a></li>
-                                                    <li><a href="login.html"><i className="icon-f-76" />Sign In</a></li>
-                                                    <li><a href="page404.html"><i className="icon-f-77" />Sign Out</a></li>
-                                                    <li><a href="create-account.html"><i className="icon-f-94" />Register</a></li>
+                                                    <li><a href="login.html" ><i className="icon-e-42"></i>Perfil</a></li>
+                                                    <li><a href="/account/login"><i className="icon-g-44" />Iniciar Sesión</a></li>
+                                                    <li><a href="/account/register"><i className="icon-h-22" />Registrarse</a></li>
+                                                    <li><a href="page404.html"><i className="icon-g-17" />Cerrar Sesión</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -219,7 +216,7 @@ export default class HeaderComponent extends Component {
                                                                 <a href="product.html">
                                                                     <div className="tt-item-img">
 
-                                                                        <img src="images/loader.svg" data-src="images/product/product-01.jpg" alt="27" />
+                                                                        <img src="/images/loader.svg" data-src="/images/product/product-01.jpg" alt="27" />
                                                                     </div>
                                                                     <div className="tt-item-descriptions">
                                                                         <h2 className="tt-title">Flared Shift Dress</h2>
@@ -237,7 +234,7 @@ export default class HeaderComponent extends Component {
                                                             <div className="tt-item">
                                                                 <a href="product.html">
                                                                     <div className="tt-item-img">
-                                                                        <img src="images/loader.svg" data-src="images/product/product-02.jpg" alt="28" />
+                                                                        <img src="/images/loader.svg" data-src="/images/product/product-02.jpg" alt="28" />
                                                                     </div>
                                                                     <div className="tt-item-descriptions">
                                                                         <h2 className="tt-title">Flared Shift Dress</h2>

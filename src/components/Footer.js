@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 export default () => {
     return (
-        <div>
+        <Fragment>
             <footer>
                 <div className="tt-footer-default tt-color-scheme-02">
                     <div className="container">
@@ -115,7 +115,7 @@ export default () => {
                                 {/* <div className="tt-col-item tt-logo-col"> */}
                                 {/* logo */}
                                 {/* <a className="tt-logo tt-logo-alignment" href="index.html">
-                                    <img src="images/custom/logo.png" alt="70" />
+                                    <img src="/images/custom/logo.png" alt="70" />
                                 </a> */}
                                 {/* /logo */}
                                 {/* </div> */}
@@ -130,10 +130,10 @@ export default () => {
                             <div className="col-md-4">
 
                                 {/* payment-list */}
-                                <img className="icon-payments" src="assets/visa.png" alt="cobru" />
-                                <img className="icon-payments" src="assets/master_card.png" alt="cobru" />
-                                <img className="icon-payments" src="assets/cobru.png" alt="cobru" />
-                                <img className="icon-payments" src="assets/american_express.png" alt="cobru" />
+                                <img className="icon-payments" src="/assets/visa.png" alt="cobru" />
+                                <img className="icon-payments" src="/assets/master_card.png" alt="cobru" />
+                                <img className="icon-payments" src="/assets/cobru.png" alt="cobru" />
+                                <img className="icon-payments" src="/assets/american_express.png" alt="cobru" />
                                 {/* /payment-list */}
 
                             </div>
@@ -144,6 +144,6 @@ export default () => {
             </footer>
             {/* link top back  */}
             <a href="/" className="tt-back-to-top">Volver arriba</a>
-        </div>
+        </Fragment>
     )
 }
