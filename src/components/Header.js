@@ -174,7 +174,7 @@ export default class HeaderComponent extends Component {
                                 {/* tt-account */}
                                 <div className="tt-desctop-parent-account tt-parent-box">
                                     <div className="tt-account tt-dropdown-obj">
-                                        <button className="tt-dropdown-toggle" data-tooltip={'Wilfan'} data-tposition="bottom">
+                                        <button className="tt-dropdown-toggle" data-tooltip={'Mi cuenta'} data-tposition="bottom">
                                             <i className="far fa-user-circle"></i>
                                         </button>
                                         <div className="tt-dropdown-menu">

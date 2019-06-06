@@ -6,6 +6,7 @@ import Content1Component from '../components/Content1';
 // import { ListCategoryComponent, OrderCategoryComponent } from '../components/Category';
 import TabContentComponent from '../components/TabContent';
 import FooterComponent from '../components/Footer';
+import BannerComponent from '../components/Banner';
 import '../styles/styles.css';
 
 export default class DrogueryVirtual extends Component {
@@ -33,6 +34,7 @@ export default class DrogueryVirtual extends Component {
                         </Col>
                     </Row>
                 </Container>
+                <BannerComponent />
                 <FooterComponent />
             </Fragment>
         );

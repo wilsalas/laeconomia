@@ -6,6 +6,7 @@ import Content1Component from '../components/Content1';
 // import { ListCategoryComponent, OrderCategoryComponent } from '../components/Category';
 import TabContentComponent from '../components/TabContent';
 import FooterComponent from '../components/Footer';
+import BannerComponent from '../components/Banner';
 import '../styles/styles.css';
 export default class BaCare extends Component {
 
@@ -20,11 +21,11 @@ export default class BaCare extends Component {
                         <Col md={2} className="mt-4">
                             <Row>
                                 <Col md={12}>
-                                    ORDENAR POR
-                            </Col>
+                                    <h5>ORDENAR POR</h5>
+                                </Col>
                                 <Col md={12}>
                                     CATEGORIAS
-                            </Col>
+                                </Col>
                             </Row>
                         </Col>
                         <Col md={10}>
@@ -32,6 +33,7 @@ export default class BaCare extends Component {
                         </Col>
                     </Row>
                 </Container>
+                <BannerComponent />
                 <FooterComponent />
             </Fragment>
         );
