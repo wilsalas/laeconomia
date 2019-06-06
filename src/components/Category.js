@@ -1,6 +1,25 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-export default () => (
+const OrderCategoryComponent = () => {
+    return (
+        <Fragment>
+            LIST CATEGORY
+        </Fragment>
+    );
+}
+
+
+const ListCategoryComponent = () => {
+    return (
+        <Fragment>
+            LIST CATEGORY
+        </Fragment>
+    );
+}
+
+const CategoryComponent = () => {
+    return (
+        <Fragment>
             <div className="row tt-layout-promo-box mt-3">
                 <div className="col-sm-12 col-md-6">
                     <div className="row">
@@ -74,4 +93,14 @@ export default () => (
                         </div>
                     </div>
                 </div>
-            </div>);
+            </div>
+        </Fragment>
+    );
+}
+
+
+export {
+    CategoryComponent,
+    OrderCategoryComponent,
+    ListCategoryComponent
+}

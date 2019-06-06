@@ -3,26 +3,26 @@ import { Card, CardBody, CardTitle, CardSubtitle, CardImg, CardText, Row, Col } 
 
 
 
-const ContentVertical = props => (
+const VerticalProductComponent = props => (
     <Row className="justify-content-center" >
         {new Array(props.listCount).fill().map((value, i) => {
             return (
                 <Col key={i} md={props.col} className="mt-3 mb-3 " >
-                    <ProductComponent {...props} />
+                    <Product {...props} />
                 </Col>
             );
         })}
     </Row>
 );
 
-const ContentHorizontal = props => (
+const HorizontalProductComponent = props => (
     <div className="grid-container">
         <main className="grid-item main">
             <div className="items">
                 {new Array(props.listCount).fill().map((value, i) => {
                     return (
                         <div className="item " key={i}>
-                            <ProductComponent {...props} />
+                            <Product {...props} />
                         </div>
                     );
                 })}
@@ -32,7 +32,7 @@ const ContentHorizontal = props => (
 );
 
 
-const ProductComponent = props => {
+const Product = props => {
     return (
         <Card className="text-center card-tab-products">
             <div className="div-percent">{Math.floor((Math.random() * 100) + 1)}%</div>
@@ -49,4 +49,7 @@ const ProductComponent = props => {
 }
 
 
-export default props => props.horizontal ? <ContentHorizontal {...props} /> : <ContentVertical {...props} />;
+export {
+    VerticalProductComponent,
+    HorizontalProductComponent
+};

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
-import Product from './Product';
+import { VerticalProductComponent } from './Product';
 
 export default class TabContentComponent extends Component {
 
@@ -49,16 +49,16 @@ export default class TabContentComponent extends Component {
                 </Nav>
                 <TabContent activeTab={this.state.activeTab} className="tab-content-scroll">
                     <TabPane tabId="1">
-                        <Product listCount={8} col={3} />
+                        <VerticalProductComponent listCount={8} col={3} />
                     </TabPane>
                     <TabPane tabId="2">
-                        <Product listCount={8} col={3} />
+                        <VerticalProductComponent listCount={8} col={3} />
                     </TabPane>
                     <TabPane tabId="3">
-                        <Product listCount={8} col={3} />
+                        <VerticalProductComponent listCount={8} col={3} />
                     </TabPane>
                     <TabPane tabId="4">
-                        <Product listCount={8} col={3} />
+                        <VerticalProductComponent listCount={8} col={3} />
                     </TabPane>
                 </TabContent>
                 <button className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }}>Cargar más</button>

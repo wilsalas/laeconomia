@@ -5,7 +5,7 @@ import InterestComponent from '../components/Interest';
 import SearchComponent from '../components/Search';
 import HeaderComponent from '../components/Header';
 import Content1Component from '../components/Content1';
-import CategoryComponent from '../components/Category';
+import { CategoryComponent } from '../components/Category';
 import TabContentComponent from '../components/TabContent';
 import BannerComponent from '../components/Banner';
 import FooterComponent from '../components/Footer';
