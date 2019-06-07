@@ -81,39 +81,6 @@ export default () => (
                                     <Button className="btn btn-border btn-block" type="submit">Ingresar</Button>
                                 </FormGroup>
                             </Form>
-                            {/* <form id="contactform" method="post" noValidate="novalidate">
-                                <div className="form-group">
-                                    <label htmlFor="loginInputName">FIRST NAME *</label>
-                                    <div className="tt-required">* Required Fields</div>
-                                    <input type="text" name="name" className="form-control" id="loginInputName" placeholder="Enter First Name" />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="loginLastName">LAST NAME *</label>
-                                    <input type="text" name="lastName" className="form-control" id="loginLastName" placeholder="Enter Last Name" />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="loginInputEmail">E-MAIL *</label>
-                                    <input type="text" name="email" className="form-control" id="loginInputEmail" placeholder="Enter E-mail" />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="loginInputPassword">PASSWORD *</label>
-                                    <input type="text" name="passowrd" className="form-control" id="loginInputPassword" placeholder="Enter Password" />
-                                </div>
-                                <div className="row">
-                                    <div className="col-auto">
-                                        <div className="form-group">
-                                            <button className="btn btn-border" type="submit">CREATE</button>
-                                        </div>
-                                    </div>
-                                    <div className="col-auto align-self-center">
-                                        <div className="form-group">
-                                            <ul className="additional-links">
-                                                <li>or <a href="#">Return to Store</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form> */}
                         </div>
                     </div>
                     <p className="text-center mt-2"><b>Droguería La Economía</b> cuenta con rigurosos estándares de seguridad con el fin de proteger tu informacíon personal.</p>

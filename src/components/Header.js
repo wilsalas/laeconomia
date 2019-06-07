@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SearchComponent from './Search';
+import { SearchHeaderComponent } from '../components/Search';
 
 export default class HeaderComponent extends Component {
 
@@ -292,7 +292,7 @@ export default class HeaderComponent extends Component {
                     <div className="container">
 
                         {/* Search component */}
-                        <SearchComponent />
+                        <SearchHeaderComponent />
                         <div className="tt-header-row ">
                             <div className="tt-stuck-parent-menu" />
                             <div className="tt-stuck-parent-multi tt-parent-box" />

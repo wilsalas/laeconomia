@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 import PromoComponent from '../components/Promo';
-import InterestComponent from '../components/Interest';
-import SearchComponent from '../components/Search';
+import { SearchHeaderComponent } from '../components/Search';
 import HeaderComponent from '../components/Header';
 import Content1Component from '../components/Content1';
 import { CategoryComponent } from '../components/Category';
-import TabContentComponent from '../components/TabContent';
+import { TabContentComponent, InterestContentComponent } from '../components/ContentProducts';
 import BannerComponent from '../components/Banner';
 import FooterComponent from '../components/Footer';
 import '../styles/styles.css';
@@ -17,7 +16,7 @@ export default class App extends Component {
 
     return (
       <div>
-        <SearchComponent />
+        <SearchHeaderComponent />
         <HeaderComponent />
 
 
@@ -26,7 +25,7 @@ export default class App extends Component {
           <CategoryComponent />
           <TabContentComponent />
           <PromoComponent />
-          <InterestComponent />
+          <InterestContentComponent />
           <BannerComponent />
         </Container>
 
