@@ -10,7 +10,8 @@ class TabContentComponent extends Component {
 
         this.toggle = this.toggle.bind(this);
         this.state = {
-            activeTab: '1'
+            activeTab: '1',
+            col: this.props.col ? this.props.col : 3
         };
     }
 
@@ -50,16 +51,16 @@ class TabContentComponent extends Component {
                     </Nav>
                     <TabContent activeTab={this.state.activeTab} className="tab-content-scroll">
                         <TabPane tabId="1">
-                            <VerticalProductComponent listCount={8} col={3} />
+                            <VerticalProductComponent listCount={8} col={this.state.col} />
                         </TabPane>
                         <TabPane tabId="2">
-                            <VerticalProductComponent listCount={8} col={3} />
+                            <VerticalProductComponent listCount={8} col={this.state.col} />
                         </TabPane>
                         <TabPane tabId="3">
-                            <VerticalProductComponent listCount={8} col={3} />
+                            <VerticalProductComponent listCount={8} col={this.state.col} />
                         </TabPane>
                         <TabPane tabId="4">
-                            <VerticalProductComponent listCount={8} col={3} />
+                            <VerticalProductComponent listCount={8} col={this.state.col} />
                         </TabPane>
                     </TabContent>
                     <button className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }}>Cargar más</button>
