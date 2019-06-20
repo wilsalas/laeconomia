@@ -4,8 +4,8 @@ p {
 
 /* Color title  */
 
-h1, h2, h3, h4, h5, h6, label {
-    color: #657272
+h1, h2, h3, h4, h5, h6, label, tr, th, td, .tt-btn-close {
+    color: #657272 !important
 }
 
 ul {
@@ -492,5 +492,18 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     margin-top: -2%;
     font-size: 12px;
     height: 150px;
+    overflow: scroll;
+}
+
+.tt-price{
+    color: #657272 !important;
+}
+.tt-input-counter > input {
+    color: #657272 !important;
+}
+
+.tbody-cart-buy{
+    display: block;
+    height: 30rem;
     overflow: scroll;
 }
