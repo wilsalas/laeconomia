@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import { SearchHeaderComponent, SearchMedicineComponent } from '../components/Search';
+import { SearchMedicineComponent } from '../components/Search';
 import HeaderComponent from '../components/Header';
 import FooterComponent from '../components/Footer';
 import BannerComponent from '../components/Banner';
@@ -13,7 +13,6 @@ export default class Dictionary extends Component {
     render() {
         return (
             <div>
-                <SearchHeaderComponent />
                 <HeaderComponent />
                 <Content1Component seletedMenu={3} />
                 <Container>

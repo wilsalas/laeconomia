@@ -5,7 +5,8 @@ p {
 /* Color title  */
 
 h1, h2, h3, h4, h5, h6, label, tr, th, td, .tt-btn-close {
-    color: #657272 !important
+    color: #657272 !important;
+    font-weight: 500
 }
 
 ul {
@@ -36,7 +37,15 @@ textarea:focus, textarea.form-control:focus, input.form-control:focus, input[typ
     color: #a5a5a5;
 }
 
-.header-input::placeholder, .header-input:focus {
+textarea {
+    border: none !important;
+    background-color: #f4f4f4 !important;
+    font-weight: 500 !important;
+    color: #a5a5a5 !important;
+    border-radius: 11px !important;
+}
+
+.header-input::placeholder, .header-input:focus, textarea::placeholder {
     color: #a5a5a5 !important;
 }
 
@@ -495,15 +504,112 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     overflow: scroll;
 }
 
-.tt-price{
-    color: #657272 !important;
-}
-.tt-input-counter > input {
+.tt-price {
     color: #657272 !important;
 }
 
-.tbody-cart-buy{
+.tt-input-counter>input {
+    color: #657272 !important;
+}
+
+.tbody-cart-buy {
     display: block;
     height: 30rem;
     overflow: scroll;
+}
+
+/* Progress bar steps buys */
+
+.progressbar {
+    display: flex;
+    margin-left: -4%;
+    counter-reset: step;
+}
+
+.progressbar li {
+    list-style-type: none;
+    width: 25%;
+    float: left;
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    color: #657272;
+}
+
+.progressbar li:before {
+    width: 50px;
+    height: 50px;
+    content: counter(step);
+    counter-increment: step;
+    line-height: 45px;
+    border: 2px solid #f4f4f4;
+    display: block;
+    text-align: center;
+    margin: -9px auto 10px auto;
+    border-radius: 50%;
+    background-color: #f4f4f4;
+}
+
+.progressbar li:after {
+    width: 100%;
+    height: 2px;
+    content: '';
+    position: absolute;
+    background-color: #f4f4f4;
+    top: 15px;
+    left: -50%;
+    z-index: -1;
+}
+
+.progressbar li:first-child:after {
+    content: none;
+}
+
+.progressbar li .progressbar_active {
+    color: #1b42cb;
+}
+
+.progressbar li.progressbar_active:before {
+    background: #1b42cb;
+    color: wheat;
+    border: none;
+}
+
+.progressbar li.progressbar_active+li:after {
+    background-color: #1b42cb;
+}
+
+.text-progress {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 899px) {
+    .progressbar {
+        margin-left: -10%;
+        counter-reset: step;
+    }
+    .text-progress {
+        font-size: 9px;
+        font-weight: 500;
+    }
+}
+
+/* Steps for styles */
+
+.card-step {
+    border-radius: 7px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.col-active-step {
+    border: 2px solid #1b42cb;
+}
+
+.col-active-title-step {
+    color: #1b42cb !important;
 }

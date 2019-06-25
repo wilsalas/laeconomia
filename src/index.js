@@ -7,7 +7,8 @@ import DrogueryVirtual from './pages/DrogueryVirtual';
 import BaCare from './pages/BaCare';
 import Dictionary from './pages/Dictionary';
 import Subsidiary from './pages/Subsidiary';
-import Buys from './pages/Buys';
+import CartToBuy from './pages/CartToBuy';
+import ProcessToBuy from './pages/ProcessToBuy';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
@@ -45,7 +46,8 @@ ReactDOM.render(
                 <RouteProvider path='/dictionary' component={Dictionary} />
                 <RouteProvider path='/subsidiary' component={Subsidiary} />
                 <RouteProvider path='/account/:page' component={Account} />
-                <RouteProvider path='/buys' component={Buys} />
+                <RouteProvider path='/buys' component={CartToBuy} />
+                <RouteProvider path='/processbuy' component={ProcessToBuy} />
                 <Route render={() => <Redirect to="/" />} />
             </Switch >
         </div>

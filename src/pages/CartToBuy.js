@@ -1,16 +1,22 @@
 import React, { Component, Fragment } from 'react';
 import {
-    Container, Col, Row, Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
+    Container, Col, Row, Card, CardBody,
+    CardTitle, Button
 } from 'reactstrap';
+import HeaderComponent from '../components/Header';
+import FooterComponent from '../components/Footer';
+import BannerComponent from '../components/Banner';
+import '../styles/styles.css';
 
 
 class CartToBuy extends Component {
     render() {
         return (
             <Fragment>
+                <HeaderComponent />
+
                 <Container>
-                    <h5>CARRITO DE COMPRAS</h5>
+                    <h5 className="mt-4">CARRITO DE COMPRAS</h5>
                     <Row>
                         <Col md={8}>
                             <div className="tt-shopcart-table-02">
@@ -113,7 +119,7 @@ class CartToBuy extends Component {
                                             </tbody>
                                         </table>
 
-                                        <Button block>Realizar compra</Button>
+                                        <Button block onClick={() => window.location.href = "/processbuy"}>Realizar compra</Button>
                                     </div>
                                 </CardBody>
                             </Card>
@@ -123,7 +129,8 @@ class CartToBuy extends Component {
                 </Container>
 
 
-
+                <BannerComponent />
+                <FooterComponent />
 
 
 
