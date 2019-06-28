@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 import PromoComponent from '../components/Promo';
 import HeaderComponent from '../components/Header';
-import Content1Component from '../components/Content1';
+import SliderComponent from '../components/Slider';
 import { CategoryComponent } from '../components/Category';
 import { TabContentComponent, InterestContentComponent } from '../components/ContentProducts';
 import BannerComponent from '../components/Banner';
@@ -16,9 +16,7 @@ export default class App extends Component {
     return (
       <div>
         <HeaderComponent />
-
-
-        <Content1Component seletedMenu={0} />
+        <SliderComponent />
         <Container>
           <CategoryComponent />
           <TabContentComponent />
@@ -26,9 +24,7 @@ export default class App extends Component {
           <InterestContentComponent />
           <BannerComponent />
         </Container>
-
         <FooterComponent />
-
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import HeaderComponent from '../components/Header';
-import Content1Component from '../components/Content1';
+import SliderComponent from '../components/Slider';
 import { GroupCategoryComponent } from '../components/Category';
 import FooterComponent from '../components/Footer';
 import BannerComponent from '../components/Banner';
@@ -11,7 +11,7 @@ export default class BaCare extends Component {
         return (
             <Fragment>
                 <HeaderComponent />
-                <Content1Component seletedMenu={3} />
+                <SliderComponent banner/>
                 <GroupCategoryComponent />
                 <BannerComponent />
                 <FooterComponent />

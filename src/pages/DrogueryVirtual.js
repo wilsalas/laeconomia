@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import HeaderComponent from '../components/Header';
-import Content1Component from '../components/Content1';
+import BabyCareComponent from '../components/BabyCare';
 import { GroupCategoryComponent } from '../components/Category';
 import FooterComponent from '../components/Footer';
 import BannerComponent from '../components/Banner';
@@ -12,7 +12,7 @@ export default class DrogueryVirtual extends Component {
         return (
             <Fragment>
                 <HeaderComponent />
-                <Content1Component seletedMenu={1} />
+                <BabyCareComponent />
                 <GroupCategoryComponent />
                 <BannerComponent />
                 <FooterComponent />

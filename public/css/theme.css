@@ -35640,7 +35640,7 @@ input[type=checkbox]:checked~label .check {
 .tt-login-form .tt-item {
   border: 1px solid #e9e7e7;
   padding: 32px 39px 20px;
-  /* height: 100%; */
+  height: 100%;
 }
 
 .tt-login-form .tt-item .tt-title {

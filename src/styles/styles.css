@@ -613,3 +613,84 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
 .col-active-title-step {
     color: #1b42cb !important;
 }
+
+/* sumary steps */
+
+.sumary-content-text, .sumary-content-text-value {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sumary-content-text>p:nth-child(1) {
+    font-weight: 500;
+}
+
+.sumary-content-text>span {
+    font-weight: 500;
+    color: #b2c3c3
+}
+
+.sumary-content-text-value>p {
+    font-weight: 500;
+    color: #b2c3c3
+}
+
+.sumary-content-text-value>span {
+    font-weight: 500;
+}
+
+.sumary-content-text>span:nth-child(2)>span {
+    color: #ff2f6c
+}
+
+.item1-sumary {
+    height: 50% !important;
+}
+
+.list_sumary_items {
+    padding: 0;
+    text-align: left;
+}
+
+.list_sumary_items>li>p:nth-child(odd) {
+    color: #b2c3c3;
+}
+
+.list_sumary_items>li>p:nth-child(even) {
+    font-weight: 500;
+}
+
+.sumary_table>tbody>tr>td {
+    font-size: 14px;
+}
+
+.sumary_table>tbody {
+    display: block;
+    height: 30rem;
+    overflow: scroll;
+}
+
+.sumary_table td, .sumary_table th {
+    padding: 1rem !important;
+}
+
+.sumary_table>tbody>tr>td:nth-child(2), .sumary_table>tbody>tr>td:nth-child(3), .sumary_table>tbody>tr>td:nth-child(4) {
+    color: #b2c3c3 !important;
+}
+
+.sumary_table>tbody>tr>td:nth-child(2)>span, .sumary_table>tbody>tr>td:nth-child(3)>span, .sumary_table>tbody>tr>td:nth-child(4)>span {
+    color: #657272 !important;
+}
+
+
+@media (max-width:899px) {
+    .sumary_table td, .sumary_table th {
+        padding: 0.70rem !important;
+    }
+    .sumary_table>tbody>tr>td {
+        font-size: 12px;
+    }
+    .item1-sumary {
+        height: 95% !important;
+    }
+}

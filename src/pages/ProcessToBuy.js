@@ -9,6 +9,8 @@ import {
     StepPaymentMethodComponent,
     StepSumaryBuyComponent
 } from '../components/Steps';
+import {InterestContentComponent } from '../components/ContentProducts';
+import SliderComponent from '../components/Slider';
 import FooterComponent from '../components/Footer';
 import BannerComponent from '../components/Banner';
 import '../styles/styles.css';
@@ -19,6 +21,7 @@ class ProcessToBuy extends Component {
         return (
             <Fragment>
                 <HeaderComponent />
+                <SliderComponent banner />
                 <Container fluid>
 
                     <div className="mt-5">
@@ -40,15 +43,16 @@ class ProcessToBuy extends Component {
 
 
                         {/* Step 3  */}
-                        <StepPaymentMethodComponent />
+                        {/* <StepPaymentMethodComponent /> */}
 
 
 
 
                         {/* Step 4  */}
+                        <StepSumaryBuyComponent />
 
                     </div>
-
+                    <InterestContentComponent />
                 </Container>
 
                 <BannerComponent />
