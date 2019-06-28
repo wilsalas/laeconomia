@@ -71,9 +71,9 @@ class Slider extends Component {
   }
 
   compareHeight = () => {
-    let height = 100;
+    let height = 400;
     if (this.props.banner) {
-      height = 50
+      height = 250
     }
     return height;
   }
@@ -90,14 +90,11 @@ class Slider extends Component {
           onExiting={this.onExiting}
           onExited={this.onExited}
         >
-          <a href={item.direction} target="_blank" rel="noopener noreferrer">  <img src={item.path} alt="img carousel" width="100%" /></a>
+          <a href={item.direction} target="_blank" rel="noopener noreferrer">  <img src={item.path} alt="img carousel" width="100%" height={this.compareHeight()} /></a>
           <CarouselCaption className="text-danger" captionText={item.caption} captionHeader={item.caption} />
         </CarouselItem>
       );
     });
-
-
-
 
 
     return (
@@ -106,7 +103,6 @@ class Slider extends Component {
           {
             `.custom-tag {
                 max-width: 100%;
-                height: ${this.compareHeight()}%;
                 background: black;
               }`
           }

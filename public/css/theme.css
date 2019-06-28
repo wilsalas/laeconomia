@@ -20017,7 +20017,7 @@ html.edge .tt-portfolio-content figure:hover figcaption {
   font-family: "Hind", sans-serif;
   font-weight: 500;
   color: #191919;
-  border-radius: 6px;
+  border-radius: 15px;
 }
 
 .tt-input-counter.style-01 span {
@@ -32970,13 +32970,13 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0px;
 }
 
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+/* h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
   color: #191919;
   -moz-transition: color 0.2s linear;
   -o-transition: color 0.2s linear;
   -webkit-transition: color 0.2s linear;
   transition: color 0.2s linear;
-}
+} */
 
 h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
   color: #1b42cb;
@@ -33212,12 +33212,12 @@ hr {
   border-top: 1px solid #e9e7e7;
 }
 
-hr:not([class]) {
+/* hr:not([class]) {
   margin-top: 53px;
   margin-bottom: 53px;
-}
+} */
 
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
   hr:not([class]) {
     margin-top: 35px;
     margin-bottom: 34px;
@@ -33229,7 +33229,7 @@ hr:not([class]) {
     margin-top: 27px;
     margin-bottom: 26px;
   }
-}
+} */
 
 hr.hr-01 {
   margin-top: 53px;
@@ -37889,4 +37889,8 @@ html:not(.mac):not(.touch-device) .tt-carousel-brands .slick-track {
 
 .tt-color-bg-18 {
   background-color: #777878;
+}
+
+.card{
+  border-radius: 0;
 }

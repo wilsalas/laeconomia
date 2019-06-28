@@ -3221,6 +3221,26 @@ jQuery(function ($) {
     });
   }
 
+
+
+  // Collapse item 
+
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function () {
+      this.classList.toggle("active_collapsible");
+      var content = this.nextElementSibling;
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = 200+ "px";
+        content.style.overflow = "scroll"
+      }
+    });
+  }
+
 });
 
 
