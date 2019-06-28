@@ -2416,10 +2416,10 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
   flex-direction: column;
   width: 100%;
   pointer-events: auto;
-  background-color: transparent;
+  /* background-color: transparent; */
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0;
+  border-radius: 5px;
   outline: 0;
 }
 
@@ -21469,7 +21469,7 @@ html.ie.gecko body.modal-open {
 }
 
 .modal .modal-content {
-  border-radius: 0;
+  /* border-radius: 0; */
   border: none;
 }
 
@@ -21502,9 +21502,9 @@ html.ie.gecko body.modal-open {
   letter-spacing: 0.02em;
 }
 
-.modal .modal-footer {
+/* .modal .modal-footer {
   border: none;
-}
+} */
 
 /* tt-modal-addtocart */
 

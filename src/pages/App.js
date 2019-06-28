@@ -7,6 +7,7 @@ import { CategoryComponent } from '../components/Category';
 import { TabContentComponent, InterestContentComponent } from '../components/ContentProducts';
 import BannerComponent from '../components/Banner';
 import FooterComponent from '../components/Footer';
+import {ModalComponent} from '../components/PopUp';
 import '../styles/styles.css';
 
 export default class App extends Component {
@@ -25,6 +26,7 @@ export default class App extends Component {
           <BannerComponent />
         </Container>
         <FooterComponent />
+        <ModalComponent/>
       </div>
     );
   }
