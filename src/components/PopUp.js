@@ -1,17 +1,60 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Modal, ModalBody, ModalFooter, Label, Input, FormGroup, Form } from 'reactstrap';
-
+import { Modal, ModalHeader, ModalBody, Input } from 'reactstrap';
+import { GetCitys } from '../managers/api/ApiManager';
 
 
 class Location extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            citys: [],
+            defaultCity: "Ciudad"
+        }
+    }
+
+    // loading data for citys
+    async componentDidMount() {
+        let citys = await GetCitys();
+        this.setState({ citys })
+    }
+
+
+    SelectedCity = e => {
+        console.log(e.target.value);
+        localStorage.setItem("city", e.target.value);
+
+    }
+
     render() {
         return (
             <Fragment>
-                test
+                <h5>UBICACIÓN</h5>
+                <p>¿Desde que ciudad quieres comprar?</p>
+                <Input type="select" name="select" className="mt-2" onChange={this.SelectedCity.bind(this)} defaultValue={this.state.defaultCity}>
+                    <option value="">{this.state.defaultCity}</option>
+                    {this.state.citys.map((element, i) => <option key={i} value={element.Ciudad}>{element.Descripcion}</option>)}
+                </Input>
             </Fragment>
         );
     }
 }
+
+
+class PaymentMethos extends Component {
+
+    render() {
+        return (
+            <Fragment>
+                {/* {this.props.credit_cart  && 
+
+                
+                } */}
+            </Fragment>
+        )
+    }
+}
+
 
 
 class ModalComponent extends Component {
@@ -19,43 +62,32 @@ class ModalComponent extends Component {
         super();
         this.state = {
             open: false,
-            focusAfterClose: true
+            buttonCloset: false
         };
         this.toggle = this.toggle.bind(this);
-        this.handleSelectChange = this.handleSelectChange.bind(this);
     }
 
-    toggle() {
-        this.setState(({ open }) => ({ open: !open }));
+
+    componentDidMount() {
+        // validate if selected one city and not empty
+        this.toggle(!localStorage.getItem("city"))
     }
 
-    handleSelectChange({ target: { value } }) {
-        this.setState({ focusAfterClose: JSON.parse(value) });
+    toggle(open) {
+        this.setState({ open });
     }
 
 
     render() {
         return (
-            <div>
-                <Form inline onSubmit={(e) => e.preventDefault()}>
-                    <FormGroup>
-                        <Label for="focusAfterClose">Focus After Close</Label>
-                        <Input className="mx-2" type="select" id="focusAfterClose" onChange={this.handleSelectChange}>
-                            <option value="true">Yes</option>
-                            <option value="false">No</option>
-                        </Input>
-                    </FormGroup>
-                    <Button color="danger" onClick={this.toggle}>Open</Button>
-                </Form>
-                <Modal returnFocusAfterClose={this.state.focusAfterClose} isOpen={this.state.open}>
+            <Fragment>
+                <Modal returnFocusAfterClose isOpen={this.state.open}>
+                    {this.state.buttonCloset && <ModalHeader toggle={this.toggle}></ModalHeader>}
                     <ModalBody>
-                        Observe the "Open" button. It will be focused after close when "returnFocusAfterClose" is true and will not be focused if "returnFocusAfterClose" is false.
+                        <Location />
                     </ModalBody>
-                    <ModalFooter>
-                        <Button color="primary" onClick={this.toggle}>Close</Button>
-                    </ModalFooter>
                 </Modal>
-            </div>
+            </Fragment>
         )
     }
 }
