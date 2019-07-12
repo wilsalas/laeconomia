@@ -1,5 +1,6 @@
 p {
     margin: 0px;
+    font-weight: 500
 }
 
 /* Color title  */
@@ -201,11 +202,6 @@ a:not([href]):not([tabindex]) {
 .tt-title-small-drogueria:hover {
     color: white !important;
 }
-
-.tt-title-large {
-    color: #657272 !important;
-}
-
 .tt-title-large {
     color: #1b42cb !important;
 }
@@ -682,7 +678,6 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     color: #657272 !important;
 }
 
-
 @media (max-width:899px) {
     .sumary_table td, .sumary_table th {
         padding: 0.70rem !important;
@@ -693,4 +688,49 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     .item1-sumary {
         height: 95% !important;
     }
+}
+
+/* input for payment methods  */
+
+.payment-input{
+    border: none !important;
+    background-color: #f4f4f4 !important;
+    font-weight: 300 !important;
+    color: #a5a5a5 !important;
+    border-radius: 11px !important;
+}
+
+.payment-input::placeholder, .payment-input:focus {
+    color: #a5a5a5 !important;
+}
+
+.payment-form>button {
+    border-radius: 1rem !important;
+}
+
+.select-style, .select-style select, .select-style select:focus{
+    background: transparent url("/assets/icon-select.png") no-repeat 90% 50%;
+}
+
+.select-style {
+    border: 1px solid #ccc;
+    border-radius: 11px;
+    overflow: hidden;
+    background-size: 15px
+}
+
+.select-style select {
+    padding: 8px;
+    width: 120%;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    color: #b2c3c3;
+}
+
+.select-style select:focus {
+    outline: none;
+    color: #b2c3c3;
 }
