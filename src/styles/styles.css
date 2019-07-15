@@ -202,6 +202,7 @@ a:not([href]):not([tabindex]) {
 .tt-title-small-drogueria:hover {
     color: white !important;
 }
+
 .tt-title-large {
     color: #1b42cb !important;
 }
@@ -688,11 +689,14 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     .item1-sumary {
         height: 95% !important;
     }
+    .list-detail-product{
+        padding: 0px 
+    }
 }
 
 /* input for payment methods  */
 
-.payment-input{
+.payment-input {
     border: none !important;
     background-color: #f4f4f4 !important;
     font-weight: 300 !important;
@@ -708,7 +712,7 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     border-radius: 1rem !important;
 }
 
-.select-style, .select-style select, .select-style select:focus{
+.select-style, .select-style select, .select-style select:focus {
     background: transparent url("/assets/icon-select.png") no-repeat 90% 50%;
 }
 
@@ -732,5 +736,42 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
 
 .select-style select:focus {
     outline: none;
+    color: #b2c3c3;
+}
+
+.content-detail-product {
+    display: flex;
+    flex-direction: row;
+}
+
+.div-percent-product {
+    margin-left: 2%;
+    width: 50px;
+    height: 20px;
+    border-radius: 10px;
+    color: white;
+    background-color: #ff2f6c;
+    text-align: center;
+    font-weight: 500
+}
+
+.text-price-blue {
+    font-weight: 500;
+    font-size: 27px;
+    color: #1b42cb;
+}
+
+.text-subray {
+    margin-left: 2%;
+    font-weight: 500;
+    font-size: 20px;
+    color: #b2c3c3;
+    text-decoration: line-through;
+}
+
+.text-gray {
+    margin-left: 2%;
+    font-weight: 500;
+    font-size: 19px;
     color: #b2c3c3;
 }

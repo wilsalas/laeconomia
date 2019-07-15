@@ -9,6 +9,7 @@ import Dictionary from './pages/Dictionary';
 import Subsidiary from './pages/Subsidiary';
 import CartToBuy from './pages/CartToBuy';
 import ProcessToBuy from './pages/ProcessToBuy';
+import ProductDetail from './pages/ProductDetail';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
@@ -48,6 +49,7 @@ ReactDOM.render(
                 <RouteProvider path='/account/:page' component={Account} />
                 <RouteProvider path='/buys' component={CartToBuy} />
                 <RouteProvider path='/processbuy' component={ProcessToBuy} />
+                <RouteProvider path='/detail' component={ProductDetail} />
                 <Route render={() => <Redirect to="/" />} />
             </Switch >
         </div>

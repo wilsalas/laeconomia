@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Col, Container, Modal, ModalHeader, ModalBody, Input, Form, FormGroup, Label, Row } from 'reactstrap';
+import {  Col, Container, Modal, ModalHeader, ModalBody, Input, Form, FormGroup, Row } from 'reactstrap';
 import { GetCitys } from '../managers/api/ApiManager';
 
 
@@ -179,7 +179,7 @@ class ModalComponent extends Component {
     componentDidMount() {
         // validate if selected one city and not empty
         // this.toggle(!localStorage.getItem("city"));
-        this.toggle(true)
+        this.toggle(false)
     }
 
     toggle(open) {
