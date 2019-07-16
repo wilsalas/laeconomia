@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React, { Component, Fragment } from 'react';
 import { Container, Col, TabContent, TabPane, Nav, NavItem, NavLink, Row } from 'reactstrap';
-import { VerticalProductComponent, HorizontalProductComponent } from './Product';
+import { VerticalProductComponent, HorizontalProductComponent, HorizontalBrandsComponent } from './Product';
 
 class TabContentComponent extends Component {
 
@@ -78,40 +78,37 @@ class InterestContentComponent extends Component {
                 <Container>
                     <Row className="mt-4">
                         <Col md={10}>
-                            <h5 style={{ fontWeight: 600, color: '#657272' }}>TE PODRÍA INTERESAR</h5>
+                            <h5 className="h5-title">TE PODRÍA INTERESAR</h5>
                         </Col>
-                        <Col md={2} style={{
-                            justifyContent: 'flex-end',
-                            display: 'inline-flex'
-                        }}>
-                            <button
-                                className="mr-2"
-                                style={{
-                                    width: '37.3px',
-                                    height: '35px',
-                                    borderRadius: '10.7px',
-                                    backgroundColor: '#f2f2f2',
-                                    color: '#657272',
-                                    border: 'none',
-                                    fontSize: 23,
-                                    fontWeight: 700
-                                }}
-                            >{'<'}</button>
-                            <button
-                                style={{
-                                    width: '37.3px',
-                                    height: '35px',
-                                    borderRadius: '10.7px',
-                                    backgroundColor: '#657272',
-                                    color: '#f2f2f2',
-                                    border: 'none',
-                                    fontSize: 23,
-                                    fontWeight: 700
-                                }}
-                            >{'>'}</button>
+                        <Col md={2} className="align-inline-flex-content-column">
+                            <button className="mr-2 btn-left-product btn-products-arrow">{'<'}</button>
+                            <button className="btn-rigth-product  btn-products-arrow">{'>'}</button>
                         </Col>
                         <Col >
                             <HorizontalProductComponent listCount={12} col={3} />
+                        </Col>
+                    </Row>
+                </Container>
+            </Fragment>
+        );
+    }
+}
+
+class SponsorShipsComponent extends Component {
+    render() {
+        return (
+            <Fragment>
+                <Container>
+                    <Row className="mt-4">
+                        <Col md={10}>
+                            <h5 className="h5-title">MARCAS PATROCINADORAS</h5>
+                        </Col>
+                        <Col md={2} className="align-inline-flex-content-column">
+                            <button className="mr-2 btn-left-product btn-products-arrow">{'<'}</button>
+                            <button className="btn-rigth-product  btn-products-arrow">{'>'}</button>
+                        </Col>
+                        <Col >
+                            <HorizontalBrandsComponent listCount={12} col={3} />
                         </Col>
                     </Row>
                 </Container>
@@ -124,6 +121,7 @@ class InterestContentComponent extends Component {
 
 export {
     TabContentComponent,
-    InterestContentComponent
+    InterestContentComponent,
+    SponsorShipsComponent
 }
 

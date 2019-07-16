@@ -3241,6 +3241,9 @@ jQuery(function ($) {
     });
   }
 
+  // open collapsible items to reload page
+  $(".collapsible").trigger("click");
+
 });
 
 

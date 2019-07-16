@@ -152,7 +152,7 @@ class BuySuccess extends Component {
                     <h5>{this.state.title}</h5>
                     <Form className="payment-form">
                         <FormGroup>
-                            <img src="/assets/icon-success.png" width="20%" />
+                            <img src="/assets/icon-success.png" width="20%" alt="img icon suc"/>
                         </FormGroup>
                         <FormGroup>
                             <p>{this.state.message}</p>

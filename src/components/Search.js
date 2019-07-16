@@ -10,7 +10,9 @@ const SearchHeaderComponent = () => {
         <Container >
             <Row className="mt-4 mb-1" >
                 <Col md={2} xs={12}>
+                <a href="/">
                     <img alt="la economia" src="/assets/logo_economia.png" className="logo-header" />
+                </a>
                 </Col>
                 <Col md={10} xs={12}>
                     <Form>

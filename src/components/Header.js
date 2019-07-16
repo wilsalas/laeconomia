@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { SearchHeaderComponent } from '../components/Search';
+import { Row, Col } from 'reactstrap';
 
 export default class HeaderComponent extends Component {
 
@@ -38,7 +39,7 @@ export default class HeaderComponent extends Component {
                                 <a href="/dictionary" >DICCIONARIO</a>
                             </li>
                             <li>
-                                <a href="/">SUCURSALES</a>
+                                <a href="/subsidiary">SUCURSALES</a>
                             </li>
                             <li>
                                 <a href="http://clubvidasana.co/" target="_blank" rel="noopener noreferrer" className="btn-club-vida-mobile">
@@ -125,7 +126,7 @@ export default class HeaderComponent extends Component {
                                                     </li>
 
                                                     <li className="dropdown tt-megamenu-col-01">
-                                                        <a href="/">SUCURSALES</a>
+                                                        <a href="/subsidiary">SUCURSALES</a>
                                                     </li>
 
                                                     <a href="http://clubvidasana.co/" target="_blank" rel="noopener noreferrer" className="btn-club-vida ">CLUB VIDA SANA</a>
@@ -165,9 +166,9 @@ export default class HeaderComponent extends Component {
                                     {/* tt-search */}
                                     <div className="tt-desctop-parent-search tt-parent-box">
                                         <div className="tt-search tt-dropdown-obj">
-                                            <button className="tt-dropdown-toggle" data-tooltip="Sucursales" data-tposition="bottom">
+                                            <a href="/subsidiary" className="tt-dropdown-toggle" data-tooltip="Sucursales" data-tposition="bottom">
                                                 <i className="icon-f-24" />
-                                            </button>
+                                            </a>
 
                                         </div>
                                     </div>
@@ -206,51 +207,35 @@ export default class HeaderComponent extends Component {
                                             </button>
                                             <div className="tt-dropdown-menu">
                                                 <div className="tt-mobile-add">
-                                                    <h6 className="tt-title">SHOPPING CART</h6>
-                                                    <button className="tt-close">Close</button>
+                                                    <h6 className="tt-title">Carrito de compra</h6>
+                                                    <button className="tt-close">Cerrar</button>
 
                                                 </div>
                                                 <div className="tt-dropdown-inner">
                                                     <div className="tt-cart-layout">
                                                         <div className="tt-cart-content">
-                                                            <div className="tt-cart-list">
-                                                                <div className="tt-item">
-                                                                    <a href="product.html">
-                                                                        <div className="tt-item-img">
+                                                            <div className="tt-cart-list" style={{ height: 250, overflow: 'scroll' }}>
+                                                                {new Array(50).fill().map((value, i) => {
+                                                                    return (
+                                                                        <div className="tt-item" key={i} onClick={()=>  window.location.href= "/detail" }>
+                                                                                <div className="tt-item-img">
 
-                                                                            <img src="/images/loader.svg" data-src="/images/product/product-01.jpg" alt="27" />
+                                                                                    <img src="/images/loader.svg" data-src="https://www.droguerialaeconomia.com/economia/site/img/086541.png" alt="27" />
+                                                                                </div>
+                                                                                <div className="tt-item-descriptions">
+                                                                                    <h2 className="tt-title">Coboral z polvo vainilla x 400 gramos</h2>
+                                                                                    <ul className="tt-add-info">
+                                                                                        <li>Mililitro a $999.999</li>
+                                                                                        <li>CUIDADO DE LA PIEL</li>
+                                                                                    </ul>
+                                                                                    <div className="tt-quantity">1 X</div> <div className="tt-price">$999.990</div>
+                                                                                </div>
+                                                                            <div className="tt-item-close">
+                                                                                <a href="/" className="tt-btn-close" > </a>
+                                                                            </div>
                                                                         </div>
-                                                                        <div className="tt-item-descriptions">
-                                                                            <h2 className="tt-title">Flared Shift Dress</h2>
-                                                                            <ul className="tt-add-info">
-                                                                                <li>Yellow, Material 2, Size 58,</li>
-                                                                                <li>Vendor: Addidas</li>
-                                                                            </ul>
-                                                                            <div className="tt-quantity">1 X</div> <div className="tt-price">$12</div>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div className="tt-item-close">
-                                                                        <a href="/" className="tt-btn-close" > </a>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="tt-item">
-                                                                    <a href="product.html">
-                                                                        <div className="tt-item-img">
-                                                                            <img src="/images/loader.svg" data-src="/images/product/product-02.jpg" alt="28" />
-                                                                        </div>
-                                                                        <div className="tt-item-descriptions">
-                                                                            <h2 className="tt-title">Flared Shift Dress</h2>
-                                                                            <ul className="tt-add-info">
-                                                                                <li>Yellow, Material 2, Size 58,</li>
-                                                                                <li>Vendor: Addidas</li>
-                                                                            </ul>
-                                                                            <div className="tt-quantity">1 X</div> <div className="tt-price">$18</div>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div className="tt-item-close">
-                                                                        <a href="/" className="tt-btn-close" > </a>
-                                                                    </div>
-                                                                </div>
+                                                                    );
+                                                                })}
                                                             </div>
                                                             <div className="tt-cart-total-row">
                                                                 <div className="tt-cart-total-title">SUBTOTAL:</div>
@@ -293,14 +278,21 @@ export default class HeaderComponent extends Component {
                         <div className="container">
 
                             {/* Search component */}
-                            <SearchHeaderComponent />
-                            <div className="tt-header-row ">
-                                <div className="tt-stuck-parent-menu" />
-                                <div className="tt-stuck-parent-multi tt-parent-box" />
-                                <div className="tt-stuck-parent-search tt-parent-box" />
-                                <div className="tt-stuck-parent-account tt-parent-box" />
-                                <div className="tt-stuck-parent-cart tt-parent-box" />
-                            </div>
+                            <Row>
+                                <Col md={10}>
+                                    <SearchHeaderComponent />
+                                </Col>
+                                <Col md={2} className="mb-2">
+                                    <div className="tt-header-row mt-2">
+                                        <div className="tt-stuck-parent-menu" style={{ display: 'none' }} />
+                                        <div className="tt-stuck-parent-multi tt-parent-box" />
+                                        <div className="tt-stuck-parent-search tt-parent-box" />
+                                        <div className="tt-stuck-parent-account tt-parent-box" />
+                                        <div className="tt-stuck-parent-cart tt-parent-box" />
+                                    </div>
+
+                                </Col>
+                            </Row>
                         </div>
                     </div>
 
