@@ -3,8 +3,6 @@ import {
     Container, Col, Row, Card, CardBody,
     CardTitle, Button
 } from 'reactstrap';
-import HeaderComponent from '../components/Header';
-import FooterComponent from '../components/Footer';
 import BannerComponent from '../components/Banner';
 import '../styles/styles.css';
 
@@ -13,8 +11,6 @@ class CartToBuy extends Component {
     render() {
         return (
             <Fragment>
-                <HeaderComponent />
-
                 <Container>
                     <h5 className="mt-4">CARRITO DE COMPRAS</h5>
                     <Row>
@@ -124,16 +120,9 @@ class CartToBuy extends Component {
                                 </CardBody>
                             </Card>
                         </Col>
-
                     </Row>
                 </Container>
-
-
                 <BannerComponent />
-                <FooterComponent />
-
-
-
             </Fragment>
         );
     }

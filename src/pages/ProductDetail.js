@@ -2,8 +2,6 @@ import React, { Component, Fragment } from 'react';
 import {
     Container, Col, Row
 } from 'reactstrap';
-import HeaderComponent from '../components/Header';
-import FooterComponent from '../components/Footer';
 import BannerComponent from '../components/Banner';
 import { InterestContentComponent } from '../components/ContentProducts';
 import '../styles/styles.css';
@@ -13,8 +11,6 @@ class ProductDetail extends Component {
     render() {
         return (
             <Fragment>
-                <HeaderComponent />
-
                 <Container>
                     <Row className="mt-4">
                         <Col md={6}>
@@ -76,8 +72,6 @@ class ProductDetail extends Component {
 
 
                 <BannerComponent />
-                <FooterComponent />
-
 
 
             </Fragment>

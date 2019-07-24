@@ -15,10 +15,10 @@ export default () => {
                                                 ESTÁ EN CONTACTO CON NOSOTROS
                                             </h4>
                                             <div className="tt-collapse-content">
-                                                <form id="newsletterform" className="form-inline form-default" method="post" noValidate="novalidate" action="#">
+                                                <form  className="form-inline form-default" method="post">
                                                     <div className="form-group">
                                                         <input type="text" name="email" className="form-control" placeholder="Ingresa tu correo" />
-                                                        <button type="submit" className="btn btn-contact">
+                                                        <button className="btn btn-contact">
                                                             SUSCRIBIRSE
                                                     </button>
                                                     </div>

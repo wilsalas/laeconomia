@@ -10,6 +10,9 @@ import Subsidiary from './pages/Subsidiary';
 import CartToBuy from './pages/CartToBuy';
 import ProcessToBuy from './pages/ProcessToBuy';
 import ProductDetail from './pages/ProductDetail';
+import Header from './components/Header';
+import Footer from './components/Footer';
+
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
@@ -40,6 +43,7 @@ const RouteProvider = ({ component: Component, ...objectPath }) => (
 ReactDOM.render(
     <Router>
         <div>
+            <Header />
             <Switch>
                 <RouteProvider exact path='/' component={App} />
                 <RouteProvider path='/droguery' component={DrogueryVirtual} />
@@ -52,6 +56,7 @@ ReactDOM.render(
                 <RouteProvider path='/detail' component={ProductDetail} />
                 <Route render={() => <Redirect to="/" />} />
             </Switch >
+            <Footer />
         </div>
     </Router>
     , document.getElementById('root'));

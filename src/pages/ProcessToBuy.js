@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import {
     Container
 } from 'reactstrap';
-import HeaderComponent from '../components/Header';
 import {
     StepLoginComponent,
     StepFacturationComponent,
@@ -10,8 +9,6 @@ import {
     StepSumaryBuyComponent
 } from '../components/Steps';
 import {InterestContentComponent } from '../components/ContentProducts';
-import SliderComponent from '../components/Slider';
-import FooterComponent from '../components/Footer';
 import BannerComponent from '../components/Banner';
 import '../styles/styles.css';
 
@@ -20,8 +17,6 @@ class ProcessToBuy extends Component {
     render() {
         return (
             <Fragment>
-                <HeaderComponent />
-                <SliderComponent banner />
                 <Container fluid>
 
                     <div className="mt-5">
@@ -56,7 +51,6 @@ class ProcessToBuy extends Component {
                 </Container>
 
                 <BannerComponent />
-                <FooterComponent />
             </Fragment>
         );
     }
