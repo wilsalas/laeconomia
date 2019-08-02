@@ -1,9 +1,26 @@
 //action to get the index of the selected menu
-const SelectedMenu = index => ({
-    type: "SELECTED_MENU",
-    index
+const ActionAllCitys = citys => ({
+    type: "LIST_CITYS",
+    citys
 });
 
+
+//action to get the index of the selected menu
+const ActionCategories = categories => ({
+    type: "LIST_CATEGORIES",
+    categories
+});
+
+//action to get the index of the selected menu
+const ActionRetrieveTopOffers = productOffers => ({
+    type: "RETRIEVE_TOP_OFFERS",
+    productOffers
+});
+
+
+
 export {
-    SelectedMenu
+    ActionAllCitys,
+    ActionCategories,
+    ActionRetrieveTopOffers
 }

@@ -3,10 +3,10 @@ import { createStore } from 'redux';
 //create storage of global states in the application
 const reducer = (state, action) => {
     switch (action.type) {
-        case 'SELECTED_MENU':
+        case 'Product':
             return {
                 ...state,
-                index: action.index
+                citys: action.citys
             };
         default:
             return state;
@@ -15,5 +15,7 @@ const reducer = (state, action) => {
 
 // export create store for app react
 export default createStore(reducer, {
-    index: 0
+    citys: [],
+    categories: [],
+    productOffers: []
 });

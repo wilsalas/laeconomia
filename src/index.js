@@ -12,11 +12,8 @@ import ProcessToBuy from './pages/ProcessToBuy';
 import ProductDetail from './pages/ProductDetail';
 import Header from './components/Header';
 import Footer from './components/Footer';
-
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-
-
 
 /*function to authenticate users*/
 const Authenticated = (type, session = localStorage.getItem('fakeAuth')) => {

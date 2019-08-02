@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import {  Col, Container, Modal, ModalHeader, ModalBody, Input, Form, FormGroup, Row } from 'reactstrap';
-import { GetCitys } from '../managers/api/ApiManager';
+import { Col, Container, Modal, ModalHeader, ModalBody, Input, Form, FormGroup, Row } from 'reactstrap';
+import Store from '../managers/store/Store';
+import { API } from '../managers/api/ApiManager';
 
 
 class Location extends Component {
@@ -8,20 +9,18 @@ class Location extends Component {
     constructor() {
         super();
         this.state = {
-            citys: [],
-            defaultCity: "Ciudad"
+            defaultCity: "Selecciona una ciudad",
+            citys: []
         }
     }
 
-    // loading data for citys
     async componentDidMount() {
-        let citys = await GetCitys();
-        this.setState({ citys })
+        let res = await API.GET.RetrieveStores();
+        if (Array.isArray(res.message)) this.setState({ citys: res.message })
     }
 
-
+    // selected one city
     SelectedCity = e => {
-        console.log(e.target.value);
         localStorage.setItem("city", e.target.value);
         this.props.toggle(false);
     }
@@ -31,8 +30,8 @@ class Location extends Component {
             <Fragment>
                 <h5>UBICACIÓN</h5>
                 <p>¿Desde que ciudad quieres comprar?</p>
-                <Input type="select" name="select" className="mt-2" onChange={this.SelectedCity.bind(this)} defaultValue={this.state.defaultCity}>
-                    <option defaultValue="">{this.state.defaultCity}</option>
+                <Input type="select" name="select" className="mt-2" onChange={this.SelectedCity.bind(this)} >
+                    <option defaultValue="">Selecciona una ciudad</option>
                     {this.state.citys.map((element, i) => <option key={i} value={element.Ciudad}>{element.Descripcion}</option>)}
                 </Input>
             </Fragment>
@@ -133,14 +132,14 @@ class PaymentPSE extends Component {
 
 class BuySuccess extends Component {
 
-    constructor(){
+    constructor() {
         super();
         this.state = {
             // title: "¡Tu compra \n ha sido exitosa!",
             // message: "Nuestros domiciliarios estarán \n muy pronto contigo",
             title: "¡Tu registro \n ha sido exitoso!",
             message: "Empieza a disfrutar de las promociones que tenemos para ti",
-            
+
         }
     }
 
@@ -152,7 +151,7 @@ class BuySuccess extends Component {
                     <h5>{this.state.title}</h5>
                     <Form className="payment-form">
                         <FormGroup>
-                            <img src="/assets/icon-success.png" width="20%" alt="img icon suc"/>
+                            <img src="/assets/icon-success.png" width="20%" alt="img icon suc" />
                         </FormGroup>
                         <FormGroup>
                             <p>{this.state.message}</p>
@@ -166,35 +165,23 @@ class BuySuccess extends Component {
 }
 
 
-class ModalComponent extends Component {
+class ModalLocation extends Component {
     constructor() {
         super();
-        this.state = {
-            open: false,
-        };
+        this.state = { open: false, };
         this.toggle = this.toggle.bind(this);
     }
 
-
-    componentDidMount() {
-        // validate if selected one city and not empty
-        // this.toggle(!localStorage.getItem("city"));
-        this.toggle(false)
-    }
-
-    toggle(open) {
-        this.setState({ open });
-    }
-
-
+    // verify is selected city for modal hide
+    componentDidMount() { this.toggle(!localStorage.getItem("city")); }
+    toggle(open) { this.setState({ open }); }
     render() {
         return (
             <Fragment>
                 <Modal returnFocusAfterClose isOpen={this.state.open} >
                     <ModalHeader toggle={() => this.toggle(false)}></ModalHeader>
                     <ModalBody>
-                        {/* <Location toggle={this.toggle} /> */}
-                        <BuySuccess />
+                        <Location toggle={this.toggle} />
                     </ModalBody>
                 </Modal>
             </Fragment>
@@ -202,8 +189,12 @@ class ModalComponent extends Component {
     }
 }
 
+
+
+
+
 export {
-    ModalComponent
+    ModalLocation
 }
 
 

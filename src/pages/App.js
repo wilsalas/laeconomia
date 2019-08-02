@@ -4,7 +4,7 @@ import SliderComponent from '../components/Slider';
 import { CategoryComponent } from '../components/Category';
 import { TabContentComponent, InterestContentComponent, SponsorShipsComponent } from '../components/ContentProducts';
 import BannerComponent from '../components/Banner';
-import { ModalComponent } from '../components/PopUp';
+import { ModalLocation } from '../components/PopUp';
 import '../styles/styles.css';
 
 export default class App extends Component {
@@ -20,7 +20,7 @@ export default class App extends Component {
         <SponsorShipsComponent />
         <InterestContentComponent />
         <BannerComponent />
-        <ModalComponent />
+        <ModalLocation />
       </Fragment>
     );
   }

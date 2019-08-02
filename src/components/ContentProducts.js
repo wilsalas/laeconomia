@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import React, { Component, Fragment } from 'react';
 import { Container, Col, TabContent, TabPane, Nav, NavItem, NavLink, Row } from 'reactstrap';
 import { VerticalProductComponent, HorizontalProductComponent, HorizontalBrandsComponent } from './Product';
+import { API } from '../managers/api/ApiManager';
 
 class TabContentComponent extends Component {
 
@@ -11,9 +12,20 @@ class TabContentComponent extends Component {
         this.toggle = this.toggle.bind(this);
         this.state = {
             activeTab: '1',
-            col: this.props.col ? this.props.col : 3
+            col: this.props.col ? this.props.col : 3,
+            listCountLimit: 10,
+            retrieveOffers: []
         };
     }
+
+
+    async componentDidMount() {
+
+        let res = await API.GET.RetrieveOffers(localStorage.getItem("city"));
+        if (Array.isArray(res.message)) this.setState({ retrieveOffers: res.message })
+    }
+
+
 
     toggle(tab) {
         if (this.state.activeTab !== tab) {
@@ -24,6 +36,11 @@ class TabContentComponent extends Component {
     }
 
     render() {
+
+        console.log("top product", this.state.retrieveTopOffers);
+
+
+
         return (
             <Fragment>
                 <Container>
@@ -50,18 +67,18 @@ class TabContentComponent extends Component {
                         </NavLink>
                             </NavItem>
                         </Nav>
-                        <TabContent activeTab={this.state.activeTab} className="tab-content-scroll">
-                            <TabPane tabId="1">
-                                <VerticalProductComponent listCount={8} col={this.state.col} />
+                        <TabContent activeTab={this.state.activeTab} >
+                            <TabPane tabId="1" >
+                                <VerticalProductComponent  products={this.state.retrieveOffers.slice(0, 10)} col={this.state.col} />
                             </TabPane>
-                            <TabPane tabId="2">
-                                <VerticalProductComponent listCount={8} col={this.state.col} />
+                            <TabPane tabId="2" >
+                                <VerticalProductComponent  products={this.state.retrieveOffers.slice(0, 5)} col={this.state.col} />
                             </TabPane>
-                            <TabPane tabId="3">
-                                <VerticalProductComponent listCount={8} col={this.state.col} />
+                            <TabPane tabId="3" >
+                                <VerticalProductComponent  products={this.state.retrieveOffers.slice(0, 5)} col={this.state.col} />
                             </TabPane>
-                            <TabPane tabId="4">
-                                <VerticalProductComponent listCount={8} col={this.state.col} />
+                            <TabPane tabId="4" >
+                                <VerticalProductComponent  products={this.state.retrieveOffers.slice(0, 5)} col={this.state.col} />
                             </TabPane>
                         </TabContent>
                         <button className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }}>Cargar más</button>
@@ -209,7 +226,7 @@ class SponsorShipsComponent extends Component {
                             <HorizontalBrandsComponent listCount={12} col={3} />
                         </Col>
                     </Row> */}
-                      <Row className="mt-4">
+                    <Row className="mt-4">
                         <Col md={12}>
                             <Row>
                                 <Col md={1} className="column-btns-product-center">

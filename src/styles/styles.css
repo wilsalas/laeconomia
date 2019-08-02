@@ -317,6 +317,7 @@ a:not([href]):not([tabindex]) {
     font-size: 10px;
     color: #b2c3c3;
     margin-top: -6px;
+    text-transform: uppercase;
 }
 
 .tab-content-scroll {
