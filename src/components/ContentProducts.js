@@ -11,20 +11,29 @@ class TabContentComponent extends Component {
 
         this.toggle = this.toggle.bind(this);
         this.state = {
-            activeTab: '1',
+            activeTab: '0',
             col: this.props.col ? this.props.col : 3,
-            listCountLimit: 10,
-            retrieveOffers: []
+            retrieveOffers: [],
+            retrieveTopOffers: []
         };
     }
 
 
     async componentDidMount() {
+        this.retrieveOffers();
+        this.retrieveTopOffers()
 
+    }
+
+    retrieveOffers = async () => {
         let res = await API.GET.RetrieveOffers(localStorage.getItem("city"));
         if (Array.isArray(res.message)) this.setState({ retrieveOffers: res.message })
     }
 
+    retrieveTopOffers = async () => {
+        let res = await API.GET.RetrieveTopOffers(localStorage.getItem("city"));
+        if (Array.isArray(res.message)) this.setState({ retrieveTopOffers: res.message })        
+    }
 
 
     toggle(tab) {
@@ -35,53 +44,54 @@ class TabContentComponent extends Component {
         }
     }
 
+
+    moreProducts = () => { }
+
+
+
     render() {
-
-        console.log("top product", this.state.retrieveTopOffers);
-
-
-
         return (
             <Fragment>
                 <Container>
                     <div style={{ display: 'grid', overflow: 'scroll' }} className="mt-4">
                         <Nav tabs className="justify-content-center">
                             <NavItem>
-                                <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>
+                                <NavLink className={classnames({ active: this.state.activeTab === '0' })} onClick={() => { this.toggle('0'); }}>
                                     OFERTAS DEL DÍA
                         </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className={classnames({ active: this.state.activeTab === '2' })} onClick={() => { this.toggle('2'); }}>
+                                <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>
                                     NUEVOS PRODUCTOS
                         </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className={classnames({ active: this.state.activeTab === '3' })} onClick={() => { this.toggle('3'); }}>
+                                <NavLink className={classnames({ active: this.state.activeTab === '2' })} onClick={() => { this.toggle('2'); }}>
                                     MÁS COMPRADOS
                         </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className={classnames({ active: this.state.activeTab === '4' })} onClick={() => { this.toggle('4'); }}>
+                                <NavLink className={classnames({ active: this.state.activeTab === '3' })} onClick={() => { this.toggle('3'); }}>
                                     MÁS PEDIDOS
                         </NavLink>
                             </NavItem>
                         </Nav>
                         <TabContent activeTab={this.state.activeTab} >
+                            <TabPane tabId="0" >
+                                <VerticalProductComponent products={this.state.retrieveOffers.slice(0, this.state.retrieveOffers.length)} col={this.state.col} />
+                            </TabPane>
                             <TabPane tabId="1" >
-                                <VerticalProductComponent  products={this.state.retrieveOffers.slice(0, 10)} col={this.state.col} />
+                                <VerticalProductComponent products={this.state.retrieveTopOffers.slice(0, this.state.retrieveTopOffers.length)} col={this.state.col} />
                             </TabPane>
                             <TabPane tabId="2" >
-                                <VerticalProductComponent  products={this.state.retrieveOffers.slice(0, 5)} col={this.state.col} />
+                                <VerticalProductComponent products={this.state.retrieveOffers.slice(0, this.state.retrieveOffers.length)} col={this.state.col} />
                             </TabPane>
                             <TabPane tabId="3" >
-                                <VerticalProductComponent  products={this.state.retrieveOffers.slice(0, 5)} col={this.state.col} />
-                            </TabPane>
-                            <TabPane tabId="4" >
-                                <VerticalProductComponent  products={this.state.retrieveOffers.slice(0, 5)} col={this.state.col} />
+                                <VerticalProductComponent products={this.state.retrieveOffers.slice(0, this.state.retrieveOffers.length)} col={this.state.col} />
                             </TabPane>
                         </TabContent>
-                        <button className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }}>Cargar más</button>
+
+                        <button className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }} onClick={() => this.moreProducts()}>Cargar más</button>
                     </div>
                 </Container>
             </Fragment>
@@ -98,12 +108,18 @@ class InterestContentComponent extends Component {
         this.state = {
             translate: 0,
             velocity: 885,
-            page: 2,
-            limitPage: 0
+            page: 24,
+            limitPage: 0,
+            retrieveProducts: []
         }
 
-
     }
+
+    async componentDidMount() {
+        let res = await API.GET.RetrieveOffers(localStorage.getItem("city"));
+        if (Array.isArray(res.message)) this.setState({ retrieveProducts: res.message })
+    }
+
 
     ButtonSlider = direction => {
         let container = document.querySelector(".container-interest"),
@@ -119,7 +135,7 @@ class InterestContentComponent extends Component {
             translate -= this.state.velocity
         }
         this.setState({ translate, limitPage })
-        container.style.transform = "translateX(" + translate + "px" + ")";
+        container.style.transform = `translateX(${translate}px)`;
         console.log("lIMIT PAGE:", this.state.limitPage);
 
     }
@@ -152,7 +168,7 @@ class InterestContentComponent extends Component {
                                             <button className="btn-lg btn-outline-primary rounded-pill" onClick={this.AddMoreProduct.bind(this)}>Ver mas</button>
                                         </Col>
                                     </Row>
-                                    <HorizontalProductComponent listCount={12} col={3} />
+                                    <HorizontalProductComponent products={this.state.retrieveProducts.slice(0, this.state.retrieveProducts.length)} col={3} />
                                 </Col>
                                 <Col md={1} className="column-btns-product-center">
                                     {
@@ -198,7 +214,7 @@ class SponsorShipsComponent extends Component {
             translate -= this.state.velocity
         }
         this.setState({ translate, limitPage })
-        container.style.transform = "translateX(" + translate + "px" + ")";
+        container.style.transform = `translateX(${translate}px)`;
         console.log("lIMIT PAGE:", this.state.limitPage);
 
     }

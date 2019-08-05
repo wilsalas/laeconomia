@@ -1,15 +1,12 @@
 import React from 'react';
 import { Card, CardBody, CardTitle, CardSubtitle, CardImg, CardText, Row, Col } from 'reactstrap';
-
+import { FormatCOPNumber } from '../managers/helpers/HelperManager';
+import { Redirect } from 'react-router-dom';
 
 
 const VerticalProductComponent = props => {
-
-    console.log(props);
-
     return (
         <Row className="justify-content-center" >
-
             {props.products.map((value, i) => {
                 return (
                     <Col key={i} md={props.col} className="mt-3 mb-3 " >
@@ -38,10 +35,10 @@ const HorizontalProductComponent = props => (
     <div className="outer" id="content">
         <div className="container-inner container-interest">
             {/* <Row className="justify-content-center" > */}
-            {new Array(props.listCount).fill().map((value, i) => {
+            {props.products.map((value, i) => {
                 return (
                     <Col key={i} md={props.col} className="mt-3 mb-3 " >
-                        <Product {...props} />
+                        <Product {...value} />
                     </Col>
                 );
             })}
@@ -94,17 +91,15 @@ const HorizontalBrandsComponent = props => (
 );
 
 const Product = props => {
-    console.log(props.codigo);
-    console.log(props.Porcentaje);
-
+    // console.log(props);
 
     return (
-        <Card className="text-center card-tab-products" onClick={() => window.location.href = "/detail"}>
+        <Card className="text-center card-tab-products" onClick={() => window.location.href = `/detail?prod=${btoa(props)}`}>
             <div className="div-percent">{props.Porcentaje}%</div>
-            <CardImg top src={`https://www.droguerialaeconomia.com/economia/site/img/${props.codigo}.png`} alt="Card image cap" />
+            <CardImg top src={`https://www.droguerialaeconomia.com/economia/site/img/${props.codigo}.png`} alt={`Card image cap ${props.codigo}`} />
             <CardBody className="div-cardbody">
-                <CardTitle >$999.990</CardTitle>
-                <CardSubtitle>$999.990</CardSubtitle>
+                <CardTitle >{FormatCOPNumber(props.Ahora)}</CardTitle>
+                <CardSubtitle>{FormatCOPNumber(props.Antes)}</CardSubtitle>
                 <CardText>{props.descripcion}</CardText>
                 <CardText>Mililitro a $999.999</CardText>
                 <CardText>{props.Categoria}</CardText>

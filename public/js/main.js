@@ -3236,7 +3236,7 @@ jQuery(function ($) {
       if (content.style.maxHeight) {
         content.style.maxHeight = null;
       } else {
-        content.style.maxHeight = 200+ "px";
+        content.style.maxHeight = 500+ "px";
         content.style.overflow = "scroll"
       }
     });

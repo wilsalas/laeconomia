@@ -8,13 +8,20 @@ import '../styles/styles.css';
 
 
 class ProductDetail extends Component {
+
+componentDidMount(){
+    console.log("PROPS DEL DETALLE PRODUCTO", this.props);
+    
+}
+
+
     render() {
         return (
             <Fragment>
                 <Container>
                     <Row className="mt-4">
                         <Col md={6}>
-                            <img src="images/loader.svg" data-src="https://www.droguerialaeconomia.com/economia/site/img/042681.png" alt="item1" width="100%" />
+                            <img src="images/loader.svg" src="https://www.droguerialaeconomia.com/economia/site/img/042681.png" alt="item1" width="100%" />
                         </Col>
                         <Col md={6}>
                             <ul className="list-detail-product">

@@ -86,8 +86,8 @@ export const API = {
             return await fetchAsync(`${URL.HOST}/economia/api/Categorias/${location}/`, HTTP_REQUEST_METHOD.GET)
         },
         
-        async RetrieveTopOffers (location) {
-            return await fetchAsync(`${URL.HOST}/economia/api/top/${location}/`, HTTP_REQUEST_METHOD.GET)
+        async RetrieveTopOffers (location, itemsPerPage = 12) {
+            return await fetchAsync(`${URL.HOST}/economia/api/top/${location}/${itemsPerPage}`, HTTP_REQUEST_METHOD.GET)
         },
         
         async RetrieveOffers (location) {

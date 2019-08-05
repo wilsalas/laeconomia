@@ -3,7 +3,7 @@ import {
     Container, Col, Row
 } from 'reactstrap';
 import { TabContentComponent } from './ContentProducts';
-
+import { API } from '../managers/api/ApiManager';
 
 class OrderCategoryComponent extends Component {
     render() {
@@ -29,13 +29,13 @@ class ListCategoryComponent extends Component {
         return (
             <Fragment>
                 <div className="mt-3">
-                    {new Array(20).fill().map((value, i) => {
+                    {this.props.retrieveCategories.map((value, i) => {
                         return (
                             <div key={i} className="panel-group " id={"accordion" + i}>
                                 <div className="panel panel-default">
                                     <div className="panel-heading ">
                                         <h4 className="panel-title ">
-                                            <a data-toggle="collapse" data-parent={"#accordion" + i} href={"#collapse" + i} > Alimento {i}</a>
+                                            <a data-toggle="collapse" data-parent={"#accordion" + i} href={"#collapse" + i} > {value}</a>
                                         </h4>
                                     </div>
                                     <div id={"collapse" + i} className="panel-collapse collapse in">
@@ -145,7 +145,30 @@ class CategoryComponent extends Component {
 
 
 class GroupCategoryComponent extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            retrieveCategories: []
+        }
+    }
+
+    async componentDidMount() {
+        let res = await API.GET.RetrieveCategories(localStorage.getItem("city"));
+        if (Array.isArray(res.message)){
+            let listCategories = [];
+            for (const categories of res.message) {
+                listCategories.push(categories.Descripcion)
+            }
+
+            this.setState({ retrieveCategories: listCategories.filter((v,i) => listCategories.indexOf(v) === i) })
+
+        } 
+    }
+
     render() {
+        console.log("CATEGORIAS: ", JSON.stringify( this.state.retrieveCategories ));
+        
         return (
             <Container>
                 <Row>
@@ -160,7 +183,7 @@ class GroupCategoryComponent extends Component {
                             <Col md={12}>
                                 <button className="collapsible">CATEGORÍAS</button>
                                 <div className="content_active_collapsible">
-                                    <ListCategoryComponent />
+                                    <ListCategoryComponent retrieveCategories={this.state.retrieveCategories}/>
                                 </div>
                             </Col>
                         </Row>
