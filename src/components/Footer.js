@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 export default () => {
     return (
-        <Fragment>
+        <>
             <footer>
                 <div className="tt-footer-default tt-color-scheme-02">
                     <div className="container">
@@ -15,7 +15,7 @@ export default () => {
                                                 ESTÁ EN CONTACTO CON NOSOTROS
                                             </h4>
                                             <div className="tt-collapse-content">
-                                                <form  className="form-inline form-default" method="post">
+                                                <form className="form-inline form-default" method="post">
                                                     <div className="form-group">
                                                         <input type="text" name="email" className="form-control" placeholder="Ingresa tu correo" />
                                                         <button className="btn btn-contact">
@@ -128,6 +128,6 @@ export default () => {
             </footer>
             {/* link top back  */}
             <a href="/" className="tt-back-to-top">Volver arriba</a>
-        </Fragment>
+        </>
     )
 }

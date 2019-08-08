@@ -1,197 +1,193 @@
-import React, { Component, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Container, Modal, ModalHeader, ModalBody, Input, Form, FormGroup, Row } from 'reactstrap';
-import Store from '../managers/store/Store';
 import { API } from '../managers/api/ApiManager';
 
 
-class Location extends Component {
+const Location = props => {
+    const [citys, setCitys] = useState([]);
 
-    constructor() {
-        super();
-        this.state = {
-            defaultCity: "Selecciona una ciudad",
-            citys: []
-        }
-    }
+    // initialize citys getdata
+    useEffect(() => {
+        RetrieveStores();
+    }, [])
 
-    async componentDidMount() {
+    // get all citys
+    const RetrieveStores = async () => {
         let res = await API.GET.RetrieveStores();
-        if (Array.isArray(res.message)) this.setState({ citys: res.message })
+        if (Array.isArray(res.message)) setCitys(res.message)
     }
 
     // selected one city
-    SelectedCity = e => {
+    const SelectedCity = e => {
         localStorage.setItem("city", e.target.value);
-        this.props.toggle(false);
+        props.toggle(false);
     }
 
-    render() {
-        return (
-            <Fragment>
-                <h5>UBICACIÓN</h5>
-                <p>¿Desde que ciudad quieres comprar?</p>
-                <Input type="select" name="select" className="mt-2" onChange={this.SelectedCity.bind(this)} >
-                    <option defaultValue="">Selecciona una ciudad</option>
-                    {this.state.citys.map((element, i) => <option key={i} value={element.Ciudad}>{element.Descripcion}</option>)}
-                </Input>
-            </Fragment>
-        );
-    }
+    return (
+        <>
+            <h5>UBICACIÓN</h5>
+            <p>¿Desde que ciudad quieres comprar?</p>
+            <Input type="select" name="select" className="mt-2" onChange={e => SelectedCity(e)} >
+                <option defaultValue="">Selecciona una ciudad</option>
+                {citys.map((element, i) => <option key={i} value={element.Ciudad}>{element.Descripcion}</option>)}
+            </Input>
+        </>
+    );
 }
 
 
-class PaymentCreditCart extends Component {
-    render() {
-        return (
-            <Fragment>
-                <Container>
-                    <h6>INGRESA TUS DATOS</h6>
-                    <Form className="payment-form">
-                        <FormGroup>
-                            <Input className="payment-input" type="number" name="tc_number" placeholder="Número de tarjeta" />
-                        </FormGroup>
-                        <FormGroup>
-                            <Input className="payment-input" type="text" name="tc_name" placeholder="Nombre como aparece en la tarjeta" />
-                        </FormGroup>
-                        <Row form>
-                            <Col md={4}>
-                                <FormGroup>
-                                    <Input className="payment-input" type="text" name="tc_date" placeholder="MM/AA" />
-                                </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                                <FormGroup>
-                                    <Input className="payment-input" type="text" name="tc_cvv" placeholder="CVV" />
-                                </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                                <FormGroup>
-                                    <div class="select-style">
-                                        <Input type="select" name="select_cuotes">
-                                            <option value="1">Cuotas</option>
-                                            <option value="1">Cuotas2</option>
-                                            <option value="1">Cuotas3</option>
-                                        </Input>
-                                    </div>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <button className="btn-lg btn-block btn-outline-primary ">Pagar $999.999</button>
-                    </Form>
-                </Container>
-            </Fragment>
-        )
-    }
+const PaymentCreditCart = () => {
+    return (
+        <>
+            <Container>
+                <h6>INGRESA TUS DATOS</h6>
+                <Form className="payment-form">
+                    <FormGroup>
+                        <Input className="payment-input" type="number" name="tc_number" placeholder="Número de tarjeta" />
+                    </FormGroup>
+                    <FormGroup>
+                        <Input className="payment-input" type="text" name="tc_name" placeholder="Nombre como aparece en la tarjeta" />
+                    </FormGroup>
+                    <Row form>
+                        <Col md={4}>
+                            <FormGroup>
+                                <Input className="payment-input" type="text" name="tc_date" placeholder="MM/AA" />
+                            </FormGroup>
+                        </Col>
+                        <Col md={4}>
+                            <FormGroup>
+                                <Input className="payment-input" type="text" name="tc_cvv" placeholder="CVV" />
+                            </FormGroup>
+                        </Col>
+                        <Col md={4}>
+                            <FormGroup>
+                                <div class="select-style">
+                                    <Input type="select" name="select_cuotes">
+                                        <option value="1">Cuotas</option>
+                                        <option value="1">Cuotas2</option>
+                                        <option value="1">Cuotas3</option>
+                                    </Input>
+                                </div>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <button className="btn-lg btn-block btn-outline-primary ">Pagar $999.999</button>
+                </Form>
+            </Container>
+        </>
+    );
 }
 
 
 
-class PaymentCobru extends Component {
-    render() {
-        return (
-            <Fragment>
-                <Container>
-                    <h6>INGRESA TUS DATOS</h6>
-                    <Form className="payment-form">
-                        <FormGroup>
-                            <Input className="payment-input" style={{ padding: 7 }} type="tel" name="cobru_number" placeholder="Ingresa tu número de celular" />
-                        </FormGroup>
-                        <button className="btn-lg btn-block btn-outline-primary ">Pagar con la App</button>
-                    </Form>
-                </Container>
-            </Fragment>
-        )
-    }
+const PaymentCobru = () => {
+    return (
+        <>
+            <Container>
+                <h6>INGRESA TUS DATOS</h6>
+                <Form className="payment-form">
+                    <FormGroup>
+                        <Input className="payment-input" style={{ padding: 7 }} type="tel" name="cobru_number" placeholder="Ingresa tu número de celular" />
+                    </FormGroup>
+                    <button className="btn-lg btn-block btn-outline-primary ">Pagar con la App</button>
+                </Form>
+            </Container>
+        </>
+    );
 }
 
 
-class PaymentPSE extends Component {
-    render() {
-        return (
-            <Fragment>
-                <Container>
-                    <h6>INGRESA TUS DATOS</h6>
-                    <Form className="payment-form">
-                        <FormGroup>
-                            <div class="select-style">
-                                <Input type="select" name="select_cuotes" >
-                                    <option value="">Escoge tu banco</option>
-                                    <option value="1">Cuotas2</option>
-                                    <option value="1">Cuotas3</option>
-                                </Input>
-                            </div>
-                        </FormGroup>
-                        <button className="btn-lg btn-block btn-outline-primary ">Continuar en PSE</button>
-                    </Form>
-                </Container>
-            </Fragment>
-        )
-    }
+const PaymentPSE = () => {
+    return (
+        <>
+            <Container>
+                <h6>INGRESA TUS DATOS</h6>
+                <Form className="payment-form">
+                    <FormGroup>
+                        <div class="select-style">
+                            <Input type="select" name="select_cuotes" >
+                                <option value="">Escoge tu banco</option>
+                                <option value="1">Cuotas2</option>
+                                <option value="1">Cuotas3</option>
+                            </Input>
+                        </div>
+                    </FormGroup>
+                    <button className="btn-lg btn-block btn-outline-primary ">Continuar en PSE</button>
+                </Form>
+            </Container>
+        </>
+    );
 }
 
 
-class BuySuccess extends Component {
+const BuySuccess = () => {
 
-    constructor() {
-        super();
-        this.state = {
-            // title: "¡Tu compra \n ha sido exitosa!",
-            // message: "Nuestros domiciliarios estarán \n muy pronto contigo",
-            title: "¡Tu registro \n ha sido exitoso!",
-            message: "Empieza a disfrutar de las promociones que tenemos para ti",
+    const [title] = useState("¡Tu compra \n ha sido exitosa!");
+    const [message] = useState("Nuestros domiciliarios estarán \n muy pronto contigo");
 
-        }
-    }
-
-
-    render() {
-        return (
-            <Fragment>
-                <Container>
-                    <h5>{this.state.title}</h5>
-                    <Form className="payment-form">
-                        <FormGroup>
-                            <img src="/assets/icon-success.png" width="20%" alt="img icon suc" />
-                        </FormGroup>
-                        <FormGroup>
-                            <p>{this.state.message}</p>
-                        </FormGroup>
-                        <button className="btn-lg btn-block btn-outline-primary ">Entendido</button>
-                    </Form>
-                </Container>
-            </Fragment>
-        )
-    }
+    return (
+        <>
+            <Container>
+                <h5>{title}</h5>
+                <Form className="payment-form">
+                    <FormGroup>
+                        <img src="/assets/icon-success.png" width="20%" alt="img icon suc" />
+                    </FormGroup>
+                    <FormGroup>
+                        <p>{message}</p>
+                    </FormGroup>
+                    <button className="btn-lg btn-block btn-outline-primary ">Entendido</button>
+                </Form>
+            </Container>
+        </>
+    );
 }
 
 
-class ModalLocation extends Component {
-    constructor() {
-        super();
-        this.state = { open: false, };
-        this.toggle = this.toggle.bind(this);
-    }
+const RegisterSuccess = () => {
 
-    // verify is selected city for modal hide
-    componentDidMount() { this.toggle(!localStorage.getItem("city")); }
-    toggle(open) { this.setState({ open }); }
-    render() {
-        return (
-            <Fragment>
-                <Modal returnFocusAfterClose isOpen={this.state.open} >
-                    <ModalHeader toggle={() => this.toggle(false)}></ModalHeader>
-                    <ModalBody>
-                        <Location toggle={this.toggle} />
-                    </ModalBody>
-                </Modal>
-            </Fragment>
-        )
-    }
+    const [title] = useState("¡Tu registro \n ha sido exitoso!");
+    const [message] = useState("Empieza a disfrutar de las promociones que tenemos para ti");
+
+    return (
+        <>
+            <Container>
+                <h5>{title}</h5>
+                <Form className="payment-form">
+                    <FormGroup>
+                        <img src="/assets/icon-success.png" width="20%" alt="img icon suc" />
+                    </FormGroup>
+                    <FormGroup>
+                        <p>{message}</p>
+                    </FormGroup>
+                    <button className="btn-lg btn-block btn-outline-primary ">Entendido</button>
+                </Form>
+            </Container>
+        </>
+    );
 }
 
 
+const ModalLocation = () => {
 
+    const [open, setOpen] = useState(false);
+    const toggle = open => setOpen(open)
 
+    useEffect(() => {
+        toggle(!localStorage.getItem("city"));
+    }, [])
+
+    return (
+        <>
+            <Modal returnFocusAfterClose isOpen={open} >
+                <ModalHeader toggle={() => toggle(false)}></ModalHeader>
+                <ModalBody>
+                    <Location toggle={toggle} />
+                </ModalBody>
+            </Modal>
+        </>
+    );
+}
 
 export {
     ModalLocation

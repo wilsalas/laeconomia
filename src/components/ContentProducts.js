@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { Component, Fragment } from 'react';
+import React, { Component, } from 'react';
 import { Container, Col, TabContent, TabPane, Nav, NavItem, NavLink, Row } from 'reactstrap';
 import { VerticalProductComponent, HorizontalProductComponent, HorizontalBrandsComponent } from './Product';
 import { API } from '../managers/api/ApiManager';
@@ -32,7 +32,7 @@ class TabContentComponent extends Component {
 
     retrieveTopOffers = async () => {
         let res = await API.GET.RetrieveTopOffers(localStorage.getItem("city"));
-        if (Array.isArray(res.message)) this.setState({ retrieveTopOffers: res.message })        
+        if (Array.isArray(res.message)) this.setState({ retrieveTopOffers: res.message })
     }
 
 
@@ -47,11 +47,9 @@ class TabContentComponent extends Component {
 
     moreProducts = () => { }
 
-
-
     render() {
         return (
-            <Fragment>
+            <>
                 <Container>
                     <div style={{ display: 'grid', overflow: 'scroll' }} className="mt-4">
                         <Nav tabs className="justify-content-center">
@@ -94,7 +92,7 @@ class TabContentComponent extends Component {
                         <button className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }} onClick={() => this.moreProducts()}>Cargar más</button>
                     </div>
                 </Container>
-            </Fragment>
+            </>
         );
     }
 }
@@ -149,7 +147,7 @@ class InterestContentComponent extends Component {
 
     render() {
         return (
-            <Fragment>
+            <>
                 <Container fluid>
                     <Row className="mt-4">
                         <Col md={12}>
@@ -180,7 +178,7 @@ class InterestContentComponent extends Component {
                         </Col>
                     </Row>
                 </Container>
-            </Fragment>
+            </>
         );
     }
 }
@@ -228,7 +226,7 @@ class SponsorShipsComponent extends Component {
 
     render() {
         return (
-            <Fragment>
+            <>
                 <Container fluid>
                     {/* <Row className="mt-4">
                         <Col md={10}>
@@ -271,7 +269,7 @@ class SponsorShipsComponent extends Component {
                         </Col>
                     </Row>
                 </Container>
-            </Fragment>
+            </>
         );
     }
 }

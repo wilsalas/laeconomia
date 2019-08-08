@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import '../src/styles/styles.css';
 import App from './pages/App';
 import Account from './pages/Account';
 import DrogueryVirtual from './pages/DrogueryVirtual';
@@ -35,11 +36,10 @@ const RouteProvider = ({ component: Component, ...objectPath }) => (
     <Route  {...objectPath} render={props => <Component {...props} fakeAuth={Authenticated} logout={Logout} />} />
 );
 
-
 // Config routes app
 ReactDOM.render(
     <Router>
-        <div>
+        <>
             <Header />
             <Switch>
                 <RouteProvider exact path='/' component={App} />
@@ -54,12 +54,7 @@ ReactDOM.render(
                 <Route render={() => <Redirect to="/" />} />
             </Switch >
             <Footer />
-        </div>
+        </>
     </Router>
     , document.getElementById('root'));
-
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

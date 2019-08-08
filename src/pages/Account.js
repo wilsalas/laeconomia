@@ -1,17 +1,13 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
-import {LoginComponent, RegisterComponent} from '../components/ContentForm';
-import '../styles/styles.css';
+import { LoginComponent, RegisterComponent } from '../components/ContentForm';
 
-export default class Account extends Component {
-
-    render() {
-        return (
-            <Fragment>
-                {this.props.match.params.page === "login" && <LoginComponent />}
-                {this.props.match.params.page === "register" && <RegisterComponent />}
-                {(this.props.match.params.page !== "login" && this.props.match.params.page !== "register") && <Redirect to={'/'} />}
-            </Fragment>
-        );
-    }
+export default function Account(props) {
+    return (
+        <>
+            {props.match.params.page === "login" && <LoginComponent />}
+            {props.match.params.page === "register" && <RegisterComponent />}
+            {(props.match.params.page !== "login" && props.match.params.page !== "register") && <Redirect to={'/'} />}
+        </>
+    );
 }
