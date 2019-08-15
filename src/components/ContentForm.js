@@ -1,9 +1,31 @@
 import React from 'react';
+import { AlertSwal, ValidateInputFormEmpty } from '../managers/helpers/HelperManager';
+import { API } from '../managers/api/ApiManager';
 import {
     Button, Container, Col, Label, Form, FormGroup, Input, Row, CustomInput
 } from 'reactstrap';
 
+
 const LoginComponent = () => {
+
+    // determine login app
+    const funLogin = async e => {
+        e.preventDefault();
+        let { email, password } = e.target;
+
+        if (ValidateInputFormEmpty({ email: email.value, password: password.value })) {
+            AlertSwal("EMPTY_FIELDS_LOGIN")
+        } else {
+            let resLogin = await API.POST.PerformSignIn(email.value, password.value);
+            if (!resLogin.error) {
+                localStorage.setItem("userInfoLEC", btoa(JSON.stringify(resLogin.message.data)));
+                window.location.href = "/"
+            } else {
+                AlertSwal(resLogin.message.message)
+            }
+        }
+    }
+
     return (
         <>
             <Container>
@@ -26,14 +48,14 @@ const LoginComponent = () => {
                                 <h2 className="tt-title">INGRESA</h2>
                                 Ingresa correctamente la información de los siguientes campos:
                                     <div className="form-default form-top">
-                                    <Form>
+                                    <Form onSubmit={e => funLogin(e)}>
                                         <FormGroup>
-                                            <Label for="email">Usuario o e-mail *</Label>
-                                            <Input className="account-input" type="email" name="email" placeholder="Ingresa tu usuario o correo electrónico" />
+                                            <Label for="email">Correo electrónico *</Label>
+                                            <Input className="account-input" type="email" name="email" placeholder="Ingresa tu correo electrónico" required />
                                         </FormGroup>
                                         <FormGroup>
                                             <Label for="password">Contraseña *</Label>
-                                            <Input className="account-input" type="password" name="password" placeholder="Ingresa tu contraseña" />
+                                            <Input className="account-input" type="password" name="password" placeholder="Ingresa tu contraseña" required />
                                         </FormGroup>
                                         <Row>
                                             <Col className="col-auto mr-auto">
@@ -62,6 +84,44 @@ const LoginComponent = () => {
 
 
 const RegisterComponent = () => {
+
+    // determine register app
+    const funRegister = async e => {
+        e.preventDefault();
+        let { email, name, nit, dateOfBirth, phone, cellphone, password, confirmPassword, terms } = e.target;
+
+        let fields = {
+            email: email.value,
+            nombres: name.value,
+            nit: nit.value,
+            fecha_nacimiento: dateOfBirth.value,
+            telefono: phone.value,
+            celular: cellphone.value,
+            password: password.value,
+            confirm_password: confirmPassword.value,
+            acepta_condiciones: terms.checked,
+        }
+
+        if (ValidateInputFormEmpty(fields)) {
+            AlertSwal("EMPTY_FIELDS_REGISTER")
+        } else {
+            let message = "";
+            if (!terms.checked) {
+                message = "TERMS";
+            } else {
+                let resRegister = await API.POST.PerformSignUp(fields);
+                if (!resRegister.error) {
+                    message = "REGISTER_SUCESS";
+                } else {
+                    message = resRegister.message.message
+                }
+                console.log(resRegister);
+            }
+
+            AlertSwal(message);
+        }
+    }
+
     return (
         <>
             <Container>
@@ -71,54 +131,54 @@ const RegisterComponent = () => {
                         <Col md={6} xs={12}>
                             <div className="tt-item tt-item-register">
                                 <div className="form-default">
-                                    <Form>
+                                    <Form onSubmit={e => funRegister(e)}>
                                         <FormGroup>
-                                            <Label for="email">Usuario o e-mail:</Label>
-                                            <Input className="account-input" type="email" name="email" />
+                                            <Label for="email">Correo electrónico:</Label>
+                                            <Input className="account-input" type="email" name="email" required />
                                         </FormGroup>
                                         <Row form>
                                             <Col md={6}>
                                                 <FormGroup>
                                                     <Label for="password">Contraseña:</Label>
-                                                    <Input className="account-input" type="password" name="password" />
+                                                    <Input className="account-input" type="password" name="password" required />
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
                                                 <FormGroup>
-                                                    <Label for="repeatpassword">Repetir contraseña:</Label>
-                                                    <Input className="account-input" type="password" name="repeatpassword" />
+                                                    <Label for="confirmPassword">Repetir contraseña:</Label>
+                                                    <Input className="account-input" type="password" name="confirmPassword" required />
                                                 </FormGroup>
                                             </Col>
                                         </Row>
                                         <FormGroup>
                                             <Label for="name">Nombre completo:</Label>
-                                            <Input className="account-input" type="text" name="name" />
+                                            <Input className="account-input" type="text" name="name" required />
                                         </FormGroup>
                                         <Row form>
                                             <Col md={6}>
                                                 <FormGroup>
                                                     <Label for="nit">Cédula/NIT/Pasaporte:</Label>
-                                                    <Input className="account-input" type="number" name="nit" />
+                                                    <Input className="account-input" type="number" name="nit" required />
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
                                                 <FormGroup>
-                                                    <Label for="fecha_nacimiento">Fecha de nacimiento:</Label>
-                                                    <Input className="account-input" type="date" name="fecha_nacimiento" />
+                                                    <Label for="dateOfBirth">Fecha de nacimiento:</Label>
+                                                    <Input className="account-input" type="date" name="dateOfBirth" required />
                                                 </FormGroup>
                                             </Col>
                                         </Row>
                                         <Row form>
                                             <Col md={6}>
                                                 <FormGroup>
-                                                    <Label for="celular">Celular:</Label>
-                                                    <Input className="account-input" type="number" name="celular" />
+                                                    <Label for="cellphone">Celular:</Label>
+                                                    <Input className="account-input" type="number" name="cellphone" required />
                                                 </FormGroup>
                                             </Col>
                                             <Col md={6}>
                                                 <FormGroup>
-                                                    <Label for="telefono">Teléfono:</Label>
-                                                    <Input className="account-input" type="number" name="telefono" />
+                                                    <Label for="phone">Teléfono:</Label>
+                                                    <Input className="account-input" type="number" name="phone" required />
                                                 </FormGroup>
                                             </Col>
                                         </Row>
@@ -133,7 +193,7 @@ const RegisterComponent = () => {
                                         </FormGroup>
                                         <FormGroup>
                                             <div className="content-conditions">
-                                                <CustomInput type="checkbox" id="exampleCustomInline2" label="Acepto condiciones y restricciones." inline />
+                                                <CustomInput type="checkbox" id="terms" name="terms" label="Acepto condiciones y restricciones." inline />
                                                 <a className="conditions-link" href="/">Ver condiciones</a>
                                             </div>
                                         </FormGroup>

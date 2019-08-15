@@ -13,28 +13,10 @@ import ProcessToBuy from './pages/ProcessToBuy';
 import ProductDetail from './pages/ProductDetail';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { ModalLocation } from './components/PopUp';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
-/*function to authenticate users*/
-const Authenticated = (type, session = localStorage.getItem('fakeAuth')) => {
-    return type === 'public' && session !== null ? <Redirect to={'/home'} /> :
-        type === 'private' && session === null ? <Redirect to={'/'} /> :
-            type === 'compare' ? session : null;
-}
-
-/*function logout app */
-const Logout = () => {
-    if (window.confirm("Are you sure you want to log out?")) {
-        localStorage.removeItem('fakeAuth');
-        window.location.href = "/";
-    }
-}
-
-/*function render components app */
-const RouteProvider = ({ component: Component, ...objectPath }) => (
-    <Route  {...objectPath} render={props => <Component {...props} fakeAuth={Authenticated} logout={Logout} />} />
-);
 
 // Config routes app
 ReactDOM.render(
@@ -42,18 +24,19 @@ ReactDOM.render(
         <>
             <Header />
             <Switch>
-                <RouteProvider exact path='/' component={App} />
-                <RouteProvider path='/droguery' component={DrogueryVirtual} />
-                <RouteProvider path='/babycare' component={BaCare} />
-                <RouteProvider path='/dictionary' component={Dictionary} />
-                <RouteProvider path='/subsidiary' component={Subsidiary} />
-                <RouteProvider path='/account/:page' component={Account} />
-                <RouteProvider path='/buys' component={CartToBuy} />
-                <RouteProvider path='/processbuy' component={ProcessToBuy} />
-                <RouteProvider path='/detail' component={ProductDetail} />
+                <Route exact path='/' component={App} />
+                <Route path='/droguery' component={DrogueryVirtual} />
+                <Route path='/babycare' component={BaCare} />
+                <Route path='/dictionary' component={Dictionary} />
+                <Route path='/subsidiary' component={Subsidiary} />
+                <Route path='/account/:page' component={Account} />
+                <Route path='/buys' component={CartToBuy} />
+                <Route path='/processbuy' component={ProcessToBuy} />
+                <Route path='/detail' component={ProductDetail} />
                 <Route render={() => <Redirect to="/" />} />
             </Switch >
             <Footer />
+            <ModalLocation />
         </>
     </Router>
     , document.getElementById('root'));

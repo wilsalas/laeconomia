@@ -4,7 +4,6 @@ import SliderComponent from '../components/Slider';
 import { CategoryComponent } from '../components/Category';
 import { TabContentComponent, InterestContentComponent, SponsorShipsComponent } from '../components/ContentProducts';
 import BannerComponent from '../components/Banner';
-import { ModalLocation } from '../components/PopUp';
 import { ROUTES } from '../managers/api/ApiManager';
 
 export default function App() {
@@ -17,7 +16,6 @@ export default function App() {
       <SponsorShipsComponent />
       <InterestContentComponent />
       <BannerComponent />
-      <ModalLocation />
     </>
   );
 }

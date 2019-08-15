@@ -792,3 +792,22 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     display: flex;
     transition: transform .4s ease-in;
 }
+
+.swal-button{
+    background: transparent;
+    color: #1b42cb;
+    border: 1px solid #1b42cb;
+    padding-left: 29px;
+    padding-right: 29px;
+    border-radius: 10px;
+}
+
+.swal-button:hover{
+    background-color: #1b42cb !important;
+    color: white !important;
+}
+
+.swal-footer{
+    display: flex;
+    justify-content: center;
+}

@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SearchHeaderComponent } from '../components/Search';
 import { Row, Col } from 'reactstrap';
 
 export default function HeaderComponent() {
+
+    const [getProfile, setProfile] = useState([]);
+
+    useEffect(() => {
+        if (localStorage.getItem("userInfoLEC")) {
+            setProfile(JSON.parse(atob(localStorage.getItem("userInfoLEC"))))
+        }
+    }, [])
+
+
+    /*function logout app */
+    const funLogout = e => {
+        e.preventDefault();
+        localStorage.removeItem('userInfoLEC');
+        window.location.href = "/";
+    }
+
 
     return (
         <>
@@ -185,10 +202,19 @@ export default function HeaderComponent() {
                                             </div>
                                             <div className="tt-dropdown-inner">
                                                 <ul>
-                                                    <li><a href="login.html" ><i className="icon-e-42"></i>Perfil</a></li>
-                                                    <li><a href="/account/login"><i className="icon-g-44" />Iniciar Sesión</a></li>
-                                                    <li><a href="/account/register"><i className="icon-h-22" />Registrarse</a></li>
-                                                    <li><a href="page404.html"><i className="icon-g-17" />Cerrar Sesión</a></li>
+
+                                                    {getProfile.nit &&
+                                                        <li><a href="login.html" ><i className="icon-e-42"></i>Perfil</a></li>
+                                                    }
+                                                    {!getProfile.nit &&
+                                                        <li><a href="/account/login"><i className="icon-g-44" />Iniciar Sesión</a></li>
+                                                    }
+                                                    {!getProfile.nit &&
+                                                        <li><a href="/account/register"><i className="icon-h-22" />Registrarse</a></li>
+                                                    }
+                                                    {getProfile.nit &&
+                                                        <li><a href="/" onClick={e => funLogout(e)}><i className="icon-g-17" />Cerrar Sesión</a></li>
+                                                    }
                                                 </ul>
                                             </div>
                                         </div>

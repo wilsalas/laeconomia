@@ -115,32 +115,16 @@ export const API = {
     POST: {
         async PerformSignIn(email, password) {
             let response = await fetchAsync(`${URL.HOST}/economia/site/users/login/`, HTTP_REQUEST_METHOD.POST, { body: FormUrlEncoded({ email, password }), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
-
             if (!response.message.success) {
                 response.error = true;
             }
-
             return response;
         },
         async PerformSignUp(fields) {
-            let _fields = {
-                email: fields.email,
-                nombres: fields.name,
-                nit: fields.document,
-                fecha_nacimiento: fields.dateOfBirth,
-                telefono: fields.phone,
-                celular: fields.phone,
-                password: fields.password,
-                confirm_password: fields.password,
-                acepta_condiciones: fields.terms,
-            }
-
-            let response = await fetchAsync(`${URL.HOST}/economia/site/users/signup/`, HTTP_REQUEST_METHOD.POST, { body: FormUrlEncoded(_fields), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
-
+            let response = await fetchAsync(`${URL.HOST}/economia/site/users/signup/`, HTTP_REQUEST_METHOD.POST, { body: FormUrlEncoded(fields), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
             if (!response.message.success) {
                 response.error = true;
             }
-
             return response;
         }
     },
