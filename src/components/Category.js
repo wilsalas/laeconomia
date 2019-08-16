@@ -4,12 +4,15 @@ import {
 } from 'reactstrap';
 import { TabContentComponent } from './ContentProducts';
 import { API } from '../managers/api/ApiManager';
+import { funRenderSpinner } from '../managers/helpers/HelperManager';
+import Store from '../managers/store/Store';
+
 
 const OrderCategoryComponent = () => {
     return (
         <>
             <ul className="mt-2 order_category_list">
-                {new Array(20).fill().map((value, i) => {
+                {new Array(3).fill().map((value, i) => {
                     return (
                         <li key={i}>  <a href="/"> <i className="icon-g-80" /> Cuidado de la piel</a> </li>
                     );
@@ -21,24 +24,59 @@ const OrderCategoryComponent = () => {
 }
 
 
-const ListCategoryComponent = props => {
+
+const ListCategoryComponent = () => {
+
+    const [getCategories, setCategories] = useState([]);
+
+    useEffect(() => {
+        RetrieveCategories();
+    }, [])
+
+    const RetrieveCategories = async () => {
+        let res = await API.GET.RetrieveCategories(localStorage.getItem("city"));
+        if (Array.isArray(res.message)) {
+            let listCategories = [], listNewCategories = [];
+            res.message.forEach(categories => {
+                listCategories.push({ id: categories.Categoria, name: categories.Descripcion, subCategories: [] });
+                listNewCategories = Array.from(new Set(listCategories.map(a => a.id))).map(id => listCategories.find(a => a.id === id));
+                listNewCategories.forEach(element => {
+                    if (element.id === categories.Categoria) {
+                        element.subCategories.push({ subName: categories.Sub_descripcion, subID: categories.SubCategoria })
+                    }
+                });
+            })
+            // console.log(listNewCategories);
+            setCategories(listNewCategories);
+        }
+    }
+
+
+    const funProductForSubCategories = async (e, subCategory) => {
+        e.preventDefault();
+        Store.dispatch({ type: "Product" })
+        let res = await API.GET.RetrieveProductsFromSubcategory(localStorage.getItem("city"), subCategory);
+        if (Array.isArray(res.message)) Store.dispatch({ type: "Product", products: res.message })
+    }
+
     return (
         <>
             <div className="mt-3">
-                {props.retrieveCategories.map((value, i) => {
+                {getCategories.length < 1 && funRenderSpinner("sm")}
+                {getCategories.length > 0 && getCategories.map((categories, i) => {
                     return (
                         <div key={i} className="panel-group " id={"accordion" + i}>
                             <div className="panel panel-default">
                                 <div className="panel-heading ">
                                     <h4 className="panel-title ">
-                                        <a data-toggle="collapse" data-parent={"#accordion" + i} href={"#collapse" + i} > {value}</a>
+                                        <a data-toggle="collapse" data-parent={"#accordion" + i} href={"#collapse" + i} > {categories.name}</a>
                                     </h4>
                                 </div>
                                 <div id={"collapse" + i} className="panel-collapse collapse in">
                                     <ul className="list_category">
-                                        {new Array(20).fill().map((value, i) => {
+                                        {categories.subCategories.map((item, i) => {
                                             return (
-                                                <li key={i}>item {i}</li>
+                                                <li key={i}><a href="/" onClick={e => funProductForSubCategories(e, item.subID)}>{item.subName}</a></li>
                                             );
                                         })}
                                     </ul>
@@ -138,23 +176,6 @@ const CategoryComponent = () => {
 
 const GroupCategoryComponent = () => {
 
-    const [retrieveCategories, setRetrieveCategories] = useState([]);
-
-    useEffect(() => {
-        RetrieveCategories();
-    })
-
-    const RetrieveCategories = async () => {
-        let res = await API.GET.RetrieveCategories(localStorage.getItem("city"));
-        if (Array.isArray(res.message)) {
-            let listCategories = [];
-            for (const categories of res.message) {
-                listCategories.push(categories.Descripcion)
-            }
-            setRetrieveCategories(listCategories.filter((v, i) => listCategories.indexOf(v) === i));
-        }
-    }
-
     return (
         <Container>
             <Row>
@@ -169,7 +190,7 @@ const GroupCategoryComponent = () => {
                         <Col md={12}>
                             <button className="collapsible">CATEGORÍAS</button>
                             <div className="content_active_collapsible">
-                                <ListCategoryComponent retrieveCategories={retrieveCategories} />
+                                <ListCategoryComponent />
                             </div>
                         </Col>
                     </Row>
@@ -186,7 +207,5 @@ const GroupCategoryComponent = () => {
 
 export {
     CategoryComponent,
-    OrderCategoryComponent,
-    ListCategoryComponent,
     GroupCategoryComponent
 }

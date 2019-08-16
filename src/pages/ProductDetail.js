@@ -1,37 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import {
     Container, Col, Row
 } from 'reactstrap';
 import BannerComponent from '../components/Banner';
 import { InterestContentComponent } from '../components/ContentProducts';
+import { FormatCOPNumber } from '../managers/helpers/HelperManager';
+
+
 
 export default function ProductDetails() {
 
-    let [product] = useState([{ data: 1 }, { data: 2 }, { data: 3 }]);
+    const [getDetailProduct, setDetailProduct] = useState([]);
 
-    console.log(product);
+    useEffect(() => {
+        if (localStorage.getItem("dp")) {
+            setDetailProduct(JSON.parse(atob(localStorage.getItem("dp"))))
+        }
+    }, [])
+    
+console.log(getDetailProduct);
 
     return (
         <>
             <Container>
                 <Row className="mt-4">
                     <Col md={6}>
-                        <img src="images/loader.svg" data-src="https://www.droguerialaeconomia.com/economia/site/img/042681.png" alt="item1" width="100%" />
+                        <img src={`https://www.droguerialaeconomia.com/economia/site/img/${getDetailProduct.codigo}.png`} alt="item" width="100%" />
                     </Col>
                     <Col md={6}>
                         <ul className="list-detail-product">
                             <li>
-                                <h6>SKU: 001 <br /> 40 unidades disponibles</h6>
+                                <h6>Unidad: {getDetailProduct.IdUnidad} <br /> {getDetailProduct.Cant} unidades disponibles</h6>
                             </li>
                             <li className="margin-top-detail-product">
-                                <h3>Altex lámina antibrillo x 50 unidades</h3>
+                                <h3>{getDetailProduct.descripcion}</h3>
                             </li>
                             <li className="margin-top-detail-product">
 
                                 <div className="content-detail-product">
-                                    <p className="text-price-blue">$999.990</p>
-                                    <div className="div-percent-product">{Math.floor((Math.random() * 100) + 1)}%</div>
-                                    <p className="text-subray">$999.990</p>
+                                    <p className="text-price-blue">{FormatCOPNumber(getDetailProduct.Ahora)}</p>
+                                    <div className="div-percent-product">{getDetailProduct.Porcentaje}%</div>
+                                    <p className="text-subray">{FormatCOPNumber(getDetailProduct.Antes)}</p>
                                     <p className="text-gray">Mililitro a $999.999</p>
                                 </div>
 
@@ -63,8 +72,8 @@ export default function ProductDetails() {
 
                             </li>
                             <li className="mt-2">
-                                <p>Categoría: Cuidado de la piel</p>
-                                <p>Tags: Altex, piel, cuidado, laminas</p>
+                                <p>Categoría: {getDetailProduct.Categoria}</p>
+                                {/* <p>Tags: Altex, piel, cuidado, laminas</p> */}
                             </li>
                         </ul>
                     </Col>

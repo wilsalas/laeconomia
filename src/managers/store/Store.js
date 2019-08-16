@@ -6,7 +6,7 @@ const reducer = (state, action) => {
         case 'Product':
             return {
                 ...state,
-                citys: action.citys
+                products: action.products ? action.products : []
             };
         default:
             return state;
@@ -15,7 +15,5 @@ const reducer = (state, action) => {
 
 // export create store for app react
 export default createStore(reducer, {
-    citys: [],
-    categories: [],
-    productOffers: []
+    products: []
 });

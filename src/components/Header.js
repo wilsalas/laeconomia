@@ -7,8 +7,8 @@ export default function HeaderComponent() {
     const [getProfile, setProfile] = useState([]);
 
     useEffect(() => {
-        if (localStorage.getItem("userInfoLEC")) {
-            setProfile(JSON.parse(atob(localStorage.getItem("userInfoLEC"))))
+        if (localStorage.getItem("usi")) {
+            setProfile(JSON.parse(atob(localStorage.getItem("usi"))))
         }
     }, [])
 
@@ -16,7 +16,7 @@ export default function HeaderComponent() {
     /*function logout app */
     const funLogout = e => {
         e.preventDefault();
-        localStorage.removeItem('userInfoLEC');
+        localStorage.removeItem('usi');
         window.location.href = "/";
     }
 

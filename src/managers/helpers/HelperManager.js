@@ -1,6 +1,7 @@
+import React from 'react';
 import numeral from 'numeral';
 import swal from 'sweetalert';
-
+import {Spinner} from 'reactstrap';
 
 
 
@@ -63,3 +64,6 @@ export function FormatCOPNumber(number, commas = false) {
         return "";
     }
 }
+
+
+export const funRenderSpinner = (type = "md") => <div style={{ display: 'flex', justifyContent: 'center' }}><Spinner size={type} color="primary" /> </div>

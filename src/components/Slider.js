@@ -10,31 +10,6 @@ import '../styles/styles.css';
 import { API } from '../managers/api/ApiManager';
 
 
-const items = [
-  {
-    id: 1,
-    altText: '',
-    caption: '',
-    direction: 'https://www.droguerialaeconomia.com/economia/site/catalogo?s=LYQwzgxg9gLuQ===',
-    path: 'https://www.droguerialaeconomia.com/economia/site/img/BannerWeb-CampanaCopaAmerica.png'
-  },
-  {
-    id: 2,
-    altText: '',
-    caption: '',
-    direction: 'https://www.droguerialaeconomia.com/economia/site/catalogo?s=LYQwzgxg9gLuQ===',
-    path: 'https://www.droguerialaeconomia.com/economia/site/img/BannerWebAtopeelABR2019.png'
-  },
-  {
-    id: 3,
-    altText: '',
-    caption: '',
-    direction: 'https://www.droguerialaeconomia.com/economia/site/catalogo?s=LYQwzgxg9gLuQ===',
-    path: 'https://www.droguerialaeconomia.com/economia/site/img/Banner-web-favoritosTQ30jun.png'
-  }
-];
-
-
 const URL = "https://www.droguerialaeconomia.com/economia/site/img/";
 
 class Slider extends Component {
@@ -54,11 +29,6 @@ class Slider extends Component {
   async componentDidMount() {
     let res = await API.GET.RetrieveAdsBanner(this.props.routes);
     if (Array.isArray(res.message)) this.setState({ retrieveAdsBanner: res.message })
-
-
-
-    console.log("banners", this.state.retrieveAdsBanner);
-
   }
 
   onExiting() {
@@ -71,13 +41,13 @@ class Slider extends Component {
 
   next() {
     if (this.animating) return;
-    const nextIndex = this.state.activeIndex === items.length - 1 ? 0 : this.state.activeIndex + 1;
+    const nextIndex = this.state.activeIndex === this.state.retrieveAdsBanner.length - 1 ? 0 : this.state.activeIndex + 1;
     this.setState({ activeIndex: nextIndex });
   }
 
   previous() {
     if (this.animating) return;
-    const nextIndex = this.state.activeIndex === 0 ? items.length - 1 : this.state.activeIndex - 1;
+    const nextIndex = this.state.activeIndex === 0 ? this.state.retrieveAdsBanner.length - 1 : this.state.activeIndex - 1;
     this.setState({ activeIndex: nextIndex });
   }
 
@@ -129,7 +99,7 @@ class Slider extends Component {
           next={this.next}
           previous={this.previous}
         >
-          <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
+          <CarouselIndicators items={slides} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
           {slides}
           <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
           <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />

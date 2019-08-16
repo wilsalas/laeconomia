@@ -3,6 +3,8 @@ import React, { Component, } from 'react';
 import { Container, Col, TabContent, TabPane, Nav, NavItem, NavLink, Row } from 'reactstrap';
 import { VerticalProductComponent, HorizontalProductComponent, HorizontalBrandsComponent } from './Product';
 import { API } from '../managers/api/ApiManager';
+import Store from '../managers/store/Store';
+
 
 class TabContentComponent extends Component {
 
@@ -19,15 +21,23 @@ class TabContentComponent extends Component {
     }
 
 
-    async componentDidMount() {
+    async componentWillMount() {
         this.retrieveOffers();
         this.retrieveTopOffers()
 
+
+        Store.subscribe(() => {
+           this.setState({ retrieveOffers: Store.getState().products })
+            this.setState({ retrieveTopOffers: Store.getState().products })
+            // console.log(Store.getState());  
+        })
     }
 
     retrieveOffers = async () => {
         let res = await API.GET.RetrieveOffers(localStorage.getItem("city"));
         if (Array.isArray(res.message)) this.setState({ retrieveOffers: res.message })
+        // console.log(res.message);
+
     }
 
     retrieveTopOffers = async () => {

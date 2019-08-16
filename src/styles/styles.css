@@ -217,10 +217,10 @@ a:not([href]):not([tabindex]) {
     box-sizing: content-box;
     -ms-flex: 0 1 auto;
     flex: 0 1 auto;
-    width: 14px !important;
-    height: 13px !important;
-    margin-right: 3px;
-    margin-left: 3px;
+    width: 10px !important;
+    height: 10px !important;
+    margin-right: 7px;
+    margin-left: 7px;
     text-indent: -999px;
     cursor: pointer;
     background-color: #1b42cb;
@@ -475,10 +475,8 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
 }
 
 .list_category {
-    margin-top: -2%;
+    margin-top: -1.5%;
     font-size: 12px;
-    height: 150px;
-    overflow: scroll;
 }
 
 .tt-price {
@@ -810,4 +808,16 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
 .swal-footer{
     display: flex;
     justify-content: center;
+}
+
+.card-img-top {
+    height: 140px !important;
+}
+
+.v-prod{
+    max-width: 21% !important;
+}
+
+.h-prod{
+    max-width: 21% !important;
 }

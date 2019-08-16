@@ -18,7 +18,7 @@ const LoginComponent = () => {
         } else {
             let resLogin = await API.POST.PerformSignIn(email.value, password.value);
             if (!resLogin.error) {
-                localStorage.setItem("userInfoLEC", btoa(JSON.stringify(resLogin.message.data)));
+                localStorage.setItem("usi", btoa(JSON.stringify(resLogin.message.data)));
                 window.location.href = "/"
             } else {
                 AlertSwal(resLogin.message.message)

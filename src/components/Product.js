@@ -1,13 +1,18 @@
 import React from 'react';
 import { Card, CardBody, CardTitle, CardSubtitle, CardImg, CardText, Row, Col } from 'reactstrap';
-import { FormatCOPNumber } from '../managers/helpers/HelperManager';
+import { FormatCOPNumber, funRenderSpinner } from '../managers/helpers/HelperManager';
 
 const VerticalProductComponent = props => {
+
+    if (props.products.length < 1) {
+        return funRenderSpinner();
+    }
+
     return (
         <Row className="justify-content-center" >
             {props.products.map((value, i) => {
                 return (
-                    <Col key={i} md={props.col} className="mt-3 mb-3 " >
+                    <Col key={i} md={props.col} className="mt-2 mb-2 v-prod" >
                         <Product {...value} />
                     </Col>
                 );
@@ -16,13 +21,20 @@ const VerticalProductComponent = props => {
     )
 };
 
+
+
 const HorizontalProductComponent = props => {
+
+    if (props.products.length < 1) {
+        return funRenderSpinner();
+    }
+
     return (
         <div className="outer" id="content">
             <div className="container-inner container-interest">
                 {props.products.map((value, i) => {
                     return (
-                        <Col key={i} md={props.col} className="mt-3 mb-3 " >
+                        <Col key={i} md={props.col} className="mt-2 mb-2 h-prod" >
                             <Product {...value} />
                         </Col>
                     );
@@ -55,21 +67,33 @@ const HorizontalBrandsComponent = props => {
     )
 };
 
+
+
 const Product = props => {
-    return (
-        <Card className="text-center card-tab-products" onClick={() => window.location.href = `/detail?prod=${btoa(props.codigo)}`}>
+
+    let URL_IMAGE = `https://www.droguerialaeconomia.com/economia/site/img/`;
+
+    const funSaveDetailProduct = () => {
+        localStorage.setItem("dp", btoa(JSON.stringify(props)));
+        window.location.href = "/detail"
+    }
+
+    return props.codigo ? (
+        <Card className="text-center card-tab-products" >
             <div className="div-percent">{props.Porcentaje}%</div>
-            <CardImg top src={`https://www.droguerialaeconomia.com/economia/site/img/${props.codigo}.png`} alt={`Card image cap ${props.codigo}`} />
+            <CardImg top style={{ cursor: 'pointer' }} src={`${URL_IMAGE}${props.codigo}.png`}
+                onError={(e) => { e.target.src = `${URL_IMAGE}no-disponible.png` }}
+                alt={`Card image cap ${props.codigo}`} onClick={() => funSaveDetailProduct()} />
             <CardBody className="div-cardbody">
                 <CardTitle >{FormatCOPNumber(props.Ahora)}</CardTitle>
                 <CardSubtitle>{FormatCOPNumber(props.Antes)}</CardSubtitle>
-                <CardText>{props.descripcion}</CardText>
+                <CardText title={props.descripcion}>{props.descripcion.length >= 30 ? props.descripcion.substring(0, 27) + "..." : props.descripcion}</CardText>
                 <CardText>Mililitro a $999.999</CardText>
                 <CardText>{props.Categoria}</CardText>
                 <button className="btn-lg btn-outline-primary rounded-pill" onClick={(e) => console.log(e.target)}>Agregar</button>
             </CardBody>
         </Card>
-    );
+    ) : null
 }
 
 

@@ -105,11 +105,15 @@ export const API = {
             return await fetchAsync(`${URL.HOST}/economia/api/referencias/${location}/${barCode}/`, HTTP_REQUEST_METHOD.GET)
         },
 
-        async RetrieveProductFromSearch(location, search, { page = 0, itemsPerPage = 20, orderBy = ORDER_BY.DESCRIPTION, offer = IN_OFFER.NO } = {}) {
+        async RetrieveProductFromSearch(location, search, { page = 0, itemsPerPage = 12, orderBy = ORDER_BY.DESCRIPTION, offer = IN_OFFER.NO } = {}) {
             // return await fetchAsync(`${URL.HOST}/economia/api/referencias/${location}/${search}/${page}/${itemsPerPage}/${orderBy}/${offer}/`, HTTP_REQUEST_METHOD.GET)
             return await fetchAsync(`${URL.HOST}/economia/api/busqProductos/${location}?q=${search}`, HTTP_REQUEST_METHOD.GET)
         },
 
+        async RetrieveProductsFromSubcategory (location, subcategory, {page = 1, itemsPerPage = 12, orderBy = ORDER_BY.DESCRIPTION} = {})
+        {
+            return await fetchAsync(`${URL.HOST}/economia/api/RefSubCat/${location}/${subcategory}/${page}/${itemsPerPage}/${orderBy}/`, HTTP_REQUEST_METHOD.GET)
+        },
 
     },
     POST: {
