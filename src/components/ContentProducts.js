@@ -14,7 +14,8 @@ class TabContentComponent extends Component {
         this.toggle = this.toggle.bind(this);
         this.state = {
             activeTab: '0',
-            col: this.props.col ? this.props.col : 3,
+            col: this.props.col ? 4 : 3,
+            maxwidth: this.props.maxwidth ? 2 : 1,
             retrieveOffers: [],
             retrieveTopOffers: []
         };
@@ -27,7 +28,7 @@ class TabContentComponent extends Component {
 
 
         Store.subscribe(() => {
-           this.setState({ retrieveOffers: Store.getState().products })
+            this.setState({ retrieveOffers: Store.getState().products })
             this.setState({ retrieveTopOffers: Store.getState().products })
             // console.log(Store.getState());  
         })
@@ -86,16 +87,16 @@ class TabContentComponent extends Component {
                         </Nav>
                         <TabContent activeTab={this.state.activeTab} >
                             <TabPane tabId="0" >
-                                <VerticalProductComponent products={this.state.retrieveOffers.slice(0, this.state.retrieveOffers.length)} col={this.state.col} />
+                                <VerticalProductComponent products={this.state.retrieveOffers.slice(0, this.state.retrieveOffers.length)} col={this.state.col} maxwidth={this.state.maxwidth} />
                             </TabPane>
                             <TabPane tabId="1" >
-                                <VerticalProductComponent products={this.state.retrieveTopOffers.slice(0, this.state.retrieveTopOffers.length)} col={this.state.col} />
+                                <VerticalProductComponent products={this.state.retrieveTopOffers.slice(0, this.state.retrieveTopOffers.length)} col={this.state.col} maxwidth={this.state.maxwidth} />
                             </TabPane>
                             <TabPane tabId="2" >
-                                <VerticalProductComponent products={this.state.retrieveOffers.slice(0, this.state.retrieveOffers.length)} col={this.state.col} />
+                                <VerticalProductComponent products={this.state.retrieveOffers.slice(0, this.state.retrieveOffers.length)} col={this.state.col} maxwidth={this.state.maxwidth} />
                             </TabPane>
                             <TabPane tabId="3" >
-                                <VerticalProductComponent products={this.state.retrieveOffers.slice(0, this.state.retrieveOffers.length)} col={this.state.col} />
+                                <VerticalProductComponent products={this.state.retrieveOffers.slice(0, this.state.retrieveOffers.length)} col={this.state.col} maxwidth={this.state.maxwidth} />
                             </TabPane>
                         </TabContent>
 

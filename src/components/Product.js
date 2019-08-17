@@ -12,7 +12,7 @@ const VerticalProductComponent = props => {
         <Row className="justify-content-center" >
             {props.products.map((value, i) => {
                 return (
-                    <Col key={i} md={props.col} className="mt-2 mb-2 v-prod" >
+                    <Col key={i} md={props.col} className={`mt-2 mb-2 v-prod${props.maxwidth}`} >
                         <Product {...value} />
                     </Col>
                 );

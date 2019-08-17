@@ -196,7 +196,7 @@ const GroupCategoryComponent = () => {
                     </Row>
                 </Col>
                 <Col md={9}>
-                    <TabContentComponent col={4} />
+                    <TabContentComponent col maxwidth />
                 </Col>
             </Row>
         </Container>

@@ -657,38 +657,7 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     color: #657272 !important;
 }
 
-@media (max-width:899px) {
-    .sumary_table td, .sumary_table th {
-        padding: 0.70rem !important;
-    }
-    .sumary_table>tbody>tr>td {
-        font-size: 12px;
-    }
-    .item1-sumary {
-        height: 95% !important;
-    }
-    .list-detail-product {
-        padding: 0px
-    }
-    .content-detail-product {
-        display: flex;
-        flex-direction: column !important;
-    }
-    .div-percent-product, .text-price-blue, .text-subray, .text-gray {
-        margin-top: 7px !important;
-        margin-left: 0% !important;
-    }
-    .text-gray {
-        margin-bottom: 0px !important;
-    }
-    .h5-title {
-        font-weight: 600;
-        color: #657272;
-    }
-    .tt-stuck-parent-menu {
-        display: block !important;
-    }
-}
+
 
 /* input for payment methods  */
 
@@ -791,7 +760,7 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     transition: transform .4s ease-in;
 }
 
-.swal-button{
+.swal-button {
     background: transparent;
     color: #1b42cb;
     border: 1px solid #1b42cb;
@@ -800,12 +769,12 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     border-radius: 10px;
 }
 
-.swal-button:hover{
+.swal-button:hover {
     background-color: #1b42cb !important;
     color: white !important;
 }
 
-.swal-footer{
+.swal-footer {
     display: flex;
     justify-content: center;
 }
@@ -814,10 +783,58 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     height: 140px !important;
 }
 
-.v-prod{
+.v-prod1 {
     max-width: 21% !important;
 }
 
-.h-prod{
-    max-width: 21% !important;
+.v-prod2 {
+    max-width: 29% !important;
+}
+
+.h-prod {
+    max-width: 22% !important;
+}
+
+
+@media (max-width:899px) {
+    .sumary_table td, .sumary_table th {
+        padding: 0.70rem !important;
+    }
+    .sumary_table>tbody>tr>td {
+        font-size: 12px;
+    }
+    .item1-sumary {
+        height: 95% !important;
+    }
+    .list-detail-product {
+        padding: 0px
+    }
+    .content-detail-product {
+        display: flex;
+        flex-direction: column !important;
+    }
+    .div-percent-product, .text-price-blue, .text-subray, .text-gray {
+        margin-top: 7px !important;
+        margin-left: 0% !important;
+    }
+    .text-gray {
+        margin-bottom: 0px !important;
+    }
+    .h5-title {
+        font-weight: 600;
+        color: #657272;
+    }
+    .tt-stuck-parent-menu {
+        display: block !important;
+    }
+
+    .v-prod1,.v-prod2  {
+        max-width: 90% !important;
+    }
+    
+    .h-prod   {
+        max-width: 60% !important;
+    }
+    
+
 }
