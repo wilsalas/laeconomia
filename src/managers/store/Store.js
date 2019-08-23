@@ -1,19 +1,28 @@
-import { createStore } from 'redux';
+import { useReducer } from 'react';
 
-//create storage of global states in the application
 const reducer = (state, action) => {
     switch (action.type) {
-        case 'Product':
+        case 'GET_PRODUCT':
             return {
                 ...state,
                 products: action.products ? action.products : []
+            };
+        case 'SEARCH_PRODUCT':
+            return {
+                ...state,
+                searchProducts: action.searchProducts
             };
         default:
             return state;
     }
 }
 
-// export create store for app react
-export default createStore(reducer, {
-    products: []
-});
+const Store = () => {
+    const [state, dispatch] = useReducer(reducer, {
+        products: [],
+        searchProducts: []
+    });
+    return [state, dispatch]
+}
+
+export default Store;

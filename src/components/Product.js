@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardBody, CardTitle, CardSubtitle, CardImg, CardText, Row, Col } from 'reactstrap';
-import { FormatCOPNumber, funRenderSpinner } from '../managers/helpers/HelperManager';
+import { FormatCOPNumber, funRenderSpinner,FormatPointsSupensive } from '../managers/helpers/HelperManager';
 
 const VerticalProductComponent = props => {
 
@@ -87,7 +87,7 @@ const Product = props => {
             <CardBody className="div-cardbody">
                 <CardTitle >{FormatCOPNumber(props.Ahora)}</CardTitle>
                 <CardSubtitle>{FormatCOPNumber(props.Antes)}</CardSubtitle>
-                <CardText title={props.descripcion}>{props.descripcion.length >= 30 ? props.descripcion.substring(0, 27) + "..." : props.descripcion}</CardText>
+                <CardText title={props.descripcion}>{FormatPointsSupensive(props.descripcion)}</CardText>
                 <CardText>Mililitro a $999.999</CardText>
                 <CardText>{props.Categoria}</CardText>
                 <button className="btn-lg btn-outline-primary rounded-pill" onClick={(e) => console.log(e.target)}>Agregar</button>

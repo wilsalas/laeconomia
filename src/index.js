@@ -15,28 +15,30 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { ModalLocation } from './components/PopUp';
 import * as serviceWorker from './serviceWorker';
+import { RootProvider } from './managers/store/Context';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-
 
 // Config routes app
 ReactDOM.render(
     <Router>
         <>
-            <Header />
-            <Switch>
-                <Route exact path='/' component={App} />
-                <Route path='/droguery' component={DrogueryVirtual} />
-                <Route path='/babycare' component={BaCare} />
-                <Route path='/dictionary' component={Dictionary} />
-                <Route path='/subsidiary' component={Subsidiary} />
-                <Route path='/account/:page' component={Account} />
-                <Route path='/buys' component={CartToBuy} />
-                <Route path='/processbuy' component={ProcessToBuy} />
-                <Route path='/detail' component={ProductDetail} />
-                <Route render={() => <Redirect to="/" />} />
-            </Switch >
-            <Footer />
-            <ModalLocation />
+            <RootProvider>
+                <Header />
+                <Switch>
+                    <Route exact path='/' component={App} />
+                    <Route path='/droguery/:code?' component={DrogueryVirtual} />
+                    <Route path='/babycare' component={BaCare} />
+                    <Route path='/dictionary' component={Dictionary} />
+                    <Route path='/subsidiary' component={Subsidiary} />
+                    <Route path='/account/:page' component={Account} />
+                    <Route path='/buys' component={CartToBuy} />
+                    <Route path='/processbuy' component={ProcessToBuy} />
+                    <Route path='/detail' component={ProductDetail} />
+                    <Route render={() => <Redirect to="/" />} />
+                </Switch >
+                <Footer />
+                <ModalLocation />
+            </RootProvider>
         </>
     </Router>
     , document.getElementById('root'));

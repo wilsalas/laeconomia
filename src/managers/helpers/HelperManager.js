@@ -1,7 +1,7 @@
 import React from 'react';
 import numeral from 'numeral';
 import swal from 'sweetalert';
-import {Spinner} from 'reactstrap';
+import { Spinner } from 'reactstrap';
 
 
 
@@ -65,5 +65,6 @@ export function FormatCOPNumber(number, commas = false) {
     }
 }
 
+export const FormatPointsSupensive = element => element.substring(0, 27)+"...";
 
 export const funRenderSpinner = (type = "md") => <div style={{ display: 'flex', justifyContent: 'center' }}><Spinner size={type} color="primary" /> </div>

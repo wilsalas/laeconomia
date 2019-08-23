@@ -5,7 +5,8 @@ import {
 import { TabContentComponent } from './ContentProducts';
 import { API } from '../managers/api/ApiManager';
 import { funRenderSpinner } from '../managers/helpers/HelperManager';
-import Store from '../managers/store/Store';
+import { useGlobal } from '../managers/store/Context';
+
 
 
 const OrderCategoryComponent = () => {
@@ -28,6 +29,7 @@ const OrderCategoryComponent = () => {
 const ListCategoryComponent = () => {
 
     const [getCategories, setCategories] = useState([]);
+    const [, dispatch] = useGlobal();
 
     useEffect(() => {
         RetrieveCategories();
@@ -54,9 +56,9 @@ const ListCategoryComponent = () => {
 
     const funProductForSubCategories = async (e, subCategory) => {
         e.preventDefault();
-        Store.dispatch({ type: "Product" })
-        let res = await API.GET.RetrieveProductsFromSubcategory(localStorage.getItem("city"), subCategory);
-        if (Array.isArray(res.message)) Store.dispatch({ type: "Product", products: res.message })
+        dispatch({ type: "GET_PRODUCT" })
+        let resSubCategories = await API.GET.RetrieveProductsFromSubcategory(localStorage.getItem("city"), subCategory);
+        if (Array.isArray(resSubCategories.message)) dispatch({ type: "GET_PRODUCT", products: resSubCategories.message })
     }
 
     return (
@@ -174,7 +176,7 @@ const CategoryComponent = () => {
 }
 
 
-const GroupCategoryComponent = () => {
+const GroupCategoryComponent = props => {
 
     return (
         <Container>
@@ -196,7 +198,7 @@ const GroupCategoryComponent = () => {
                     </Row>
                 </Col>
                 <Col md={9}>
-                    <TabContentComponent col maxwidth />
+                    <TabContentComponent col maxwidth {...props}/>
                 </Col>
             </Row>
         </Container>

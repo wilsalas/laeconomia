@@ -1,11 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Container, Col, Form, Row, InputGroup,
     Input, InputGroupAddon, Button
 } from 'reactstrap';
+import { API } from '../managers/api/ApiManager';
+import { FormatPointsSupensive, funRenderSpinner } from '../managers/helpers/HelperManager';
+import { useGlobal } from '../managers/store/Context';
 
 
 const SearchHeaderComponent = () => {
+
+    const [state, dispatch] = useGlobal();
+    const [getSearch, setSearch] = useState([]);
+    const [getLoading, setLoading] = useState(false);
+    const [getChangeInput, setChangeInput] = useState("");
+
+
+
+    useEffect(() => {
+        setSearch(state.searchProducts);
+    }, [state.searchProducts]);
+
+
+
+    const funSearch = async e => {
+        setLoading(true)
+        setChangeInput(e.target.value);
+        if (getChangeInput !== "") {
+            const resSearch = await API.GET.RetrieveProductFromSearch(localStorage.getItem("city"), getChangeInput);
+            console.log(resSearch);
+            if (resSearch) {
+                dispatch({ type: "SEARCH_PRODUCT", searchProducts: resSearch.message.referencias });
+                setSearch(resSearch.message.referencias);
+            }
+        }
+        setLoading(false)
+    }
+
+
     return (
         <>
             <Container >
@@ -17,16 +49,99 @@ const SearchHeaderComponent = () => {
                     </Col>
                     <Col md={10} xs={12}>
                         <Form>
-                            <InputGroup>
-                                <Input
-                                    placeholder={'¿Qué está buscando?'}
-                                    className="header-input" />
-                                <InputGroupAddon addonType="append">
-                                    <Button className="btn-search-header">
-                                        <i className="fas fa-search"></i>
-                                    </Button>
-                                </InputGroupAddon>
-                            </InputGroup>
+                            <Row>
+                                <Col md={11} xs={10}>
+                                    <InputGroup>
+                                        <Input
+                                            placeholder={'¿Qué está buscando?'}
+                                            className={`header-input${getChangeInput === "" ? '-border' : ''}`}
+                                            onChange={e => funSearch(e)}
+                                        />
+                                        {getChangeInput !== "" &&
+                                            <div className="content-search" >
+                                                <hr />
+                                                <Container>
+                                                    <Row className="content-row-collapsible">
+                                                        <Col md={4} className="content-search-border-rigth collapsible-col">
+                                                            {getLoading && funRenderSpinner("sm")}
+                                                            {!getLoading > 0 && getSearch.map((item, i) => {
+                                                                return (
+                                                                    <div className="mt-3" key={i}>
+
+                                                                        <div className="panel-group " id={"accordion" + i}>
+                                                                            <div className="panel panel-default">
+                                                                                <div className="panel-heading ">
+                                                                                    <h4 className="panel-title ">
+                                                                                        <a href={`/droguery/${btoa(item.codigo)}`}>
+                                                                                            {FormatPointsSupensive(item.descripcion)}
+                                                                                        </a>
+                                                                                        {/* <a title={item.descripcion} data-toggle="collapse" data-parent={"#accordion" + i} href={"#collapse" + i} className="collapsible-search">
+                                                                                            {FormatPointsSupensive(item.descripcion)}
+                                                                                        </a> */}
+                                                                                    </h4>
+                                                                                </div>
+                                                                                <div id={"collapse" + i} className="panel-collapse collapse in">
+                                                                                    <ul className="list_category">
+                                                                                        <li ><a href="/" >en Drogueria</a></li>
+                                                                                        <li ><a href="/" >en Cuidado de la piel</a></li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            })}
+                                                        </Col>
+                                                        <Col md={4} className="content-search-border-rigth collapsible-col">
+                                                            <p className="mb-2">MARCAS RELACIONADAS</p>
+                                                            <ul style={{ padding: 0 }}>
+                                                                <li>
+                                                                    <a href="/">
+                                                                        Aspirina
+                                                                </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="/">
+                                                                        Aspirina
+                                                                </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="/">
+                                                                        Aspirina
+                                                                </a>
+                                                                </li>
+
+                                                            </ul>
+                                                        </Col>
+                                                        <Col md={4} className="collapsible-col">
+                                                            <p className="mb2">CATEGORÍAS RELACIONADAS</p>
+                                                            <ul style={{ padding: 0 }}>
+                                                                <li>
+                                                                    <a href="/">
+                                                                        Lo más buscado
+                                                                </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="/">
+                                                                        Promociones del mes
+                                                                </a>
+                                                                </li>
+                                                            </ul>
+                                                        </Col>
+                                                    </Row>
+                                                </Container>
+                                            </div>
+                                        }
+                                    </InputGroup>
+                                </Col>
+                                <Col md={1} xs={2}>
+                                    <InputGroupAddon addonType="append">
+                                        <Button className="btn-search-header">
+                                            <i className="fas fa-search"></i>
+                                        </Button>
+                                    </InputGroupAddon>
+                                </Col>
+                            </Row>
                         </Form>
                     </Col>
                 </Row>
