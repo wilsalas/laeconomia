@@ -30,7 +30,7 @@ export default function ProcessToBuy() {
 
 
                     {/* Step 2  */}
-                    {/* <StepFacturationComponent /> */}
+                    <StepFacturationComponent />
 
 
 
@@ -41,7 +41,7 @@ export default function ProcessToBuy() {
 
 
                     {/* Step 4  */}
-                    <StepSumaryBuyComponent />
+                    {/* <StepSumaryBuyComponent /> */}
 
                 </div>
                 <InterestContentComponent />

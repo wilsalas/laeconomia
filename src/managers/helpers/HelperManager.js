@@ -45,7 +45,7 @@ export const ValidateInputFormEmpty = fields => {
 
 
 /** Este funcion formatea un numero a COP devuelve por ejemplo: $10.000 */
-export function FormatCOPNumber(number, commas = false) {
+export const FormatCOPNumber = (number, commas = false) => {
     try {
         //algunos inputs de la aplicacion envian textos con "$" para formatearlos, 
         //pero estos no se les puede hacer parse int. Por eso lo quitamos si no funciona. 
@@ -65,6 +65,6 @@ export function FormatCOPNumber(number, commas = false) {
     }
 }
 
-export const FormatPointsSupensive = element => element.substring(0, 27)+"...";
+export const FormatPointsSupensive = element => element.substring(0, 27) + "...";
 
 export const funRenderSpinner = (type = "md") => <div style={{ display: 'flex', justifyContent: 'center' }}><Spinner size={type} color="primary" /> </div>

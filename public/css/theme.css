@@ -2402,6 +2402,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 }
 
 .modal.show .modal-dialog {
+ margin-top: 5% !important; 
   transform: translate(0, 0);
 }
 
@@ -12337,7 +12338,6 @@ header .tt-multi-obj ul li {
 }
 
 header .tt-multi-obj ul li a {
-  color: #191919;
   padding: 3px 0;
   display: block;
   -moz-transition: color 0.2s linear;
@@ -21287,6 +21287,8 @@ html.ie.gecko body.modal-open {
 
 .modal.show {
   opacity: 1;
+  height: auto;
+
 }
 
 @media (min-width: 320px) {

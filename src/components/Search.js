@@ -22,10 +22,9 @@ const SearchHeaderComponent = () => {
     }, [state.searchProducts]);
 
 
-
     const funSearch = async e => {
+        e.preventDefault();
         setLoading(true)
-        setChangeInput(e.target.value);
         if (getChangeInput !== "") {
             const resSearch = await API.GET.RetrieveProductFromSearch(localStorage.getItem("city"), getChangeInput);
             console.log(resSearch);
@@ -48,14 +47,14 @@ const SearchHeaderComponent = () => {
                         </a>
                     </Col>
                     <Col md={10} xs={12}>
-                        <Form>
+                        <Form  onSubmit={e => funSearch(e)}>
                             <Row>
                                 <Col md={11} xs={10}>
                                     <InputGroup>
                                         <Input
                                             placeholder={'¿Qué está buscando?'}
                                             className={`header-input${getChangeInput === "" ? '-border' : ''}`}
-                                            onChange={e => funSearch(e)}
+                                            onChange={e => setChangeInput(e.target.value)}
                                         />
                                         {getChangeInput !== "" &&
                                             <div className="content-search" >
@@ -136,7 +135,8 @@ const SearchHeaderComponent = () => {
                                 </Col>
                                 <Col md={1} xs={2}>
                                     <InputGroupAddon addonType="append">
-                                        <Button className="btn-search-header">
+                                        <Button
+                                            className="btn-search-header">
                                             <i className="fas fa-search"></i>
                                         </Button>
                                     </InputGroupAddon>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Container, Modal, ModalHeader, ModalBody, Input, Form, FormGroup, Row } from 'reactstrap';
+import { Button, Col, Container, Modal, ModalHeader, ModalBody, Input, Label, Form, FormGroup, Row } from 'reactstrap';
 import { API } from '../managers/api/ApiManager';
 
 
@@ -31,6 +31,52 @@ const Location = props => {
                 <option defaultValue="">Selecciona una ciudad</option>
                 {citys.map((element, i) => <option key={i} value={element.Ciudad}>{element.Descripcion}</option>)}
             </Input>
+        </>
+    );
+}
+
+
+const Profile = () => {
+    return (
+        <>
+            <Row>
+                <Col md={12} xs={12}>
+                    <div className="tt-item">
+                        <h2 className="tt-title">MI PERFIL</h2>
+                        <div className="form-default form-top">
+                            <Form >
+                                <FormGroup>
+                                    <Label for="email" className="mt-3">INFORMACION DE CUENTA</Label>
+                                    <Input className="account-input" type="email" name="email" placeholder="Ingresa tu correo electrónico" required />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="password">CAMBIO DE CONTRASEÑA</Label>
+                                    <Input className="account-input" type="password" name="password" placeholder="Nueva contraseña" required />
+                                    <Input className="account-input mt-2" type="password" name="password" placeholder="Cambiar nueva contraseña" required />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="personal">INFORMACION PERSONAL</Label>
+                                    <Input className="account-input" type="text" name="name" placeholder="Nombre completo" required />
+                                    <Input className="account-input mt-2" type="tel" name="nit" placeholder="Cedula/Nit/Pasaporte" required />
+                                    <Input className="account-input mt-2" type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" required />
+                                </FormGroup>
+                                <Row>
+                                    <Col className="col-auto mr-auto">
+                                        <FormGroup>
+                                            <Input className="account-input" type="tel" name="celular" placeholder="Celular" required />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col className="col-auto align-self-end">
+                                        <FormGroup>
+                                            <Input className="account-input" type="tel" name="telefono" placeholder="Telefono" required />
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                            </Form>
+                        </div>
+                    </div>
+                </Col>
+            </Row>
         </>
     );
 }
@@ -167,7 +213,7 @@ const RegisterSuccess = () => {
     );
 }
 
-
+// -----------------------------------------------------------------------
 const ModalLocation = () => {
 
     const [open, setOpen] = useState(false);
@@ -189,8 +235,25 @@ const ModalLocation = () => {
     );
 }
 
+
+
+const ModalProfile = props => {
+    return (
+        <>
+            <Modal returnFocusAfterClose isOpen={props.modalOpen} >
+                <ModalHeader toggle={() => props.closeModal()}></ModalHeader>
+                <ModalBody>
+                    <Profile />
+                </ModalBody>
+            </Modal>
+        </>
+    );
+}
+
+
 export {
-    ModalLocation
+    ModalLocation,
+    ModalProfile
 }
 
 

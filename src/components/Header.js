@@ -1,16 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { SearchHeaderComponent } from '../components/Search';
+import { API } from '../managers/api/ApiManager';
 import { Row, Col } from 'reactstrap';
+import { ModalProfile } from './PopUp';
 
 export default function HeaderComponent() {
 
     const [getProfile, setProfile] = useState([]);
+    const [citys, setCitys] = useState([]);
+    const [getOpenProfile, setOpenProfile] = useState(false);
 
     useEffect(() => {
+        RetrieveStores();
         if (localStorage.getItem("usi")) {
             setProfile(JSON.parse(atob(localStorage.getItem("usi"))))
         }
-    }, [])
+    }, []);
+
+
+    // get all citys
+    const RetrieveStores = async () => {
+        let res = await API.GET.RetrieveStores();
+        if (Array.isArray(res.message)) setCitys(res.message)
+    }
+
+    // selected one city
+    const funSelectedCity = (e, codeCity) => {
+        e.preventDefault();
+        localStorage.setItem("city", codeCity);
+        window.location.reload();
+    }
+
+    // selected one city
+    const funModalProfile = modalProfile => setOpenProfile(modalProfile);
 
 
     /*function logout app */
@@ -20,6 +42,7 @@ export default function HeaderComponent() {
         window.location.href = "/";
     }
 
+    console.log("datos del usuario", getProfile);
 
     return (
         <>
@@ -165,13 +188,9 @@ export default function HeaderComponent() {
                                             <div className="tt-mobile-add">
                                                 <button className="tt-close">Cerrar</button>
                                             </div>
-                                            <div className="tt-dropdown-inner">
+                                            <div className="tt-dropdown-inner" style={{ height: 300, overflow: 'auto' }}>
                                                 <ul>
-                                                    {new Array(10).fill().map((value, i) => {
-                                                        return (
-                                                            <li key={i} className="selected_li"><a href="/">Barranquilla {i}</a></li>
-                                                        )
-                                                    })}
+                                                    {citys.map((item, i) => <li key={i} className="selected_li" ><a href="/" onClick={e => funSelectedCity(e, item.Ciudad)} >{item.Descripcion}</a></li>)}
                                                 </ul>
                                             </div>
                                         </div>
@@ -204,7 +223,7 @@ export default function HeaderComponent() {
                                                 <ul>
 
                                                     {getProfile.nit &&
-                                                        <li><a href="login.html" ><i className="icon-e-42"></i>Perfil</a></li>
+                                                        <li><a href="/profile" onClick={e => { e.preventDefault(); funModalProfile(true) }} ><i className="icon-e-42"></i>Perfil</a></li>
                                                     }
                                                     {!getProfile.nit &&
                                                         <li><a href="/account/login"><i className="icon-g-44" />Iniciar Sesión</a></li>
@@ -335,6 +354,7 @@ export default function HeaderComponent() {
                 </div>
 
             </header>
+            <ModalProfile modalOpen={getOpenProfile} closeModal={() => funModalProfile(false)} />
         </>
     );
 }
