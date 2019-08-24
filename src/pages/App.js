@@ -1,31 +1,21 @@
-import React, { Component } from 'react';
-import { Container } from 'reactstrap';
+import React from 'react';
 import PromoComponent from '../components/Promo';
-import HeaderComponent from '../components/Header';
 import SliderComponent from '../components/Slider';
 import { CategoryComponent } from '../components/Category';
-import { TabContentComponent, InterestContentComponent } from '../components/ContentProducts';
+import { TabContentComponent, InterestContentComponent, SponsorShipsComponent } from '../components/ContentProducts';
 import BannerComponent from '../components/Banner';
-import FooterComponent from '../components/Footer';
-import '../styles/styles.css';
+import { ROUTES } from '../managers/api/ApiManager';
 
-export default class App extends Component {
-
-  render() {
-
-    return (
-      <div>
-        <HeaderComponent />
-        <SliderComponent />
-        <Container>
-          <CategoryComponent />
-          <TabContentComponent />
-          <PromoComponent />
-          <InterestContentComponent />
-          <BannerComponent />
-        </Container>
-        <FooterComponent />
-      </div>
-    );
-  }
+export default function App() {
+  return (
+    <>
+      <SliderComponent routes={ROUTES.MAIN} />
+      <CategoryComponent />
+      <TabContentComponent />
+      <PromoComponent />
+      <SponsorShipsComponent />
+      <InterestContentComponent />
+      <BannerComponent />
+    </>
+  );
 }

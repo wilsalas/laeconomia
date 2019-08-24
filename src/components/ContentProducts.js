@@ -1,129 +1,271 @@
 import classnames from 'classnames';
-import React, { Component, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Col, TabContent, TabPane, Nav, NavItem, NavLink, Row } from 'reactstrap';
-import { VerticalProductComponent, HorizontalProductComponent } from './Product';
+import { VerticalProductComponent, HorizontalProductComponent, HorizontalBrandsComponent } from './Product';
+import { API } from '../managers/api/ApiManager';
+import { useGlobal } from '../managers/store/Context';
 
-class TabContentComponent extends Component {
 
-    constructor(props) {
-        super(props);
+const TabContentComponent = props => {
 
-        this.toggle = this.toggle.bind(this);
-        this.state = {
-            activeTab: '1',
-            col: this.props.col ? this.props.col : 3
-        };
+    const [state,] = useGlobal();
+    const [getRetrieveOffers, setRetrieveOffers] = useState([]);
+    const [getRetrieveTopOffers, setRetrieveTopOffers] = useState([]);
+    const [getActiveTab, setActiveTab] = useState("0");
+    const getCol = props.col ? 4 : 3;
+    const getMaxwidth = props.maxwidth ? 2 : 1;
+
+    // get products  from code and initialize
+    useEffect(() => {
+        if (!props.codeProduct) {
+            funRetrieveOffers();
+            funRetrieveTopOffers();
+        } else {
+            funRetrieveProductFromCode(atob(props.codeProduct));
+        }
+    }, [props.codeProduct]);
+
+    // get productos from subcategories
+    useEffect(() => {
+        setRetrieveOffers(state.products);
+        setRetrieveTopOffers(state.products);
+    }, [state.products]);
+
+
+    const funRetrieveProductFromCode = async code => {
+        let resRetrieveProductFromCode = await API.GET.RetrieveProductFromCode(localStorage.getItem("city"), code);
+        if (Array.isArray(resRetrieveProductFromCode.message)) setRetrieveOffers(resRetrieveProductFromCode.message);
     }
 
-    toggle(tab) {
-        if (this.state.activeTab !== tab) {
-            this.setState({
-                activeTab: tab
-            });
+    const funRetrieveOffers = async () => {
+        let resRetrieveOffers = await API.GET.RetrieveOffers(localStorage.getItem("city"));
+        if (Array.isArray(resRetrieveOffers.message)) setRetrieveOffers(resRetrieveOffers.message);
+        // console.log(res.message);
+
+    }
+
+    const funRetrieveTopOffers = async () => {
+        let resRetrieveTopOffers = await API.GET.RetrieveTopOffers(localStorage.getItem("city"));
+        if (Array.isArray(resRetrieveTopOffers.message)) setRetrieveTopOffers(resRetrieveTopOffers.message);
+    }
+
+
+    const funToggle = tab => {
+        if (getActiveTab !== tab) {
+            setActiveTab(tab);
         }
     }
 
-    render() {
-        return (
-            <Fragment>
+
+    const funMoreProducts = () => { }
+    return (
+        <>
+            <Container>
                 <div style={{ display: 'grid', overflow: 'scroll' }} className="mt-4">
                     <Nav tabs className="justify-content-center">
                         <NavItem>
-                            <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>
+                            <NavLink className={classnames({ active: getActiveTab === '0' })} onClick={() => { funToggle('0'); }}>
                                 OFERTAS DEL DÍA
                         </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink className={classnames({ active: this.state.activeTab === '2' })} onClick={() => { this.toggle('2'); }}>
+                            <NavLink className={classnames({ active: getActiveTab === '1' })} onClick={() => { funToggle('1'); }}>
                                 NUEVOS PRODUCTOS
                         </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink className={classnames({ active: this.state.activeTab === '3' })} onClick={() => { this.toggle('3'); }}>
+                            <NavLink className={classnames({ active: getActiveTab === '2' })} onClick={() => { funToggle('2'); }}>
                                 MÁS COMPRADOS
                         </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink className={classnames({ active: this.state.activeTab === '4' })} onClick={() => { this.toggle('4'); }}>
+                            <NavLink className={classnames({ active: getActiveTab === '3' })} onClick={() => { funToggle('3'); }}>
                                 MÁS PEDIDOS
                         </NavLink>
                         </NavItem>
                     </Nav>
-                    <TabContent activeTab={this.state.activeTab} className="tab-content-scroll">
-                        <TabPane tabId="1">
-                            <VerticalProductComponent listCount={8} col={this.state.col} />
+                    <TabContent activeTab={getActiveTab} >
+                        <TabPane tabId="0" >
+                            <VerticalProductComponent products={getRetrieveOffers.slice(0, getRetrieveOffers.length)} col={getCol} maxwidth={getMaxwidth} />
                         </TabPane>
-                        <TabPane tabId="2">
-                            <VerticalProductComponent listCount={8} col={this.state.col} />
+                        <TabPane tabId="1" >
+                            <VerticalProductComponent products={getRetrieveTopOffers.slice(0, getRetrieveTopOffers.length)} col={getCol} maxwidth={getMaxwidth} />
                         </TabPane>
-                        <TabPane tabId="3">
-                            <VerticalProductComponent listCount={8} col={this.state.col} />
+                        <TabPane tabId="2" >
+                            <VerticalProductComponent products={getRetrieveOffers.slice(0, getRetrieveOffers.length)} col={getCol} maxwidth={getMaxwidth} />
                         </TabPane>
-                        <TabPane tabId="4">
-                            <VerticalProductComponent listCount={8} col={this.state.col} />
+                        <TabPane tabId="3" >
+                            <VerticalProductComponent products={getRetrieveOffers.slice(0, getRetrieveOffers.length)} col={getCol} maxwidth={getMaxwidth} />
                         </TabPane>
                     </TabContent>
-                    <button className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }}>Cargar más</button>
+
+                    <button className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }} onClick={() => funMoreProducts()}>Cargar más</button>
                 </div>
-            </Fragment>
-        );
-    }
+            </Container>
+        </>
+    );
 }
 
 
-class InterestContentComponent extends Component {
-    render() {
-        return (
-            <Fragment>
-                <Container>
-                    <Row className="mt-4">
-                        <Col md={10}>
-                            <h5 style={{ fontWeight: 600, color: '#657272' }}>TE PODRÍA INTERESAR</h5>
-                        </Col>
-                        <Col md={2} style={{
-                            justifyContent: 'flex-end',
-                            display: 'inline-flex'
-                        }}>
-                            <button
-                                className="mr-2"
-                                style={{
-                                    width: '37.3px',
-                                    height: '35px',
-                                    borderRadius: '10.7px',
-                                    backgroundColor: '#f2f2f2',
-                                    color: '#657272',
-                                    border: 'none',
-                                    fontSize: 23,
-                                    fontWeight: 700
-                                }}
-                            >{'<'}</button>
-                            <button
-                                style={{
-                                    width: '37.3px',
-                                    height: '35px',
-                                    borderRadius: '10.7px',
-                                    backgroundColor: '#657272',
-                                    color: '#f2f2f2',
-                                    border: 'none',
-                                    fontSize: 23,
-                                    fontWeight: 700
-                                }}
-                            >{'>'}</button>
-                        </Col>
-                        <Col >
-                            <HorizontalProductComponent listCount={12} col={3} />
-                        </Col>
-                    </Row>
-                </Container>
-            </Fragment>
-        );
+const InterestContentComponent = () => {
+
+    const [getTranslate, setTranslate] = useState(0);
+    const [getVelocity] = useState(885);
+    const [getPage, setPage] = useState(24);
+    const [getLimitPage, setLimitPage] = useState(0);
+    const [getRetrieveOffers, setRetrieveOffers] = useState([]);
+
+
+    useEffect(() => {
+        funRetrieveOffers();
+    }, []);
+
+    const funRetrieveOffers = async () => {
+        let resRetrieveOffers = await API.GET.RetrieveOffers(localStorage.getItem("city"));
+        if (Array.isArray(resRetrieveOffers.message)) setRetrieveOffers(resRetrieveOffers.message);
+        // console.log(res.message);
+
     }
+
+
+    const funButtonSlider = direction => {
+        let container = document.querySelector(".container-interest"),
+            translate = getTranslate,
+            limitPage = getLimitPage;
+
+        if (direction > 0) {
+            limitPage--;
+            translate += getVelocity
+
+        } else {
+            limitPage++;
+            translate -= getVelocity
+        }
+        setTranslate(translate);
+        setLimitPage(limitPage)
+        container.style.transform = `translateX(${translate}px)`;
+        console.log("lIMIT PAGE:", limitPage);
+
+    }
+
+    const funAddMoreProduct = () => {
+        setPage(getPage + 1);
+        console.log("Uno mas agregado", getPage);
+    }
+
+    return (
+        <>
+            <Container fluid>
+                <Row className="mt-4">
+                    <Col md={12}>
+                        <Row>
+                            <Col md={1} className="column-btns-product-center">
+                                {getLimitPage > 0 &&
+                                    <button className="btn-left-product btn-products-arrow" onClick={() => funButtonSlider(1)}>{'<'}</button>
+                                }
+                            </Col>
+                            <Col md={10}>
+                                <Row>
+                                    <Col md={10}>
+                                        <h5 className="h5-title">TE PODRÍA INTERESAR</h5>
+                                    </Col>
+                                    <Col md={2} className="align-inline-flex-content-getColumn">
+                                        <button className="btn-lg btn-outline-primary rounded-pill" onClick={() => funAddMoreProduct()}>Ver mas</button>
+                                    </Col>
+                                </Row>
+                                <HorizontalProductComponent products={getRetrieveOffers.slice(0, getRetrieveOffers.length)} col={3} />
+                            </Col>
+                            <Col md={1} className="column-btns-product-center">
+                                {
+                                    getLimitPage < getPage &&
+                                    <button className="btn-rigth-product  btn-products-arrow" onClick={() => funButtonSlider(0)} >{'>'}</button>
+                                }
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </Container>
+        </>
+    );
+}
+
+const SponsorShipsComponent = () => {
+
+
+    const [getTranslate, setTranslate] = useState(0);
+    const [getVelocity] = useState(1185);
+    const [getPage, setPage] = useState(1);
+    const [getLimitPage, setLimitPage] = useState(0);
+
+
+
+    const funButtonSlider = direction => {
+        let container = document.querySelector(".container-interest"),
+            translate = getTranslate,
+            limitPage = getLimitPage;
+
+        if (direction > 0) {
+            limitPage--;
+            translate += getVelocity
+
+        } else {
+            limitPage++;
+            translate -= getVelocity
+        }
+        setTranslate(translate);
+        setLimitPage(limitPage)
+        container.style.transform = `translateX(${translate}px)`;
+        console.log("lIMIT PAGE:", limitPage);
+
+    }
+
+    const funAddMoreProduct = () => {
+        setPage(getPage + 1);
+        console.log("Uno mas agregado", getPage);
+    }
+
+    return (
+        <>
+            <Container fluid>
+                <Row className="mt-4">
+                    <Col md={12}>
+                        <Row>
+                            <Col md={1} className="column-btns-product-center">
+                                {getLimitPage > 0 &&
+                                    <button className="btn-left-product btn-products-arrow" onClick={() => funButtonSlider(1)}>{'<'}</button>
+                                }
+                            </Col>
+                            <Col md={10}>
+                                <Row>
+                                    <Col md={10}>
+                                        <h5 className="h5-title">MARCAS PATROCINADORAS</h5>
+                                    </Col>
+                                    <Col md={2} className="align-inline-flex-content-getColumn">
+                                        <button className="btn-lg btn-outline-primary rounded-pill" onClick={() => funAddMoreProduct()}>Ver mas</button>
+                                    </Col>
+                                </Row>
+                                <HorizontalBrandsComponent listCount={12} col={2} />
+                            </Col>
+                            <Col md={1} className="column-btns-product-center">
+                                {
+                                    getLimitPage < getPage &&
+                                    <button className="btn-rigth-product  btn-products-arrow" onClick={() => funButtonSlider(0)} >{'>'}</button>
+                                }
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </Container>
+        </>
+    );
 }
 
 
 
 export {
     TabContentComponent,
-    InterestContentComponent
+    InterestContentComponent,
+    SponsorShipsComponent
 }
+
 

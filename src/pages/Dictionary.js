@@ -1,27 +1,17 @@
-import React, { Component } from 'react';
-import { Container } from 'reactstrap';
+import React from 'react';
 import { SearchMedicineComponent } from '../components/Search';
-import HeaderComponent from '../components/Header';
-import FooterComponent from '../components/Footer';
 import BannerComponent from '../components/Banner';
 import SliderComponent from '../components/Slider';
 import { InterestContentComponent } from '../components/ContentProducts';
-import '../styles/styles.css';
+import { ROUTES } from '../managers/api/ApiManager';
 
-
-export default class Dictionary extends Component {
-    render() {
-        return (
-            <div>
-                <HeaderComponent />
-                <SliderComponent banner/>
-                <Container>
-                    <SearchMedicineComponent />
-                    <InterestContentComponent />
-                    <BannerComponent />
-                </Container>
-                <FooterComponent />
-            </div>
-        );
-    }
+export default function Dictionary() {
+    return (
+        <>
+            <SliderComponent routes={ROUTES.MAIN} banner />
+            <SearchMedicineComponent />
+            <InterestContentComponent />
+            <BannerComponent />
+        </>
+    );
 }

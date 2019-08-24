@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 export default () => {
     return (
-        <Fragment>
+        <>
             <footer>
                 <div className="tt-footer-default tt-color-scheme-02">
                     <div className="container">
@@ -11,14 +11,14 @@ export default () => {
                                 <div className="tt-newsletter-layout-01">
                                     <div className="tt-newsletter">
                                         <div className="tt-mobile-collapse">
-                                            <h4 className="tt-collapse-title">
+                                            <h4 className="tt-collapse-title text-white" >
                                                 ESTÁ EN CONTACTO CON NOSOTROS
-                                        </h4>
+                                            </h4>
                                             <div className="tt-collapse-content">
-                                                <form id="newsletterform" className="form-inline form-default" method="post" noValidate="novalidate" action="#">
+                                                <form className="form-inline form-default" method="post">
                                                     <div className="form-group">
                                                         <input type="text" name="email" className="form-control" placeholder="Ingresa tu correo" />
-                                                        <button type="submit" className="btn btn-contact">
+                                                        <button className="btn btn-contact">
                                                             SUSCRIBIRSE
                                                     </button>
                                                     </div>
@@ -48,7 +48,7 @@ export default () => {
                                 <div className="tt-mobile-collapse">
                                     <h4 className="tt-collapse-title tt-collapse-title-blue">
                                         LA EMPRESA
-                                </h4>
+                                    </h4>
                                     <div className="tt-collapse-content">
                                         <ul className="tt-list">
                                             <li><a href="listing-collection.html">Quiénes somos</a></li>
@@ -63,7 +63,7 @@ export default () => {
                                 <div className="tt-mobile-collapse">
                                     <h4 className="tt-collapse-title tt-collapse-title-blue">
                                         INFORMACIÓN
-                                </h4>
+                                    </h4>
                                     <div className="tt-collapse-content">
                                         <ul className="tt-list">
                                             <li><a href="account_order.html">Aviso de privacidad</a></li>
@@ -77,10 +77,9 @@ export default () => {
                                 <div className="tt-mobile-collapse">
                                     <h4 className="tt-collapse-title tt-collapse-title-blue">
                                         CLUB VIDA SANA
-                                </h4>
+                                    </h4>
                                     <div className="tt-collapse-content">
                                         <ul className="tt-list">
-
                                             <li><a href="account_order.html">¡Haz parte del club <span className="badge badge-primary">Registrarse</span></a></li>
                                             <li><a href="page404.html">Políticas y términos de uso</a></li>
                                             <li><a href="page404.html">Habeas data</a></li>
@@ -92,12 +91,11 @@ export default () => {
                                 <div className="tt-newsletter">
                                     <div className="tt-mobile-collapse">
                                         <h4 className="tt-collapse-title tt-collapse-title-blue">
-                                            CONTACTS
-                                    </h4>
+                                            LA EMPRESA
+                                        </h4>
                                         <div className="tt-collapse-content">
                                             <address>
-
-                                                <p><span>Contactenos:</span> <a href="mailto:info@mydomain.com">hola@mydomain.com</a></p>
+                                                <p>Contactenos: <a href="mailto:info@mydomain.com">hola@mydomain.com</a></p>
                                             </address>
                                         </div>
                                     </div>
@@ -130,6 +128,6 @@ export default () => {
             </footer>
             {/* link top back  */}
             <a href="/" className="tt-back-to-top">Volver arriba</a>
-        </Fragment>
+        </>
     )
 }

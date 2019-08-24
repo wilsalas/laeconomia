@@ -2584,20 +2584,20 @@
               set_dropdown_maxH.call(that);
             }
 
-            if ($carousel.length) {
-              if (!$carousel.hasClass('slick-initialized')) {
-                $carousel.slick({
-                  dots: false,
-                  arrows: true,
-                  infinite: true,
-                  speed: 300,
-                  slidesToShow: 2,
-                  slidesToScroll: 2,
-                  adaptiveHeight: true
-                });
-              }
-            };
-            $carousel.slick('setPosition');
+            // if ($carousel.length) {
+            //   if (!$carousel.hasClass('slick-initialized')) {
+            //     $carousel.slick({
+            //       dots: false,
+            //       arrows: true,
+            //       infinite: true,
+            //       speed: 300,
+            //       slidesToShow: 2,
+            //       slidesToScroll: 2,
+            //       adaptiveHeight: true
+            //     });
+            //   }
+            // };
+            // $carousel.slick('setPosition');
 
           }, delay);
 
@@ -3192,34 +3192,35 @@ jQuery(function ($) {
 
 
   // Funtions for slider horizontal app
-  const slider = document.querySelector('.items');
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-  if (slider) {
-    slider.addEventListener('mousedown', (e) => {
-      isDown = true;
-      slider.classList.add('active');
-      startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    });
-    slider.addEventListener('mouseleave', () => {
-      isDown = false;
-      slider.classList.remove('active');
-    });
-    slider.addEventListener('mouseup', () => {
-      isDown = false;
-      slider.classList.remove('active');
-    });
-    slider.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - slider.offsetLeft;
-      const walk = (x - startX) * 3; //scroll-fast
-      slider.scrollLeft = scrollLeft - walk;
-      // console.log(walk);
-    });
-  }
+  // const slider = document.querySelector('.items');
+  // let isDown = false;
+  // let startX;
+  // let scrollLeft;
+  // if (slider) {
+
+    // slider.addEventListener('mousedown', (e) => {
+    //   isDown = true;
+    //   slider.classList.add('active');
+    //   startX = e.pageX - slider.offsetLeft;
+    //   scrollLeft = slider.scrollLeft;
+    // });
+    // slider.addEventListener('mouseleave', () => {
+    //   isDown = false;
+    //   slider.classList.remove('active');
+    // });
+    // slider.addEventListener('mouseup', () => {
+    //   isDown = false;
+    //   slider.classList.remove('active');
+    // });
+    // slider.addEventListener('mousemove', (e) => {
+    //   if (!isDown) return;
+    //   e.preventDefault();
+    //   const x = e.pageX - slider.offsetLeft;
+    //   const walk = (x - startX) * 3; //scroll-fast
+    //   slider.scrollLeft = scrollLeft - walk;
+    //   // console.log(walk);
+    // });
+  // }
 
 
 
@@ -3235,11 +3236,14 @@ jQuery(function ($) {
       if (content.style.maxHeight) {
         content.style.maxHeight = null;
       } else {
-        content.style.maxHeight = 200+ "px";
+        content.style.maxHeight = 500+ "px";
         content.style.overflow = "scroll"
       }
     });
   }
+
+  // open collapsible items to reload page
+  $(".collapsible").trigger("click");
 
 });
 

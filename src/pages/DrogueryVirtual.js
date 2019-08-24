@@ -1,23 +1,17 @@
-import React, { Component, Fragment } from 'react';
-import HeaderComponent from '../components/Header';
+import React from 'react';
 import BabyCareComponent from '../components/BabyCare';
 import { GroupCategoryComponent } from '../components/Category';
-import FooterComponent from '../components/Footer';
 import BannerComponent from '../components/Banner';
-import '../styles/styles.css';
 
-export default class DrogueryVirtual extends Component {
+export default function DrogueryVirtual(props) {
 
-    render() {
-        return (
-            <Fragment>
-                <HeaderComponent />
-                <BabyCareComponent />
-                <GroupCategoryComponent />
-                <BannerComponent />
-                <FooterComponent />
-            </Fragment>
-        );
-    }
+    const codeProduct = props.match.params.code ? props.match.params.code : null;
 
+    return (
+        <>
+            <BabyCareComponent />
+            <GroupCategoryComponent codeProduct={codeProduct} />
+            <BannerComponent />
+        </>
+    );
 }

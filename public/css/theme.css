@@ -1966,6 +1966,7 @@ a.btn.disabled, fieldset:disabled a.btn {
   color: #1b41cb;
   background-color: transparent;
   background-image: none;
+  border: 1px solid #1b41cb;
   border-color: #1b41cb;
 }
 
@@ -2416,10 +2417,10 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
   flex-direction: column;
   width: 100%;
   pointer-events: auto;
-  background-color: transparent;
+  /* background-color: transparent; */
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0;
+  border-radius: 5px;
   outline: 0;
 }
 
@@ -2468,6 +2469,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 }
 
 .modal-footer {
+  border: none !important; 
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -21247,7 +21249,7 @@ body:not(.touch-device).mm-open .tt-stuck-nav.stuck {
 
 body:not(.touch-device).modal-open {
   overflow-x: hidden;
-  padding-right: 17px;
+  /* padding-right: 17px; */
 }
 
 body:not(.touch-device).modal-open .tt-stuck-nav.stuck {
@@ -21469,14 +21471,14 @@ html.ie.gecko body.modal-open {
 }
 
 .modal .modal-content {
-  border-radius: 0;
+  /* border-radius: 0; */
   border: none;
 }
 
 .modal .modal-header {
   border: none;
-  padding: 22px 20px 0px 20px;
-  margin: 0;
+  /* padding: 22px 20px 0px 20px;
+  margin: 0; */
 }
 
 .modal .modal-header .close {
@@ -21502,9 +21504,9 @@ html.ie.gecko body.modal-open {
   letter-spacing: 0.02em;
 }
 
-.modal .modal-footer {
+/* .modal .modal-footer {
   border: none;
-}
+} */
 
 /* tt-modal-addtocart */
 
@@ -21731,7 +21733,7 @@ html.ie.gecko body.modal-open {
   display: none;
   overflow: hidden;
   position: fixed;
-  top: 0;
+  top: -50px;
   right: 0;
   bottom: 0;
   left: 0;
@@ -21751,9 +21753,15 @@ html.ie.gecko body.modal-open {
   }
 }
 
+.modal-body{
+  top:-20px;
+}
+
 .modal .modal-header {
-  height: 54px;
+  /* height: 54px; */
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .modal .modal-header .close {
@@ -21764,7 +21772,7 @@ html.ie.gecko body.modal-open {
   position: absolute;
   text-decoration: none;
   text-align: center;
-  color: #ffffff;
+  color: #898989;
   background: none;
   border: none;
   cursor: pointer;
@@ -21777,21 +21785,21 @@ html.ie.gecko body.modal-open {
 
 @media (min-width: 1025px) {
   .modal .modal-header .close {
-    right: -52px;
+    right: 0px;
   }
 }
 
 @media (max-width: 1024px) {
   .modal .modal-header .close {
-    right: -20px;
+    right: 0px;
   }
 }
 
-.modal .modal-header .close:before {
+/* .modal .modal-header .close:before {
   content: "\ea0f";
   font-size: 20px;
   line-height: 1;
-}
+} */
 
 .modal .modal-header .close:hover {
   color: #1b42cb;
@@ -21806,7 +21814,7 @@ html.ie.gecko body.modal-open {
   overflow: hidden;
 }
 
-@media (min-width: 1025px) {
+/* @media (min-width: 1025px) {
   .modal .modal-body {
     padding: 40px;
   }
@@ -21834,7 +21842,7 @@ html.ie.gecko body.modal-open {
   .modal .modal-body {
     padding: 15px;
   }
-}
+} */
 
 @media (min-width: 320px) {
   .modal:before {
