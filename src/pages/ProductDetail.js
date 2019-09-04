@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Container, Col, Row
 } from 'reactstrap';
@@ -13,12 +13,12 @@ export default function ProductDetails() {
     const [getDetailProduct, setDetailProduct] = useState([]);
 
     useEffect(() => {
-        if (localStorage.getItem("dp")) {
-            setDetailProduct(JSON.parse(atob(localStorage.getItem("dp"))))
+        if (localStorage.getItem("dproduct")) {
+            setDetailProduct(JSON.parse(atob(localStorage.getItem("dproduct"))))
         }
     }, [])
-    
-console.log(getDetailProduct);
+
+    console.log(getDetailProduct);
 
     return (
         <>

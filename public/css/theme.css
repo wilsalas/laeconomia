@@ -2402,7 +2402,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 }
 
 .modal.show .modal-dialog {
- margin-top: 5% !important; 
+ /* margin-top: 5% !important;  */
   transform: translate(0, 0);
 }
 
@@ -21286,6 +21286,7 @@ html.ie.gecko body.modal-open {
 }
 
 .modal.show {
+  margin-top: 50px !important; 
   opacity: 1;
   height: auto;
 

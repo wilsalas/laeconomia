@@ -1,11 +1,96 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Container, Col, Row, Card, CardBody,
     CardTitle, Button
 } from 'reactstrap';
 import BannerComponent from '../components/Banner';
+import { FormatPointsSupensive, FormatCOPNumber } from '../managers/helpers/HelperManager';
+import { useGlobal } from '../managers/store/Context';
 
 export default function CartToBuy() {
+    let URL_IMAGE = `https://www.droguerialaeconomia.com/economia/site/img/`;
+    const [getProducts, setProducts] = useState([]);
+    const [getSubTotal, setSubTotal] = useState(0);
+    const [, dispatch] = useGlobal();
+    // var table = document.getElementById("tbl-prod"), sumVal = 0;
+    useEffect(() => {
+        if (localStorage.getItem("cart")) {
+            setProducts(JSON.parse(localStorage.getItem("cart")));
+        }
+    }, []);
+
+
+    // useEffect(() => {
+
+    //     for (var i = 1; i < table.rows.length; i++) {
+    //         sumVal  += parseInt(table.rows[i].cells[2].innerHTML);
+    //         console.log(sumVal);
+    //     }
+
+    // },[])
+
+
+    const funEditCart = (product, countProduct = 0, type) => {
+        let products = JSON.parse(localStorage.getItem("cart"));
+        if (products) {
+            let isRemove = false;
+            products.forEach(item => {
+                if (item.codigo === product.codigo) {
+                    if (type === "+") {
+                        item.countProduct += countProduct
+                    } else {
+                        if (item.countProduct === 1) {
+                            isRemove = true;
+                            funDeleteProductCart(item.codigo);
+                        } else {
+                            item.countProduct -= countProduct
+                        }
+                    }
+                }
+            });
+            if (!isRemove) {
+                localStorage.setItem("cart", JSON.stringify(products));
+                setProducts(products);
+                funCountProduct(products);
+
+            }
+        }
+    }
+
+
+    const funDeleteProductCart = codigo => {
+        let products = JSON.parse(localStorage.getItem("cart")), index = -1;
+        if (products) {
+            products.forEach((item, i) => {
+                if (item.codigo === codigo) {
+                    index = i;
+                    return;
+                }
+            });
+            products.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(products));
+            setProducts(products);
+            funCountProduct(products);
+        }
+    }
+
+    const funCountProduct = products => {
+        let totalProduct = 0;
+        products.forEach(item => totalProduct += item.countProduct);
+        dispatch({ type: 'COUNT_TOTAL_PRODUCT', totalProduct })
+    }
+
+    const funSumSubTotal = (ahora ,countProduct)  => {
+        let newPrices = 0;
+
+
+        newPrices +=  FormatCOPNumber(ahora * countProduct)
+        console.log(newPrices);
+
+
+
+    }
+
     return (
         <>
             <Container>
@@ -13,56 +98,64 @@ export default function CartToBuy() {
                 <Row>
                     <Col md={8}>
                         <div className="tt-shopcart-table-02">
-                            <table>
+                            <table id="tbl-prod">
                                 <tbody className="tbody-cart-buy">
+                                    {getProducts.map((item, i) => {
+
+                                        funSumSubTotal(item.Ahora, item.countProduct);
 
 
-                                    {new Array(10).fill().map((value, i) => {
                                         return (
                                             <tr key={i}>
                                                 <td>
                                                     <div className="tt-product-img">
-                                                        <img src="images/loader.svg" data-src="https://www.droguerialaeconomia.com/economia/site/img/042681.png" alt="item1" />
+                                                        <img src={`${URL_IMAGE}${item.codigo}.png`} alt={`item${i}`} />
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <h2 className="tt-title">
-                                                        Altex lámina antibrillo x 50 unidades
-                                                            </h2>
+                                                        {FormatPointsSupensive(item.descripcion)}
+                                                    </h2>
                                                     <ul className="tt-list-parameters">
                                                         <li>
                                                             <div className="tt-price">
-                                                                $999.990
-                                                                    </div>
+                                                                {FormatCOPNumber(item.Ahora)}
+                                                            </div>
                                                         </li>
                                                         <li>
-                                                            <div className="detach-quantity-mobile" />
+                                                            <div className="detach-quantity-mobile" >
+                                                                <div className="tt-input-counter style-01">
+                                                                    <span className="minus-btn" onClick={() => funEditCart(item, 1, "-")} />
+                                                                    <input type="text" value={item.countProduct} readOnly />
+                                                                    <span className="plus-btn" onClick={() => funEditCart(item, 1, "+")} />
+                                                                </div>
+                                                            </div>
                                                         </li>
                                                         <li>
                                                             <div className="tt-price subtotal">
-                                                                $999.990
-                                                                    </div>
+                                                                {FormatCOPNumber(item.Ahora * item.countProduct)}
+                                                            </div>
                                                         </li>
                                                     </ul>
                                                 </td>
                                                 <td>
                                                     <div className="tt-price">
-                                                        $999.990
-                                                          </div>
+                                                        {FormatCOPNumber(item.Ahora)}
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div className="detach-quantity-desctope">
                                                         <div className="tt-input-counter style-01">
-                                                            <span className="minus-btn" />
-                                                            <input type="text" defaultValue={1} size={100} />
-                                                            <span className="plus-btn" />
+                                                            <span className="minus-btn" onClick={() => funEditCart(item, 1, "-")} />
+                                                            <input type="text" value={item.countProduct} readOnly />
+                                                            <span className="plus-btn" onClick={() => funEditCart(item, 1, "+")} />
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div className="tt-price subtotal">
-                                                        $999.990
-                                                            </div>
+                                                        {FormatCOPNumber(item.Ahora * item.countProduct)}
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <a href="/" className="tt-btn-close" > </a>
@@ -91,11 +184,11 @@ export default function CartToBuy() {
                                         <tbody>
                                             <tr>
                                                 <th>Total artículos:</th>
-                                                <td>15</td>
+                                                <td>{getProducts.length}</td>
                                             </tr>
                                             <tr>
                                                 <th>Sub-total:</th>
-                                                <td>$2’999.990</td>
+                                                <td>{FormatCOPNumber(getSubTotal)}</td>
                                             </tr>
                                             <tr>
                                                 <th>Domicilio:</th>
@@ -123,4 +216,5 @@ export default function CartToBuy() {
         </>
     );
 }
+
 

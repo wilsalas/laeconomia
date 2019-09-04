@@ -3,19 +3,28 @@ import { SearchHeaderComponent } from '../components/Search';
 import { API } from '../managers/api/ApiManager';
 import { Row, Col } from 'reactstrap';
 import { ModalProfile } from './PopUp';
+import { useGlobal } from '../managers/store/Context';
+import { AlertSwal } from '../managers/helpers/HelperManager';
 
 export default function HeaderComponent() {
 
     const [getProfile, setProfile] = useState([]);
     const [citys, setCitys] = useState([]);
     const [getOpenProfile, setOpenProfile] = useState(false);
+    const [getCountProduct, setCountProduct] = useState(0);
+    const [state, dispatch] = useGlobal();
+
 
     useEffect(() => {
         RetrieveStores();
         if (localStorage.getItem("usi")) {
-            setProfile(JSON.parse(atob(localStorage.getItem("usi"))))
+            setProfile(JSON.parse(atob(localStorage.getItem("usi"))));
         }
     }, []);
+
+    useEffect(() => {
+        setCountProduct(state.totalProduct);
+    }, [state.totalProduct])
 
 
     // get all citys
@@ -34,6 +43,21 @@ export default function HeaderComponent() {
     // selected one city
     const funModalProfile = modalProfile => setOpenProfile(modalProfile);
 
+    // get data profile user modal
+    const funGetProfile = async e => {
+        e.preventDefault();
+        let resProfile = await API.POST.PerformRetrieveProfileInformation(getProfile.nit, getProfile.nombres, getProfile.email, getProfile.auth_token);
+        if (!resProfile.error) {
+            dispatch({ type: "INFORMATION_PROFILE", informationProfile: resProfile.message.data });
+            setOpenProfile(true)
+        }else {
+            if (resProfile.message === "TOKEN_ERROR") {
+                dispatch({ type: "REFRESH_TOKEN_MODAL", refreshTokenModal: true });
+            } else {
+                AlertSwal("ERROR_SERVER");                
+            }
+        }
+    }
 
     /*function logout app */
     const funLogout = e => {
@@ -41,8 +65,6 @@ export default function HeaderComponent() {
         localStorage.removeItem('usi');
         window.location.href = "/";
     }
-
-    console.log("datos del usuario", getProfile);
 
     return (
         <>
@@ -212,7 +234,7 @@ export default function HeaderComponent() {
                                 {/* tt-account */}
                                 <div className="tt-desctop-parent-account tt-parent-box">
                                     <div className="tt-account tt-dropdown-obj">
-                                        <button className="tt-dropdown-toggle" data-tooltip={'Mi cuenta'} data-tposition="bottom">
+                                        <button className="tt-dropdown-toggle" data-tooltip={getProfile.nombres ? getProfile.nombres : 'Mi cuenta'} data-tposition="bottom">
                                             <i className="far fa-user-circle"></i>
                                         </button>
                                         <div className="tt-dropdown-menu">
@@ -221,9 +243,8 @@ export default function HeaderComponent() {
                                             </div>
                                             <div className="tt-dropdown-inner">
                                                 <ul>
-
                                                     {getProfile.nit &&
-                                                        <li><a href="/profile" onClick={e => { e.preventDefault(); funModalProfile(true) }} ><i className="icon-e-42"></i>Perfil</a></li>
+                                                        <li><a href="/profile" onClick={e => funGetProfile(e)} ><i className="icon-e-42"></i>Perfil</a></li>
                                                     }
                                                     {!getProfile.nit &&
                                                         <li><a href="/account/login"><i className="icon-g-44" />Iniciar Sesión</a></li>
@@ -244,12 +265,12 @@ export default function HeaderComponent() {
                                 {/* tt-cart */}
                                 <div className="tt-desctop-parent-cart tt-parent-box">
                                     <div className="tt-cart tt-dropdown-obj" data-tooltip="Carrito de compra" data-tposition="bottom">
-                                        <button className="tt-dropdown-toggle">
+                                        <button className="tt-dropdown-toggle" onClick={() => window.location.href = "/buys"}>
                                             <i className="icon-f-47" />
 
-                                            <span className="tt-badge-cart">2</span>
+                                            <span className="tt-badge-cart">{getCountProduct}</span>
                                         </button>
-                                        <div className="tt-dropdown-menu">
+                                        {/* <div className="tt-dropdown-menu">
                                             <div className="tt-mobile-add">
                                                 <h6 className="tt-title">Carrito de compra</h6>
                                                 <button className="tt-close">Cerrar</button>
@@ -296,7 +317,7 @@ export default function HeaderComponent() {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
 
@@ -328,7 +349,7 @@ export default function HeaderComponent() {
                             </Col>
                             <Col md={2} className="mb-2">
                                 <div className="tt-header-row mt-2">
-                                    <div className="tt-stuck-parent-menu" style={{ display: 'none' }} />
+                                    {/* <div className="tt-stuck-parent-menu" style={{ display: 'none' }} /> */}
                                     <div className="tt-stuck-parent-multi tt-parent-box" />
                                     <div className="tt-stuck-parent-search tt-parent-box" />
                                     <div className="tt-stuck-parent-account tt-parent-box" />

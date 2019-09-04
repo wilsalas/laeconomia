@@ -45,6 +45,13 @@ export const IN_OFFER =
     NO: "N",
 }
 
+// Request errors
+export const REST = {
+    TOKEN: {
+        ERROR: 'TOKEN_ERROR', 
+    }
+}
+
 export const URL = {
     HOST: 'https://www.droguerialaeconomia.com',
 }
@@ -110,10 +117,13 @@ export const API = {
             return await fetchAsync(`${URL.HOST}/economia/api/busqProductos/${location}?q=${search}`, HTTP_REQUEST_METHOD.GET)
         },
 
-        async RetrieveProductsFromSubcategory (location, subcategory, {page = 1, itemsPerPage = 12, orderBy = ORDER_BY.DESCRIPTION} = {})
-        {
+        async RetrieveProductsFromSubcategory(location, subcategory, { page = 1, itemsPerPage = 12, orderBy = ORDER_BY.DESCRIPTION } = {}) {
             return await fetchAsync(`${URL.HOST}/economia/api/RefSubCat/${location}/${subcategory}/${page}/${itemsPerPage}/${orderBy}/`, HTTP_REQUEST_METHOD.GET)
         },
+        async RetrieveHomeServiceValue(location) {
+            return await fetchAsync(`${URL.HOST} / economia / api / VlrDomicilio / ${location}`, HTTP_REQUEST_METHOD.GET)
+        }
+
 
     },
     POST: {
@@ -130,7 +140,129 @@ export const API = {
                 response.error = true;
             }
             return response;
-        }
+        },
+        async ValidateToken(document, name, email, token) {
+            const _fields = {
+                nit: document,
+                email,
+                nombres: name,
+                auth_token: token,
+            }
+            let response = await fetchAsync(`${URL.HOST}/economia/site/users/validateToken/`, HTTP_REQUEST_METHOD.POST, { body: FormUrlEncoded(_fields), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+            if (!response.message.success) {
+                response.error = true;
+            }
+            return response;
+        },
+        async PerformRetrieveAddressList(document, name, email, token) {
+            let response = {
+                error: false,
+                message: '',
+            }
+            const validateToken = await this.ValidateToken(document, name, email, token)
+            if (validateToken.error) {
+                response.error = true;
+                response.message = REST.TOKEN.ERROR;
+            }
+            else {
+                const _fields = {
+                    nit: document,
+                    email,
+                    nombres: name,
+                    auth_token: token,
+                }
+                response = await fetchAsync(`${URL.HOST}/economia/site/users/getMyDirecciones/`, HTTP_REQUEST_METHOD.POST, { body: JSON.stringify(_fields) });
+                if (!response.message.success) {
+                    response.error = true;
+                }
+            }
+            return response;
+        },
+
+        async PerformRetrieveProfileInformation(document, name, email, token) {
+            let response = {
+                error: false,
+                message: '',
+            }
+            const validateToken = await this.ValidateToken(document, name, email, token)
+            if (validateToken.error) {
+                response.error = true;
+                response.message = REST.TOKEN.ERROR;
+            }
+            else {
+                const _fields = {
+                    nit: document,
+                    email,
+                    nombres: name,
+                    auth_token: token,
+                }
+                const body = FormUrlEncoded(_fields);
+                response = await fetchAsync(`${URL.HOST}/economia/site/users/userProfile`, HTTP_REQUEST_METHOD.POST, { body, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+                if (!response.message.success) {
+                    response.error = true;
+                }
+            }
+            return response;
+        },
+        async PerformEditProfile(document, name, email, token, { password = '', newName, newDocument, dateOfBirth, phone, cellphone }) {
+            let response = {
+                error: false,
+                message: '',
+            }
+            const _fields = {
+                userInfo: {
+                    nit: document,
+                    email,
+                    nombres: name,
+                    auth_token: token,
+                },
+                user: {
+                    email,
+                    password,
+                    confirm_password: password,
+                    nombres: newName,
+                    nit: newDocument,
+                    fecha_nacimiento: dateOfBirth,
+                    celular: cellphone,
+                    telefono: phone,
+                }
+            }
+            response = await fetchAsync(`${URL.HOST}/economia/site/users/updateUserProfile`, HTTP_REQUEST_METHOD.POST, { body: TwoLevelFormUrlEncoded(_fields), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+            if (!response.message.success) {
+                response.error = true;
+            }
+            return response;
+        },
+        async PerformSaveAddress(address, alias, document, name, email, token) {
+            let response = {
+                error: false,
+                message: '',
+            }
+            const validateToken = await this.ValidateToken(document, name, email, token)
+            if (validateToken.error) {
+                response.error = true;
+                response.message = REST.TOKEN.ERROR;
+            }
+            else {
+                const _fields = {
+                    userInfo: {
+                        nit: document,
+                        email,
+                        nombres: name,
+                        auth_token: token,
+                    },
+                    MyDireccion: {
+                        nombre_direccion: alias,
+                        direccion: address,
+                    }
+                }
+                response = await fetchAsync(`${URL.HOST}/economia/site/users/saveMyDirecciones/`, HTTP_REQUEST_METHOD.POST, { body: TwoLevelFormUrlEncoded(_fields), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+                if (!response.message.success) {
+                    response.error = true;
+                }
+            }
+            return response;
+        },
     },
     PUT: {
 
@@ -144,4 +276,19 @@ const FormUrlEncoded = (params) => {
     return Object.keys(params).map((key) => {
         return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
     }).join('&');
+}
+
+// Esta funcion es independiente de las demas
+const TwoLevelFormUrlEncoded = (params) => {
+    let urlEncoded = '';
+    for (const key in params) {
+        if (params.hasOwnProperty(key)) {
+            for (const childkey in params[key]) {
+                if (params[key].hasOwnProperty(childkey)) {
+                    urlEncoded += encodeURIComponent(key + '[' + childkey + ']') + '=' + encodeURIComponent(params[key][childkey]) + '&';
+                }
+            }
+        }
+    }
+    return urlEncoded;
 }

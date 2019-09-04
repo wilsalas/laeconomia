@@ -12,6 +12,22 @@ const reducer = (state, action) => {
                 ...state,
                 searchProducts: action.searchProducts
             };
+        case 'COUNT_TOTAL_PRODUCT':
+            localStorage.setItem("countProduct", action.totalProduct)
+            return {
+                ...state,
+                totalProduct: action.totalProduct
+            };
+        case 'INFORMATION_PROFILE':
+            return {
+                ...state,
+                informationProfile: action.informationProfile
+            };
+        case 'REFRESH_TOKEN_MODAL':
+            return {
+                ...state,
+                refreshTokenModal: action.refreshTokenModal
+            };
         default:
             return state;
     }
@@ -20,7 +36,10 @@ const reducer = (state, action) => {
 const Store = () => {
     const [state, dispatch] = useReducer(reducer, {
         products: [],
-        searchProducts: []
+        searchProducts: [],
+        totalProduct: localStorage.getItem('countProduct') ? localStorage.getItem('countProduct') : 0,
+        informationProfile: {},
+        refreshTokenModal: false
     });
     return [state, dispatch]
 }

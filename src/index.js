@@ -13,7 +13,7 @@ import ProcessToBuy from './pages/ProcessToBuy';
 import ProductDetail from './pages/ProductDetail';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { ModalLocation } from './components/PopUp';
+import { ModalLocation, ModalRefreshTokenLogin } from './components/PopUp';
 import * as serviceWorker from './serviceWorker';
 import { RootProvider } from './managers/store/Context';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
@@ -38,6 +38,7 @@ ReactDOM.render(
                 </Switch >
                 <Footer />
                 <ModalLocation />
+                <ModalRefreshTokenLogin/>
             </RootProvider>
         </>
     </Router>

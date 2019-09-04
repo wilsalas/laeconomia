@@ -9,7 +9,7 @@ const StepLoginComponent = () => {
     return (
         <>
             <br />
-            <LoginComponent />
+            <LoginComponent isLoginOrRegister/>
         </>
     );
 }

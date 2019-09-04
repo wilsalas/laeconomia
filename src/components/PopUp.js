@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Col, Container, Modal, ModalHeader, ModalBody, Input, Label, Form, FormGroup, Row } from 'reactstrap';
 import { API } from '../managers/api/ApiManager';
-
+import { useGlobal } from '../managers/store/Context';
+import { AlertSwal } from '../managers/helpers/HelperManager';
+import moment from 'moment';
+import { LoginComponent } from './ContentForm';
 
 const Location = props => {
     const [citys, setCitys] = useState([]);
+
 
     // initialize citys getdata
     useEffect(() => {
@@ -36,7 +40,41 @@ const Location = props => {
 }
 
 
-const Profile = () => {
+const Profile = props => {
+    const [state,] = useGlobal();
+    const [getProfile, setProfile] = useState({});
+    const [getDate, setDate] = useState("");
+
+    useEffect(() => {
+        setProfile(state.informationProfile);
+    }, [state.informationProfile]);
+
+
+    useEffect(() => {
+        setDate(moment(new Date(getProfile.fecha_nacimiento)).format('YYYY-MM-DD'))
+    }, [getProfile]);
+
+
+    const funEditProfile = async e => {
+        e.preventDefault();
+        let { password, name, nit, fecha_nacimiento, telefono, celular, confirm_password } = e.target;
+        if (password.value !== confirm_password.value) {
+            AlertSwal("PASSWORD_NOT_MATCH");
+        } else {
+            let resEditProfile = await API.POST.PerformEditProfile(getProfile.nit, getProfile.nombres, getProfile.email, getProfile.auth_token, {
+                password: password.value,
+                newName: name.value,
+                newDocument: nit.value,
+                dateOfBirth: fecha_nacimiento.value,
+                phone: telefono.value,
+                cellphone: celular.value
+            });
+            AlertSwal(!resEditProfile.error ? "UPDATE_SUCCESS" : "ERROR_SERVER");
+            props.closeModal();
+        }
+    }
+
+
     return (
         <>
             <Row>
@@ -44,34 +82,39 @@ const Profile = () => {
                     <div className="tt-item">
                         <h2 className="tt-title">MI PERFIL</h2>
                         <div className="form-default form-top">
-                            <Form >
+                            <Form onSubmit={e => funEditProfile(e)}>
                                 <FormGroup>
                                     <Label for="email" className="mt-3">INFORMACION DE CUENTA</Label>
-                                    <Input className="account-input" type="email" name="email" placeholder="Ingresa tu correo electrónico" required />
+                                    <div className="form-default form-control account-input">
+                                        <p className="text-left" >{getProfile.email}</p>
+                                    </div>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="password">CAMBIO DE CONTRASEÑA</Label>
-                                    <Input className="account-input" type="password" name="password" placeholder="Nueva contraseña" required />
-                                    <Input className="account-input mt-2" type="password" name="password" placeholder="Cambiar nueva contraseña" required />
+                                    <Input className="account-input" type="password" name="password" placeholder="Nueva contraseña" autoComplete="off" />
+                                    <Input className="account-input mt-2" type="password" name="confirm_password" placeholder="Confirmar nueva contraseña" autoComplete="off" />
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="personal">INFORMACION PERSONAL</Label>
-                                    <Input className="account-input" type="text" name="name" placeholder="Nombre completo" required />
-                                    <Input className="account-input mt-2" type="tel" name="nit" placeholder="Cedula/Nit/Pasaporte" required />
-                                    <Input className="account-input mt-2" type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" required />
+                                    <Input className="account-input" type="text" name="name" placeholder="Nombre completo" required defaultValue={getProfile.nombres} />
+                                    <Input className="account-input mt-2" type="tel" name="nit" placeholder="Cedula/Nit/Pasaporte" required defaultValue={getProfile.nit} />
+                                    <Input className="account-input mt-2" type="date" name="fecha_nacimiento" defaultValue={getDate !== "Invalid date" ? getDate : ''} required />
                                 </FormGroup>
                                 <Row>
                                     <Col className="col-auto mr-auto">
                                         <FormGroup>
-                                            <Input className="account-input" type="tel" name="celular" placeholder="Celular" required />
+                                            <Input className="account-input" type="tel" name="celular" placeholder="Celular" required defaultValue={getProfile.celular} />
                                         </FormGroup>
                                     </Col>
                                     <Col className="col-auto align-self-end">
                                         <FormGroup>
-                                            <Input className="account-input" type="tel" name="telefono" placeholder="Telefono" required />
+                                            <Input className="account-input" type="tel" name="telefono" placeholder="Telefono" required defaultValue={getProfile.telefono} />
                                         </FormGroup>
                                     </Col>
                                 </Row>
+                                <FormGroup>
+                                    <Button block > Actualizar </Button>
+                                </FormGroup>
                             </Form>
                         </div>
                     </div>
@@ -243,17 +286,36 @@ const ModalProfile = props => {
             <Modal returnFocusAfterClose isOpen={props.modalOpen} >
                 <ModalHeader toggle={() => props.closeModal()}></ModalHeader>
                 <ModalBody>
-                    <Profile />
+                    <Profile {...props} />
                 </ModalBody>
             </Modal>
         </>
     );
 }
 
+const ModalRefreshTokenLogin = () => {
+    const [state, dispatch] = useGlobal();
+
+    const funModalCloset = () => {
+        dispatch({ type: "REFRESH_TOKEN_MODAL", refreshTokenModal: false });
+    }
+
+    return (
+        <>
+            <Modal returnFocusAfterClose isOpen={state.refreshTokenModal} >
+                <ModalHeader toggle={() => funModalCloset()}></ModalHeader>
+                <ModalBody>
+                    <LoginComponent />
+                </ModalBody>
+            </Modal>
+        </>
+    )
+}
 
 export {
     ModalLocation,
-    ModalProfile
+    ModalProfile,
+    ModalRefreshTokenLogin
 }
 
 

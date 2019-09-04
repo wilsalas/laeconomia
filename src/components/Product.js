@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardBody, CardTitle, CardSubtitle, CardImg, CardText, Row, Col } from 'reactstrap';
-import { FormatCOPNumber, funRenderSpinner,FormatPointsSupensive } from '../managers/helpers/HelperManager';
+import { FormatCOPNumber, funRenderSpinner, FormatPointsSupensive } from '../managers/helpers/HelperManager';
+import { useGlobal } from '../managers/store/Context';
 
 const VerticalProductComponent = props => {
 
@@ -71,11 +72,39 @@ const HorizontalBrandsComponent = props => {
 
 const Product = props => {
 
+    const [, dispatch] = useGlobal();
     let URL_IMAGE = `https://www.droguerialaeconomia.com/economia/site/img/`;
 
+
     const funSaveDetailProduct = () => {
-        localStorage.setItem("dp", btoa(JSON.stringify(props)));
+        localStorage.setItem("dproduct", btoa(JSON.stringify(props)));
         window.location.href = "/detail"
+    }
+
+    const funAddCart = (product, countProduct = 0) => {
+        let products = JSON.parse(localStorage.getItem("cart"));
+        if (products) {
+            let isAdd = false;
+            products.forEach((item, i) => {
+                if (item.codigo === product.codigo) {
+                    item.countProduct += countProduct
+                    isAdd = true;
+                }
+            })
+            if (!isAdd) {
+                products.push({ ...product, countProduct });
+            }
+        } else {
+            products = [{ ...product, countProduct }];
+        }
+        localStorage.setItem("cart", JSON.stringify(products));
+        funCountProduct(products);
+    }
+
+    const funCountProduct = products => {
+        let totalProduct = 0;
+        products.forEach(item => totalProduct += item.countProduct);
+        dispatch({ type: 'COUNT_TOTAL_PRODUCT', totalProduct })
     }
 
     return props.codigo ? (
@@ -90,7 +119,7 @@ const Product = props => {
                 <CardText title={props.descripcion}>{FormatPointsSupensive(props.descripcion)}</CardText>
                 <CardText>Mililitro a $999.999</CardText>
                 <CardText>{props.Categoria}</CardText>
-                <button className="btn-lg btn-outline-primary rounded-pill" onClick={(e) => console.log(e.target)}>Agregar</button>
+                <button className="btn-lg btn-outline-primary rounded-pill" onClick={() => funAddCart(props, 1)}>Agregar</button>
             </CardBody>
         </Card>
     ) : null

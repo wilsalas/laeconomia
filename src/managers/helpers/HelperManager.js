@@ -25,10 +25,21 @@ export const AlertSwal = (message, textValue = "") => {
     } else if (message === "TERMS") {
         text = "Para continuar con el registro debes aceptar los términos y condiciones.";
         icon = "info";
-    } else if (message === "REGISTER_SUCESS") {
+    } else if (message === "REGISTER_SUCCESS") {
         text = "Se ha completado el proceso de registro.";
         icon = "success";
+    } else if (message === "UPDATE_SUCCESS") {
+        text = "Perfil de usuario actualizado con éxito.";
+        icon = "success";
+    } else if (message === "PASSWORD_NOT_MATCH") {
+        text = "La contraseña y la confirmacion no coinciden, verifiquelo e intentelo nuevamente.";
+        icon = "warning";
+    } else if (message === "ERROR_SERVER") {
+        title = "Ups!"
+        text = "Ha ocurrido un error inesperado en la aplicación. por favor intente nuevamente";
+        icon = "error";
     }
+
 
     swal({ title, text, icon, button: "Entendido" })
 };
