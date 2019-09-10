@@ -78,7 +78,7 @@ export default function HeaderComponent() {
                         </li>
                         <li>
                             <a href="/droguery" >DROGUERIA VIRTUAL</a>
-                            <ul>
+                            {/* <ul>
                                 {new Array(10).fill().map((value, i) => {
                                     return (
                                         <li key={i}>
@@ -91,7 +91,7 @@ export default function HeaderComponent() {
                                         </li>
                                     )
                                 })}
-                            </ul>
+                            </ul> */}
                         </li>
                         <li>
                             <a href="/babycare">CUIDADO DEL BEBÉ</a>
@@ -154,7 +154,7 @@ export default function HeaderComponent() {
                                                 </li>
                                                 <li className="dropdown megamenu ">
                                                     <a href="/droguery" >DROGUERIA VIRTUAL</a>
-                                                    <div className="dropdown-menu">
+                                                    {/* <div className="dropdown-menu">
                                                         <div className="row tt-col-list">
 
                                                             {new Array(10).fill().map((value, i) => {
@@ -175,7 +175,7 @@ export default function HeaderComponent() {
                                                             })}
 
                                                         </div>
-                                                    </div>
+                                                    </div> */}
                                                 </li>
 
                                                 <li className="dropdown tt-megamenu-col-01 ">

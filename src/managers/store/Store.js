@@ -28,6 +28,16 @@ const reducer = (state, action) => {
                 ...state,
                 refreshTokenModal: action.refreshTokenModal
             };
+        case 'MODAL_ADRESS':
+            return {
+                ...state,
+                modalAdress: action.modalAdress
+            };
+        case 'STEP_ACTIVE':
+            return {
+                ...state,
+                step: action.step
+            };
         default:
             return state;
     }
@@ -39,7 +49,9 @@ const Store = () => {
         searchProducts: [],
         totalProduct: localStorage.getItem('countProduct') ? localStorage.getItem('countProduct') : 0,
         informationProfile: {},
-        refreshTokenModal: false
+        refreshTokenModal: false,
+        modalAdress: false,
+        step: 1
     });
     return [state, dispatch]
 }

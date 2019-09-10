@@ -58,9 +58,9 @@ const SearchHeaderComponent = () => {
                                         />
                                         {getChangeInput !== "" &&
                                             <div className="content-search" >
-                                                <hr />
+                                                {/* <hr /> */}
                                                 <Container>
-                                                    <Row className="content-row-collapsible">
+                                                    <Row className="content-row-collapsible mt-3">
                                                         <Col md={4} className="content-search-border-rigth collapsible-col">
                                                             {getLoading && funRenderSpinner("sm")}
                                                             {!getLoading > 0 && getSearch.map((item, i) => {

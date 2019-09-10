@@ -34,13 +34,16 @@ export const AlertSwal = (message, textValue = "") => {
     } else if (message === "PASSWORD_NOT_MATCH") {
         text = "La contraseña y la confirmacion no coinciden, verifiquelo e intentelo nuevamente.";
         icon = "warning";
+    }else if (message === "ADDRESS_SUCCESS") {
+        text = "Nueva dirección añadida con éxito.";
+        icon = "success";
     } else if (message === "ERROR_SERVER") {
         title = "Ups!"
         text = "Ha ocurrido un error inesperado en la aplicación. por favor intente nuevamente";
         icon = "error";
     }
 
-
+    
     swal({ title, text, icon, button: "Entendido" })
 };
 
@@ -79,3 +82,9 @@ export const FormatCOPNumber = (number, commas = false) => {
 export const FormatPointsSupensive = element => element.substring(0, 27) + "...";
 
 export const funRenderSpinner = (type = "md") => <div style={{ display: 'flex', justifyContent: 'center' }}><Spinner size={type} color="primary" /> </div>
+
+
+// function get value formater string or number
+export const GetDigits = (text, isDataNumeric = false) => {
+    return isDataNumeric ? parseInt(text.toString().replace(/\D/g, "")) : text.toString().replace(/\D/g, "");
+}

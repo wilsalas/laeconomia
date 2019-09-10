@@ -122,8 +122,10 @@ export const API = {
         },
         async RetrieveHomeServiceValue(location) {
             return await fetchAsync(`${URL.HOST} / economia / api / VlrDomicilio / ${location}`, HTTP_REQUEST_METHOD.GET)
-        }
-
+        },
+        async RetrieveWhetherCouponIsValidOrNot (coupon, document, name, email, token) {
+            return await fetchAsync(`${URL.HOST}/economia/api/cupon/${coupon}?user[nit]=${document}&user[email]=${email}&user[nombres]=${name}&user[auth_token]=${token}`, HTTP_REQUEST_METHOD.GET)
+        },
 
     },
     POST: {
@@ -154,30 +156,35 @@ export const API = {
             }
             return response;
         },
-        async PerformRetrieveAddressList(document, name, email, token) {
-            let response = {
-                error: false,
-                message: '',
-            }
-            const validateToken = await this.ValidateToken(document, name, email, token)
-            if (validateToken.error) {
-                response.error = true;
-                response.message = REST.TOKEN.ERROR;
-            }
-            else {
-                const _fields = {
-                    nit: document,
-                    email,
-                    nombres: name,
-                    auth_token: token,
-                }
-                response = await fetchAsync(`${URL.HOST}/economia/site/users/getMyDirecciones/`, HTTP_REQUEST_METHOD.POST, { body: JSON.stringify(_fields) });
-                if (!response.message.success) {
-                    response.error = true;
-                }
-            }
-            return response;
-        },
+        async PerformRetrieveAddressList (document, name, email, token)
+       {
+           let response = {
+               error: false,
+               message: '',
+           }
+           const validateToken = await this.ValidateToken(document, name, email, token)
+           if(validateToken.error)
+           {
+               response.error = true;
+               response.message = REST.TOKEN.ERROR;
+           }
+           else
+           {
+               const _fields = {
+                   nit: document,
+                   email,
+                   nombres: name,
+                   auth_token: token,
+               }
+               const body = FormUrlEncoded(_fields);
+               response = await fetchAsync(`${URL.HOST}/economia/site/users/getMyDirecciones/`, HTTP_REQUEST_METHOD.POST, { body, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+               if(!response.message.success)
+               {
+                   response.error = true;
+               }
+           }
+           return response;
+       },
 
         async PerformRetrieveProfileInformation(document, name, email, token) {
             let response = {
@@ -291,4 +298,18 @@ const TwoLevelFormUrlEncoded = (params) => {
         }
     }
     return urlEncoded;
+}
+
+// Esta funcion es para formatear la data de cupon
+export const FormatCoupon = (coupon) =>
+{
+   return {
+       type: coupon.Condicion,
+       description: coupon.Descripcion,
+       startDate: coupon.Desde,
+       endDate: coupon.Hasta,
+       strType: coupon.TipoCupon, // <= Type of coupon as string
+       value: coupon.ValorCupon, // <= Amount of coupon
+       minAmount: coupon.VlrMinimo, // <= Min. amount of the purchase/order to apply this coupon
+   }
 }

@@ -8,27 +8,16 @@ import { FormatPointsSupensive, FormatCOPNumber } from '../managers/helpers/Help
 import { useGlobal } from '../managers/store/Context';
 
 export default function CartToBuy() {
+    let newPrices = [], subTotal = 0, totalBuy = 0, domicilie = 5500;
     let URL_IMAGE = `https://www.droguerialaeconomia.com/economia/site/img/`;
     const [getProducts, setProducts] = useState([]);
-    const [getSubTotal, setSubTotal] = useState(0);
-    const [, dispatch] = useGlobal();
+    const [state, dispatch] = useGlobal();
     // var table = document.getElementById("tbl-prod"), sumVal = 0;
     useEffect(() => {
         if (localStorage.getItem("cart")) {
             setProducts(JSON.parse(localStorage.getItem("cart")));
         }
     }, []);
-
-
-    // useEffect(() => {
-
-    //     for (var i = 1; i < table.rows.length; i++) {
-    //         sumVal  += parseInt(table.rows[i].cells[2].innerHTML);
-    //         console.log(sumVal);
-    //     }
-
-    // },[])
-
 
     const funEditCart = (product, countProduct = 0, type) => {
         let products = JSON.parse(localStorage.getItem("cart"));
@@ -80,15 +69,12 @@ export default function CartToBuy() {
         dispatch({ type: 'COUNT_TOTAL_PRODUCT', totalProduct })
     }
 
-    const funSumSubTotal = (ahora ,countProduct)  => {
-        let newPrices = 0;
-
-
-        newPrices +=  FormatCOPNumber(ahora * countProduct)
-        console.log(newPrices);
-
-
-
+    const funSumSubTotal = (ahora, countProduct) => {
+        newPrices.push(ahora * countProduct)
+        subTotal = newPrices.reduce((total, num) => total + num);
+        console.log("total", totalBuy , "domicile", domicilie, "subtotal", subTotal);
+        
+        totalBuy = domicilie + subTotal;
     }
 
     return (
@@ -184,15 +170,15 @@ export default function CartToBuy() {
                                         <tbody>
                                             <tr>
                                                 <th>Total artículos:</th>
-                                                <td>{getProducts.length}</td>
+                                                <td>{state.totalProduct}</td>
                                             </tr>
                                             <tr>
                                                 <th>Sub-total:</th>
-                                                <td>{FormatCOPNumber(getSubTotal)}</td>
+                                                <td>{FormatCOPNumber(subTotal)}</td>
                                             </tr>
                                             <tr>
                                                 <th>Domicilio:</th>
-                                                <td>$5.500</td>
+                                                <td>{FormatCOPNumber(domicilie)}</td>
                                             </tr>
                                             <tr>
                                                 <th>   <hr /></th>
@@ -200,7 +186,7 @@ export default function CartToBuy() {
                                             </tr>
                                             <tr>
                                                 <th>Total:</th>
-                                                <td>$3’005.490</td>
+                                                <td>{FormatCOPNumber(totalBuy)}</td>
                                             </tr>
                                         </tbody>
                                     </table>

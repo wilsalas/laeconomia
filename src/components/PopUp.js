@@ -124,6 +124,60 @@ const Profile = props => {
     );
 }
 
+const Adress = props => {
+
+    const [, dispatch] = useGlobal();
+
+    const funSaveAddress = async e => {
+        e.preventDefault();
+        let { name_adress, name_alias } = e.target,
+            resSaveAddress = await API.POST.PerformSaveAddress(
+                name_adress.value,
+                name_alias.value,
+                props.getProfile.nit,
+                props.getProfile.nombres,
+                props.getProfile.email,
+                props.getProfile.auth_token);
+        if (!resSaveAddress.error) {
+            props.funModalCloset();
+            AlertSwal("ADDRESS_SUCCESS");
+        } else {
+            if (resSaveAddress.message === "TOKEN_ERROR") {
+                dispatch({ type: "REFRESH_TOKEN_MODAL", refreshTokenModal: true });
+            } else {
+                AlertSwal("ERROR_SERVER");
+            }
+        }
+    }
+
+
+    return (
+        <>
+            <Row>
+                <Col md={12} xs={12}>
+                    <div className="tt-item">
+                        <h2 className="tt-title mb-3">MIS DIRECCIONES</h2>
+                        <div className="form-default form-top">
+                            <Form onSubmit={e => funSaveAddress(e)}>
+
+                                <FormGroup>
+                                    <Input className="account-input" type="text" name="name_adress" placeholder="Nombre Descriptivo" required />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Input className="account-input" type="text" name="name_alias" placeholder="Cll/Cra/Via..., Barrio" required />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Button block className="mt-2"><i className="fas fa-check"></i>&nbsp;&nbsp;Guardar </Button>
+                                </FormGroup>
+                            </Form>
+                        </div>
+                    </div>
+                </Col>
+            </Row>
+        </>
+    )
+}
+
 
 const PaymentCreditCart = () => {
     return (
@@ -312,10 +366,30 @@ const ModalRefreshTokenLogin = () => {
     )
 }
 
+const ModalAdress = props => {
+    const [state, dispatch] = useGlobal();
+
+    const funModalCloset = () => {
+        dispatch({ type: "MODAL_ADRESS", modalAdress: false });
+    }
+
+    return (
+        <>
+            <Modal returnFocusAfterClose isOpen={state.modalAdress} >
+                <ModalHeader toggle={() => funModalCloset()}></ModalHeader>
+                <ModalBody>
+                    <Adress {...props} funModalCloset={() => funModalCloset()} />
+                </ModalBody>
+            </Modal>
+        </>
+    )
+}
+
 export {
     ModalLocation,
     ModalProfile,
-    ModalRefreshTokenLogin
+    ModalRefreshTokenLogin,
+    ModalAdress
 }
 
 

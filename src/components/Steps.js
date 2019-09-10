@@ -1,20 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LoginComponent } from './ContentForm';
 import {
-    Button, Container, Col, Row, Label, Form, FormGroup, Input,
-    Card, CardImg, CardBody, CardTitle
+    Button, Container, Col, Row, Label, Form,
+    FormGroup, Input, InputGroup, InputGroupAddon,
+    InputGroupText,
+    Card, CardBody, CardTitle
 } from 'reactstrap';
+import { useGlobal } from '../managers/store/Context';
+import { API , FormatCoupon} from '../managers/api/ApiManager';
 
 const StepLoginComponent = () => {
     return (
         <>
             <br />
-            <LoginComponent isLoginOrRegister/>
+            <LoginComponent isLoginOrRegister />
         </>
     );
 }
 
-const StepFacturationComponent = () => {
+const StepFacturationComponent = props => {
+    const [, dispatch] = useGlobal();
+    const [getListAdress, setListAdress] = useState([]);
+
+    useEffect(() => {
+        if (getListAdress.length < 1) {
+            funPerformRetrieveAddressList();
+        }
+    })
+
+    // get all citys
+    const funPerformRetrieveAddressList = async () => {
+
+        let resRetrieveAddressList = await API.POST.PerformRetrieveAddressList(
+            props.getProfile.nit,
+            props.getProfile.nombres,
+            props.getProfile.email,
+            props.getProfile.auth_token);
+
+        if (!resRetrieveAddressList.error) {
+            setListAdress(resRetrieveAddressList.message.data)
+        } else {
+            if (resRetrieveAddressList.message === "TOKEN_ERROR") {
+                dispatch({ type: "REFRESH_TOKEN_MODAL", refreshTokenModal: true });
+            }
+        }
+    }
+
+
     return (
         <>
             <br />
@@ -24,28 +56,30 @@ const StepFacturationComponent = () => {
                     <Row className="mx-auto">
                         <Col md={6} xs={12}>
                             <div className="tt-item">
-                                <Form>
-                                    <FormGroup check>
-                                        <Label check>
-                                            <Input type="radio" name="adress_default" defaultChecked />  Dirección predeterminada
+                                <Row>
+                                    <Col md={8} xs={8}>
+                                        <FormGroup check>
+                                            <Label check>
+                                                <Input type="radio" name="adress_default" defaultChecked />  Dirección predeterminada
                                             </Label>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label></Label>
-                                        <Input className="account-input" type="text" name="adress" disabled placeholder="Casa - Cra 51B 80 58" />
-                                    </FormGroup>
-                                    <Row>
-                                        <Col className="col-auto mr-auto">
-                                            <FormGroup>
-                                            </FormGroup>
-                                        </Col>
-                                        <Col className="col-auto align-self-end">
-                                            <FormGroup>
-                                                <Button className="btn btn-border">Seleccionar</Button>
-                                            </FormGroup>
-                                        </Col>
-                                    </Row>
-                                </Form>
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md={4} xs={4}>
+                                        <FormGroup>
+                                            <button className="btn btn-success" onClick={() => dispatch({ type: "MODAL_ADRESS", modalAdress: true })}> <i className="fas fa-plus"></i></button>
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+
+                                <FormGroup>
+                                    <Input type="select" name="adress" className="account-input">
+                                        {getListAdress.map((item, i) => <option key={i} value={item.direccion}>{item.nombre_direccion} - {item.direccion}</option>)}
+
+                                    </Input>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Button className="btn btn-border" block disabled={getListAdress.length < 1}>Seleccionar</Button>
+                                </FormGroup>
                             </div>
                         </Col>
                         <Col md={6} xs={12}>
@@ -61,21 +95,8 @@ const StepFacturationComponent = () => {
                                         <Input className="account-input" type="text" name="adress" placeholder="Ingresa nueva dirección" />
                                     </FormGroup>
                                     <FormGroup>
-                                        <Label for="exampleText">Notas / Observaciones</Label>
-                                        <Input type="textarea" name="text" id="exampleText" placeholder="Apartamento, oficina, piso, etc." />
+                                        <Button className="btn btn-border" block>Seleccionar</Button>
                                     </FormGroup>
-                                    <Row>
-                                        <Col className="col-auto mr-auto">
-                                            <FormGroup>
-
-                                            </FormGroup>
-                                        </Col>
-                                        <Col className="col-auto align-self-end">
-                                            <FormGroup>
-                                                <Button className="btn btn-border">Seleccionar</Button>
-                                            </FormGroup>
-                                        </Col>
-                                    </Row>
                                 </Form>
                             </div>
                         </Col>
@@ -86,9 +107,11 @@ const StepFacturationComponent = () => {
     );
 }
 
-const StepPaymentMethodComponent = () => {
+const StepPaymentMethodComponent = props => {
 
     const [selectedItem, setSelectedItem] = useState("");
+    const [getCupon, setCupon] = useState("");
+    const [state, dispatch] = useGlobal();
     const [delivery] = useState([
         {
             icon: 'money',
@@ -118,23 +141,57 @@ const StepPaymentMethodComponent = () => {
     // select method avaliable
     const SeletedPaymentMethod = classname => setSelectedItem(classname);
 
+
+    const funGetCouponIsValidOrNot = async e => {
+        e.preventDefault();
+
+        setCupon(e.target.value);
+
+
+
+        console.log("lo que mando", e.target.value);
+        
+
+        let resCouponIsValidOrNot = await API.GET.RetrieveWhetherCouponIsValidOrNot(
+            e.target.value,
+            props.getProfile.nit,
+            props.getProfile.nombres,
+            props.getProfile.email,
+            props.getProfile.auth_token);
+
+
+                console.log(resCouponIsValidOrNot);
+                
+            
+            if (!resCouponIsValidOrNot.error) {
+                console.log("cupon", FormatCoupon(resCouponIsValidOrNot.message.data[0]));
+                dispatch({ type: "STEP_ACTIVE", step: 4 })
+            // setListAdress(resRetrieveAddressList.message.data)
+        } else {
+            if (resCouponIsValidOrNot.message === "TOKEN_ERROR") {
+                dispatch({ type: "REFRESH_TOKEN_MODAL", refreshTokenModal: true });
+            }
+        }
+
+    }
+
     return (
         <>
             <br />
             <Container >
-                <h5 className="mt-4 mb-2 text-center" >INFORMACIÓN DEL ENVÍO</h5>
+                <h5 className="mt-2 text-center" >MEDIOS DE PAGO</h5>
                 <div className="tt-login-form">
                     <Row className="text-center justify-content-center">
-                        <Col md={4} xs={12}>
-                            <div className="tt-item card-img-step ">
-                                <h6 className="mt-4 mb-2 " >PAGA CONTRAENTREGA</h6>
+                        <Col md={4} xs={12} className="mt-3">
+                            <div className="tt-item card-img-step " style={{ height: '100%' }}>
+                                <h6 className="" >PAGA CONTRAENTREGA</h6>
                                 <Row className="justify-content-center">
                                     {delivery.map((value, i) => {
                                         return (
                                             <Col md={4} xs={4} key={i} onClick={() => SeletedPaymentMethod(value.title)}>
                                                 <Card className={`card-step ${value.title === selectedItem ? 'col-active-step' : ''}`}>
                                                     <CardBody>
-                                                        <CardImg top width="100%" height="45px" src={`./assets/payment_methods/${value.icon}.png`} alt="Card image cap" />
+                                                        <img width="100%" style={{ height: 45 }} src={`./assets/payment_methods/${value.icon}.png`} alt="Card1" />
                                                     </CardBody>
                                                 </Card>
                                                 <CardTitle className={`mt-2 ${value.title === selectedItem ? 'col-active-title-step' : ''}`}>{value.title}</CardTitle>
@@ -143,24 +200,18 @@ const StepPaymentMethodComponent = () => {
                                     })}
                                 </Row>
                             </div>
-                            <Row>
-                                <div className="tt-shopcart-btn mt-5">
-                                    <div className="col-left">
-                                        <a className="btn-link" href="/" style={{ fontSize: 20 }} ><i className="icon-e-19" style={{ fontSize: 25 }} /> Volver</a>
-                                    </div>
-                                </div>
-                            </Row>
+
                         </Col>
-                        <Col md={4} xs={12}>
-                            <div className="tt-item m card-img-step">
-                                <h6 className="mt-4 mb-2 text-center" >PAGA ONLINE</h6>
+                        <Col md={4} xs={12} className="mt-3">
+                            <div className="tt-item card-img-step" style={{ height: '100%' }}>
+                                <h6 className="text-center" >PAGA ONLINE</h6>
                                 <Row className="justify-content-center">
                                     {onlineMethod.map((value, i) => {
                                         return (
                                             <Col md={4} xs={4} key={i} onClick={() => SeletedPaymentMethod(value.title)}>
                                                 <Card className={`card-step ${value.title === selectedItem ? 'col-active-step' : ''}`}>
                                                     <CardBody>
-                                                        <CardImg top width="100%" height="45px" src={`./assets/payment_methods/${value.icon}.png`} alt="Card image cap" />
+                                                        <img width="100%" style={{ height: 45 }} src={`./assets/payment_methods/${value.icon}.png`} alt="Card2" />
                                                     </CardBody>
                                                 </Card>
                                                 <CardTitle className={`mt-2 ${value.title === selectedItem ? 'col-active-title-step' : ''}`}>{value.title}</CardTitle>
@@ -170,17 +221,58 @@ const StepPaymentMethodComponent = () => {
                                 </Row>
 
                             </div>
+
+                        </Col>
+                        <Col md={8} xs={12} className="mt-3">
+                            <div className="tt-item m card-img-step" style={{ height: '90%' }}>
+                                <Row className="mb-3">
+                                    <Col md={6} xs={12}>
+
+                                        <h6>¿Tienes un cupón de descuento?</h6>
+                                    </Col>
+                                    <Col md={6} xs={12}>
+
+                                        <InputGroup>
+                                            <Input 
+                                            maxLength="15"
+                                            onBlur={e => funGetCouponIsValidOrNot(e)}
+                                            placeholder="INGR3S4TUCUP0N" style={{
+                                                borderRadius: '11px 0px 0px 11px',
+                                                borderRight: 'none'
+                                            }} />
+                                            <InputGroupAddon addonType="append" >
+                                                <InputGroupText className="input-group-personal" style={{
+                                                    borderRadius: '0px 11px 11px 0px'
+                                                }}>
+                                                    <img src={`/assets/icon_success.png`} width="20px" height="20px" alt="img-response"/>
+                                                </InputGroupText>
+                                            </InputGroupAddon>
+                                        </InputGroup>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Col>
+
+                        <Col md={8} xs={12} className="mt-3">
                             <Row className="float-right">
-                                <Button className="mt-5">
+                                <Button >
                                     Continuar
                                     </Button>
                             </Row>
+
+                            <Row>
+                                <div className="tt-shopcart-btn">
+                                    <div className="col-left">
+                                        <a className="btn-link" href="/" style={{ fontSize: 20 }} ><i className="icon-e-19" style={{ fontSize: 25 }} /> Volver</a>
+                                    </div>
+                                </div>
+                            </Row>
+
                         </Col>
                     </Row>
-
                 </div>
             </Container>
-            <br />  <br />  <br />  <br />  <br />
+            <br />  
         </>
     );
 }
