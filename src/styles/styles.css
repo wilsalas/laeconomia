@@ -326,6 +326,21 @@ a:not([href]):not([tabindex]) {
     color: white;
     font-weight: 600;
     border-radius: 5px 5px 5px 5px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.div-percent-buy {
+    width: 35%;
+    background-color: #ff2c6e;
+    position: absolute;
+    top: -24%;
+    left: 2%;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px 5px 5px 5px;
+    font-size: 13px;
+    text-align: center;
 }
 
 .div-cardbody>div {
@@ -407,8 +422,8 @@ a:not([href]):not([tabindex]) {
     border-left: none;
     border-radius: 0px !important;
     font-weight: 500 !important;
-    color: #657272;
-    border-color: #657272;
+    color:  #657272 !important;
+    border-color: #ced4da;
 }
 
 .medicine-input::placeholder, .medicine-input:focus {

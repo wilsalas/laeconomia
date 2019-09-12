@@ -54,11 +54,11 @@ const ListCategoryComponent = () => {
     }
 
 
-    const funProductForSubCategories = async (e, subCategory) => {
+    const funProductForSubCategories = async (e, subCategorie) => {
         e.preventDefault();
         dispatch({ type: "GET_PRODUCT" })
-        let resSubCategories = await API.GET.RetrieveProductsFromSubcategory(localStorage.getItem("city"), subCategory);
-        if (Array.isArray(resSubCategories.message)) dispatch({ type: "GET_PRODUCT", products: resSubCategories.message })
+        let resSubCategories = await API.GET.RetrieveProductsFromSubcategory(localStorage.getItem("city"), subCategorie);
+        if (Array.isArray(resSubCategories.message)) dispatch({ type: "GET_PRODUCT", products: resSubCategories.message , subCategorie})
     }
 
     return (
@@ -183,12 +183,12 @@ const GroupCategoryComponent = props => {
             <Row>
                 <Col md={3} className="mt-4">
                     <Row>
-                        <Col md={12}>
+                        {/* <Col md={12}>
                             <button className="collapsible">ORDENAR POR</button>
                             <div className="content_active_collapsible mb-4">
                                 <OrderCategoryComponent />
                             </div>
-                        </Col>
+                        </Col> */}
                         <Col md={12}>
                             <button className="collapsible">CATEGORÍAS</button>
                             <div className="content_active_collapsible">

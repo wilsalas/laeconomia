@@ -5,7 +5,8 @@ const reducer = (state, action) => {
         case 'GET_PRODUCT':
             return {
                 ...state,
-                products: action.products ? action.products : []
+                products: action.products ? action.products : [],
+                subCategorie: action.subCategorie ? action.subCategorie: ""
             };
         case 'SEARCH_PRODUCT':
             return {
@@ -38,6 +39,11 @@ const reducer = (state, action) => {
                 ...state,
                 step: action.step
             };
+        case 'ADRESS':
+            return {
+                ...state,
+                adress: action.adress
+            };
         default:
             return state;
     }
@@ -46,12 +52,14 @@ const reducer = (state, action) => {
 const Store = () => {
     const [state, dispatch] = useReducer(reducer, {
         products: [],
+        subCategorie: "",
         searchProducts: [],
         totalProduct: localStorage.getItem('countProduct') ? localStorage.getItem('countProduct') : 0,
         informationProfile: {},
         refreshTokenModal: false,
         modalAdress: false,
-        step: 1
+        step: 1,
+        adress: ""
     });
     return [state, dispatch]
 }

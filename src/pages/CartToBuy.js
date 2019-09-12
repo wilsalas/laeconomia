@@ -6,18 +6,30 @@ import {
 import BannerComponent from '../components/Banner';
 import { FormatPointsSupensive, FormatCOPNumber } from '../managers/helpers/HelperManager';
 import { useGlobal } from '../managers/store/Context';
+import { API } from '../managers/api/ApiManager';
 
 export default function CartToBuy() {
-    let newPrices = [], subTotal = 0, totalBuy = 0, domicilie = 5500;
+    let newPrices = [], pricesAntes = [], subTotal = 0, subTotalAntes = 0, totalBuy = 0;
     let URL_IMAGE = `https://www.droguerialaeconomia.com/economia/site/img/`;
     const [getProducts, setProducts] = useState([]);
     const [state, dispatch] = useGlobal();
-    // var table = document.getElementById("tbl-prod"), sumVal = 0;
+    const [getDomicilie, setDomicilie] = useState(0);
+
     useEffect(() => {
         if (localStorage.getItem("cart")) {
             setProducts(JSON.parse(localStorage.getItem("cart")));
         }
     }, []);
+
+    useEffect(() => {
+        funRetrieveHomeServiceValue()
+    }, [])
+
+
+    const funRetrieveHomeServiceValue = async () => {
+        let resRetrieveHomeServiceValue = await API.GET.RetrieveHomeServiceValue(localStorage.getItem("city"));
+        if (!resRetrieveHomeServiceValue.error) setDomicilie(resRetrieveHomeServiceValue.message[0].valor_domicilio)
+    }
 
     const funEditCart = (product, countProduct = 0, type) => {
         let products = JSON.parse(localStorage.getItem("cart"));
@@ -69,12 +81,12 @@ export default function CartToBuy() {
         dispatch({ type: 'COUNT_TOTAL_PRODUCT', totalProduct })
     }
 
-    const funSumSubTotal = (ahora, countProduct) => {
+    const funSumSubTotal = (ahora, antes, countProduct) => {
+        pricesAntes.push(antes * countProduct);
+        subTotalAntes = pricesAntes.reduce((total, num) => total + num);
         newPrices.push(ahora * countProduct)
         subTotal = newPrices.reduce((total, num) => total + num);
-        console.log("total", totalBuy , "domicile", domicilie, "subtotal", subTotal);
-        
-        totalBuy = domicilie + subTotal;
+        totalBuy = getDomicilie + subTotal;
     }
 
     return (
@@ -87,15 +99,13 @@ export default function CartToBuy() {
                             <table id="tbl-prod">
                                 <tbody className="tbody-cart-buy">
                                     {getProducts.map((item, i) => {
-
-                                        funSumSubTotal(item.Ahora, item.countProduct);
-
-
+                                        funSumSubTotal(item.Ahora, item.Antes, item.countProduct);
                                         return (
                                             <tr key={i}>
                                                 <td>
-                                                    <div className="tt-product-img">
+                                                    <div className="tt-product-img" style={{position:'relative'}}>
                                                         <img src={`${URL_IMAGE}${item.codigo}.png`} alt={`item${i}`} />
+                                                        {item.Porcentaje > 0 && <div className="div-percent-buy">-{item.Porcentaje}%</div>}
                                                     </div>
                                                 </td>
                                                 <td>
@@ -126,7 +136,7 @@ export default function CartToBuy() {
                                                 </td>
                                                 <td>
                                                     <div className="tt-price">
-                                                        {FormatCOPNumber(item.Ahora)}
+                                                        {FormatCOPNumber(item.VlrMinimo < subTotalAntes ? item.Ahora : item.Antes)}
                                                     </div>
                                                 </td>
                                                 <td>
@@ -178,7 +188,7 @@ export default function CartToBuy() {
                                             </tr>
                                             <tr>
                                                 <th>Domicilio:</th>
-                                                <td>{FormatCOPNumber(domicilie)}</td>
+                                                <td>{FormatCOPNumber(getDomicilie)}</td>
                                             </tr>
                                             <tr>
                                                 <th>   <hr /></th>

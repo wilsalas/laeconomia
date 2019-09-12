@@ -19,7 +19,11 @@ const LoginComponent = props => {
             let resLogin = await API.POST.PerformSignIn(email.value, password.value);
             if (!resLogin.error) {
                 localStorage.setItem("usi", btoa(JSON.stringify(resLogin.message.data)));
-                window.location.href = "/"
+                if (props.isLoginOrRegister) {
+                    window.location.href="/";
+                }else{
+                    window.location.reload()
+                }
             } else {
                 AlertSwal(resLogin.message.message)
             }

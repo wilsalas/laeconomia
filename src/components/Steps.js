@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { LoginComponent } from './ContentForm';
 import {
-    Button, Container, Col, Row, Label, Form,
+    Button, Container, Col, Row, Label,
     FormGroup, Input, InputGroup, InputGroupAddon,
     InputGroupText,
     Card, CardBody, CardTitle
 } from 'reactstrap';
 import { useGlobal } from '../managers/store/Context';
-import { API , FormatCoupon} from '../managers/api/ApiManager';
+import { API, FormatCoupon } from '../managers/api/ApiManager';
+import { AlertSwal } from '../managers/helpers/HelperManager';
 
 const StepLoginComponent = () => {
     return (
-        <>
+        <div className="animated fadeIn">
             <br />
             <LoginComponent isLoginOrRegister />
-        </>
+        </div>
     );
 }
 
 const StepFacturationComponent = props => {
     const [, dispatch] = useGlobal();
     const [getListAdress, setListAdress] = useState([]);
+    const [getItemSelect, setItemSelect] = useState("");
+    const [getInputSelect, setInputSelect] = useState("");
+    const [getTypeSelect, setTypeSelect] = useState("");
 
     useEffect(() => {
         if (getListAdress.length < 1) {
@@ -30,7 +34,6 @@ const StepFacturationComponent = props => {
 
     // get all citys
     const funPerformRetrieveAddressList = async () => {
-
         let resRetrieveAddressList = await API.POST.PerformRetrieveAddressList(
             props.getProfile.nit,
             props.getProfile.nombres,
@@ -46,11 +49,31 @@ const StepFacturationComponent = props => {
         }
     }
 
+    const funSelectedAdressType = () => {
+        let adress = "";
+        if (getTypeSelect === "default") {
+            if (getItemSelect === "") {
+                return AlertSwal("ADDRESS_SELECTED", "Selecciona una dirección");
+            } else {
+                adress = getItemSelect;
+            }
+        } else if (getTypeSelect === "temporal") {
+            if (getInputSelect === "") {
+                return AlertSwal("ADDRESS_SELECTED", "Ingresa una dirección temporal");
+            } else {
+                adress = getInputSelect;
+            }
+        }
+        dispatch({ type: "ADRESS", adress });
+        dispatch({ type: "STEP_ACTIVE", step: 3 })
+    }
+
+
 
     return (
         <>
             <br />
-            <Container>
+            <Container className="animated fadeIn">
                 <h5 className="mt-4 mb-2 text-center" >INFORMACIÓN DEL ENVÍO</h5>
                 <div className="tt-login-form">
                     <Row className="mx-auto">
@@ -60,7 +83,7 @@ const StepFacturationComponent = props => {
                                     <Col md={8} xs={8}>
                                         <FormGroup check>
                                             <Label check>
-                                                <Input type="radio" name="adress_default" defaultChecked />  Dirección predeterminada
+                                                <Input type="radio" name="adress_default" onClick={() => setTypeSelect("default")} />  Dirección predeterminada
                                             </Label>
                                         </FormGroup>
                                     </Col>
@@ -72,32 +95,33 @@ const StepFacturationComponent = props => {
                                 </Row>
 
                                 <FormGroup>
-                                    <Input type="select" name="adress" className="account-input">
+                                    <Input type="select" name="adress" className="account-input" onChange={e => setItemSelect(e.target.value)}>
+                                        <option value="">Selecciona tu dirección</option>
                                         {getListAdress.map((item, i) => <option key={i} value={item.direccion}>{item.nombre_direccion} - {item.direccion}</option>)}
 
                                     </Input>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Button className="btn btn-border" block disabled={getListAdress.length < 1}>Seleccionar</Button>
+                                    <Button className="btn btn-border" block disabled={(getTypeSelect !== "default")} onClick={() => funSelectedAdressType()}>Seleccionar</Button>
                                 </FormGroup>
                             </div>
                         </Col>
                         <Col md={6} xs={12}>
                             <div className="tt-item">
-                                <Form>
-                                    <FormGroup check>
-                                        <Label check>
-                                            <Input type="radio" name="adress_temporary" />  Dirección temporal
+                                <FormGroup check>
+                                    <Label check>
+                                        <Input type="radio" name="adress_default" onClick={() => setTypeSelect("temporal")} />  Dirección temporal
                                             </Label>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label></Label>
-                                        <Input className="account-input" type="text" name="adress" placeholder="Ingresa nueva dirección" />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Button className="btn btn-border" block>Seleccionar</Button>
-                                    </FormGroup>
-                                </Form>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label></Label>
+                                    <Input className="account-input" type="text" name="adress" placeholder="Ingresa nueva dirección"
+                                        onChange={e => setInputSelect(e.target.value)}
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Button className="btn btn-border" block disabled={(getTypeSelect !== "temporal")} onClick={() => funSelectedAdressType()}>Seleccionar</Button>
+                                </FormGroup>
                             </div>
                         </Col>
                     </Row>
@@ -111,7 +135,7 @@ const StepPaymentMethodComponent = props => {
 
     const [selectedItem, setSelectedItem] = useState("");
     const [getCupon, setCupon] = useState("");
-    const [state, dispatch] = useGlobal();
+    const [, dispatch] = useGlobal();
     const [delivery] = useState([
         {
             icon: 'money',
@@ -141,31 +165,23 @@ const StepPaymentMethodComponent = props => {
     // select method avaliable
     const SeletedPaymentMethod = classname => setSelectedItem(classname);
 
+    const funBack = (e, step) => {
+        e.preventDefault();
+        dispatch({ type: "STEP_ACTIVE", step })
+    }
 
     const funGetCouponIsValidOrNot = async e => {
         e.preventDefault();
-
         setCupon(e.target.value);
-
-
-
-        console.log("lo que mando", e.target.value);
-        
-
         let resCouponIsValidOrNot = await API.GET.RetrieveWhetherCouponIsValidOrNot(
             e.target.value,
             props.getProfile.nit,
             props.getProfile.nombres,
             props.getProfile.email,
             props.getProfile.auth_token);
-
-
-                console.log(resCouponIsValidOrNot);
-                
-            
-            if (!resCouponIsValidOrNot.error) {
-                console.log("cupon", FormatCoupon(resCouponIsValidOrNot.message.data[0]));
-                dispatch({ type: "STEP_ACTIVE", step: 4 })
+        if (!resCouponIsValidOrNot.error) {
+            console.log("cupon", FormatCoupon(resCouponIsValidOrNot.message.data[0]));
+            dispatch({ type: "STEP_ACTIVE", step: 4 })
             // setListAdress(resRetrieveAddressList.message.data)
         } else {
             if (resCouponIsValidOrNot.message === "TOKEN_ERROR") {
@@ -178,8 +194,8 @@ const StepPaymentMethodComponent = props => {
     return (
         <>
             <br />
-            <Container >
-                <h5 className="mt-2 text-center" >MEDIOS DE PAGO</h5>
+            <Container className="animated fadeIn">
+                <h5 className="mt-2 text-center " >MEDIOS DE PAGO</h5>
                 <div className="tt-login-form">
                     <Row className="text-center justify-content-center">
                         <Col md={4} xs={12} className="mt-3">
@@ -233,18 +249,18 @@ const StepPaymentMethodComponent = props => {
                                     <Col md={6} xs={12}>
 
                                         <InputGroup>
-                                            <Input 
-                                            maxLength="15"
-                                            onBlur={e => funGetCouponIsValidOrNot(e)}
-                                            placeholder="INGR3S4TUCUP0N" style={{
-                                                borderRadius: '11px 0px 0px 11px',
-                                                borderRight: 'none'
-                                            }} />
+                                            <Input
+                                                maxLength="15"
+                                                onBlur={e => funGetCouponIsValidOrNot(e)}
+                                                placeholder="INGR3S4TUCUP0N" style={{
+                                                    borderRadius: '11px 0px 0px 11px',
+                                                    borderRight: 'none'
+                                                }} />
                                             <InputGroupAddon addonType="append" >
                                                 <InputGroupText className="input-group-personal" style={{
                                                     borderRadius: '0px 11px 11px 0px'
                                                 }}>
-                                                    <img src={`/assets/icon_success.png`} width="20px" height="20px" alt="img-response"/>
+                                                    <img src={`/assets/icon_success.png`} width="20px" height="20px" alt="img-response" />
                                                 </InputGroupText>
                                             </InputGroupAddon>
                                         </InputGroup>
@@ -263,7 +279,9 @@ const StepPaymentMethodComponent = props => {
                             <Row>
                                 <div className="tt-shopcart-btn">
                                     <div className="col-left">
-                                        <a className="btn-link" href="/" style={{ fontSize: 20 }} ><i className="icon-e-19" style={{ fontSize: 25 }} /> Volver</a>
+                                        <a className="btn-link" href="/" style={{ fontSize: 20 }}
+                                            onClick={e => funBack(e, 2)}
+                                        ><i className="icon-e-19" style={{ fontSize: 25 }} /> Volver</a>
                                     </div>
                                 </div>
                             </Row>
@@ -272,7 +290,7 @@ const StepPaymentMethodComponent = props => {
                     </Row>
                 </div>
             </Container>
-            <br />  
+            <br />
         </>
     );
 }

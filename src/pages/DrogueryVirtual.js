@@ -10,7 +10,7 @@ export default function DrogueryVirtual(props) {
     return (
         <>
             <BabyCareComponent />
-            <GroupCategoryComponent codeProduct={codeProduct} />
+            <GroupCategoryComponent codeProduct={codeProduct} type="droguery"/>
             <BannerComponent />
         </>
     );

@@ -48,7 +48,7 @@ export const IN_OFFER =
 // Request errors
 export const REST = {
     TOKEN: {
-        ERROR: 'TOKEN_ERROR', 
+        ERROR: 'TOKEN_ERROR',
     }
 }
 
@@ -91,42 +91,37 @@ export const API = {
         async RetrieveCategories(location) {
             return await fetchAsync(`${URL.HOST}/economia/api/Categorias/${location}/`, HTTP_REQUEST_METHOD.GET)
         },
-
         async RetrieveTopOffers(location, itemsPerPage = 12) {
             return await fetchAsync(`${URL.HOST}/economia/api/top/${location}/${itemsPerPage}`, HTTP_REQUEST_METHOD.GET)
         },
-
-        async RetrieveOffers(location) {
-            return await fetchAsync(`${URL.HOST}/economia/api/ofertas/${location}/`, HTTP_REQUEST_METHOD.GET)
+        async RetrieveOffers (location, itemsPerPage = 12) {
+            return await fetchAsync(`${URL.HOST}/economia/api/ofertas/${location}/${itemsPerPage}`, HTTP_REQUEST_METHOD.GET)
         },
-
         async RetrieveAdsBanner(route) {
             return await fetchAsync(`${URL.HOST}/economia/api/anuncios/${route}/`, HTTP_REQUEST_METHOD.GET)
         },
-
         async RetrieveProductFromCode(location, productCode) {
             return await fetchAsync(`${URL.HOST}/economia/api/referencias/${location}/${productCode}/`, HTTP_REQUEST_METHOD.GET)
         },
-
         async RetrieveProductFromBarCode(location, barCode) {
             return await fetchAsync(`${URL.HOST}/economia/api/referencias/${location}/${barCode}/`, HTTP_REQUEST_METHOD.GET)
         },
-
         async RetrieveProductFromSearch(location, search, { page = 0, itemsPerPage = 12, orderBy = ORDER_BY.DESCRIPTION, offer = IN_OFFER.NO } = {}) {
             // return await fetchAsync(`${URL.HOST}/economia/api/referencias/${location}/${search}/${page}/${itemsPerPage}/${orderBy}/${offer}/`, HTTP_REQUEST_METHOD.GET)
             return await fetchAsync(`${URL.HOST}/economia/api/busqProductos/${location}?q=${search}`, HTTP_REQUEST_METHOD.GET)
         },
-
         async RetrieveProductsFromSubcategory(location, subcategory, { page = 1, itemsPerPage = 12, orderBy = ORDER_BY.DESCRIPTION } = {}) {
             return await fetchAsync(`${URL.HOST}/economia/api/RefSubCat/${location}/${subcategory}/${page}/${itemsPerPage}/${orderBy}/`, HTTP_REQUEST_METHOD.GET)
         },
         async RetrieveHomeServiceValue(location) {
-            return await fetchAsync(`${URL.HOST} / economia / api / VlrDomicilio / ${location}`, HTTP_REQUEST_METHOD.GET)
+            return await fetchAsync(`${URL.HOST}/economia/api/VlrDomicilio/${location}`, HTTP_REQUEST_METHOD.GET)
         },
-        async RetrieveWhetherCouponIsValidOrNot (coupon, document, name, email, token) {
+        async RetrieveWhetherCouponIsValidOrNot(coupon, document, name, email, token) {
             return await fetchAsync(`${URL.HOST}/economia/api/cupon/${coupon}?user[nit]=${document}&user[email]=${email}&user[nombres]=${name}&user[auth_token]=${token}`, HTTP_REQUEST_METHOD.GET)
         },
-
+        async RetrieveDictionary(search) {
+            return await fetchAsync(`${URL.HOST}/economia/api/diccionario/?q=${search}`, HTTP_REQUEST_METHOD.GET)
+        },
     },
     POST: {
         async PerformSignIn(email, password) {
@@ -156,35 +151,31 @@ export const API = {
             }
             return response;
         },
-        async PerformRetrieveAddressList (document, name, email, token)
-       {
-           let response = {
-               error: false,
-               message: '',
-           }
-           const validateToken = await this.ValidateToken(document, name, email, token)
-           if(validateToken.error)
-           {
-               response.error = true;
-               response.message = REST.TOKEN.ERROR;
-           }
-           else
-           {
-               const _fields = {
-                   nit: document,
-                   email,
-                   nombres: name,
-                   auth_token: token,
-               }
-               const body = FormUrlEncoded(_fields);
-               response = await fetchAsync(`${URL.HOST}/economia/site/users/getMyDirecciones/`, HTTP_REQUEST_METHOD.POST, { body, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
-               if(!response.message.success)
-               {
-                   response.error = true;
-               }
-           }
-           return response;
-       },
+        async PerformRetrieveAddressList(document, name, email, token) {
+            let response = {
+                error: false,
+                message: '',
+            }
+            const validateToken = await this.ValidateToken(document, name, email, token)
+            if (validateToken.error) {
+                response.error = true;
+                response.message = REST.TOKEN.ERROR;
+            }
+            else {
+                const _fields = {
+                    nit: document,
+                    email,
+                    nombres: name,
+                    auth_token: token,
+                }
+                const body = FormUrlEncoded(_fields);
+                response = await fetchAsync(`${URL.HOST}/economia/site/users/getMyDirecciones/`, HTTP_REQUEST_METHOD.POST, { body, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+                if (!response.message.success) {
+                    response.error = true;
+                }
+            }
+            return response;
+        },
 
         async PerformRetrieveProfileInformation(document, name, email, token) {
             let response = {
@@ -301,15 +292,14 @@ const TwoLevelFormUrlEncoded = (params) => {
 }
 
 // Esta funcion es para formatear la data de cupon
-export const FormatCoupon = (coupon) =>
-{
-   return {
-       type: coupon.Condicion,
-       description: coupon.Descripcion,
-       startDate: coupon.Desde,
-       endDate: coupon.Hasta,
-       strType: coupon.TipoCupon, // <= Type of coupon as string
-       value: coupon.ValorCupon, // <= Amount of coupon
-       minAmount: coupon.VlrMinimo, // <= Min. amount of the purchase/order to apply this coupon
-   }
+export const FormatCoupon = (coupon) => {
+    return {
+        type: coupon.Condicion,
+        description: coupon.Descripcion,
+        startDate: coupon.Desde,
+        endDate: coupon.Hasta,
+        strType: coupon.TipoCupon, // <= Type of coupon as string
+        value: coupon.ValorCupon, // <= Amount of coupon
+        minAmount: coupon.VlrMinimo, // <= Min. amount of the purchase/order to apply this coupon
+    }
 }

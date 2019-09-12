@@ -26,15 +26,24 @@ export default function ProcessToBuy() {
     }, []);
 
     useEffect(() => {
-        if (localStorage.getItem("usi")) {
-            dispatch({ type: "STEP_ACTIVE", step: 2 })
-        } else {
-            dispatch({ type: "STEP_ACTIVE", step: 1 })
-        }
+        dispatch({ type: "STEP_ACTIVE", step: localStorage.getItem("usi") ? 2 : 1 })
     }, [dispatch])
 
-    console.log(state.step);
+    console.log(state.step, state.adress);
 
+
+    const funRenderProgressBar = () => {
+        return (
+            <>
+                <ul className="progressbar">
+                    <li className={state.step >= 1 ? "progressbar_active" : ""}><p className="text-progress"> Iniciar Sesión</p> </li>
+                    <li className={state.step >= 2 ? "progressbar_active" : ""}><p className="text-progress">Información de Facturación</p></li>
+                    <li className={state.step >= 3 ? "progressbar_active" : ""}><p className="text-progress">Selecciona Medio de Pago</p></li>
+                    <li className={state.step >= 4 ? "progressbar_active" : ""}><p className="text-progress">Resumen de Compra</p></li>
+                </ul>
+            </>
+        )
+    }
 
     const funRenderSteps = () => {
         let render = null;
@@ -54,22 +63,17 @@ export default function ProcessToBuy() {
             default:
                 break;
         }
-        return render
+        return render;
     }
 
     return (
         <>
             <Container fluid>
                 <div className="mt-5">
-                    <ul className="progressbar">
-                        <li className="progressbar_active"> <p className="text-progress"> Iniciar Sesión</p> </li>
-                        <li ><p className="text-progress">Información de Facturación</p></li>
-                        <li ><p className="text-progress">Selecciona Medio de Pago</p></li>
-                        <li><p className="text-progress">Resumen de Compra</p></li>
-                    </ul>
+                    {funRenderProgressBar()}
                     {funRenderSteps()}
                 </div>
-                <InterestContentComponent getProfile={getProfile} />
+                <InterestContentComponent />
             </Container>
             <BannerComponent />
             <ModalAdress getProfile={getProfile} />

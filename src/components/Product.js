@@ -25,7 +25,7 @@ const VerticalProductComponent = props => {
 
 
 const HorizontalProductComponent = props => {
-
+    
     if (props.products.length < 1) {
         return funRenderSpinner();
     }
@@ -109,7 +109,7 @@ const Product = props => {
 
     return props.codigo ? (
         <Card className="text-center card-tab-products" >
-            <div className="div-percent">{props.Porcentaje}%</div>
+            {props.Porcentaje > 0 && <div className="div-percent">-{props.Porcentaje}%</div>}
             <CardImg top style={{ cursor: 'pointer' }} src={`${URL_IMAGE}${props.codigo}.png`}
                 onError={(e) => { e.target.src = `${URL_IMAGE}no-disponible.png` }}
                 alt={`Card image cap ${props.codigo}`} onClick={() => funSaveDetailProduct()} />
