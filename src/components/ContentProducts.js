@@ -256,8 +256,6 @@ const SponsorShipsComponent = () => {
         setTranslate(translate);
         setLimitPage(limitPage)
         container.style.transform = `translateX(${translate}px)`;
-        console.log("lIMIT PAGE:", limitPage);
-
     }
 
     const funAddMoreProduct = () => {

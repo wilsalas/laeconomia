@@ -34,9 +34,10 @@ export default function HeaderComponent() {
     }
 
     // selected one city
-    const funSelectedCity = (e, codeCity) => {
+    const funSelectedCity = (e, codeCity, nameCity) => {
         e.preventDefault();
         localStorage.setItem("city", codeCity);
+        localStorage.setItem("nameCity",nameCity);
         window.location.reload();
     }
 
@@ -212,7 +213,7 @@ export default function HeaderComponent() {
                                             </div>
                                             <div className="tt-dropdown-inner" style={{ height: 300, overflow: 'auto' }}>
                                                 <ul>
-                                                    {citys.map((item, i) => <li key={i} className="selected_li" ><a href="/" onClick={e => funSelectedCity(e, item.Ciudad)} >{item.Descripcion}</a></li>)}
+                                                    {citys.map((item, i) => <li key={i} className="selected_li" ><a href="/" onClick={e => funSelectedCity(e, item.Ciudad, item.Descripcion)} >{item.Descripcion}</a></li>)}
                                                 </ul>
                                             </div>
                                         </div>

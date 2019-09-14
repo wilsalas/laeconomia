@@ -5,7 +5,7 @@ import { Spinner } from 'reactstrap';
 
 
 
-export const AlertSwal = (message, textValue = "") => {
+export const AlertSwal = (message, textValue = "", titleValue = "") => {
     let title = "", text = "", icon = "";
     if (message === "Usuario o contraseña invalida.") {
         text = "El correo electrónico o la contraseña son incorrectos.";
@@ -40,6 +40,17 @@ export const AlertSwal = (message, textValue = "") => {
     } else if (message === "ADDRESS_SELECTED") {
         text = textValue;
         icon = "warning";
+    } else if (message === "SELECTED_PAYMENT_METHOD") {
+        text = textValue;
+        icon = "warning";
+    } else if (message === "ERROR_CUPON") {
+        title = "Atención"
+        text = textValue;
+        icon = "error";
+    } else if (message === "ORDER_SUCCESS") {
+        title = titleValue
+        text = textValue;
+        icon = "success";
     } else if (message === "ERROR_SERVER") {
         title = "Ups!"
         text = "Ha ocurrido un error inesperado en la aplicación. por favor intente nuevamente";
@@ -82,7 +93,7 @@ export const FormatCOPNumber = (number, commas = false) => {
     }
 }
 
-export const FormatPointsSupensive = element => element.substring(0, 27) + "...";
+export const FormatPointsSupensive = (element, point = 27) => element.substring(0, point) + "...";
 
 export const funRenderSpinner = (type = "md") => <div style={{ display: 'flex', justifyContent: 'center' }}><Spinner size={type} color="primary" /> </div>
 

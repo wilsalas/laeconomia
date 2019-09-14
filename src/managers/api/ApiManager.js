@@ -65,7 +65,6 @@ const fetchAsync = async (url, method, { body = {}, headers = {} } = {}) => {
 
     try {
         const fetchResponse = await fetch(url, form);
-
         response.error = (fetchResponse.status !== HTTP_STATUS_CODE.OK);
         response.message = await fetchResponse.json();
 
@@ -94,7 +93,7 @@ export const API = {
         async RetrieveTopOffers(location, itemsPerPage = 12) {
             return await fetchAsync(`${URL.HOST}/economia/api/top/${location}/${itemsPerPage}`, HTTP_REQUEST_METHOD.GET)
         },
-        async RetrieveOffers (location, itemsPerPage = 12) {
+        async RetrieveOffers(location, itemsPerPage = 12) {
             return await fetchAsync(`${URL.HOST}/economia/api/ofertas/${location}/${itemsPerPage}`, HTTP_REQUEST_METHOD.GET)
         },
         async RetrieveAdsBanner(route) {
@@ -261,6 +260,61 @@ export const API = {
             }
             return response;
         },
+        async PerformValidateTypeOfCoupon(typeOfCoupon, products) {
+
+            const body = FormUrlEncoded({Condicion: typeOfCoupon}) + '&' + ArrayFormUrlEncoded({Productos: products})
+            let response = await fetchAsync(`${URL.HOST}/economia/api/validaCondiciones/`, HTTP_REQUEST_METHOD.POST, { body, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+            if (!response.message.Success) {
+                response.error = true;
+            }
+            return response;
+        },
+
+        async  PerformPurchase(location, nameOfCity, document, name, email, token, address, paymentMethod, orderSubTotal, homeService, products, coupon = {}, bonus = false, platform = "WebPage", deviceOs = '') {
+            const fields = {
+                formaDePago: paymentMethod,
+                Productos: products,
+                Cliente: {
+                    nit: document,
+                    nombres: name,
+                    email,
+                    auth_token: token,
+                },
+                Direccion: address,
+                Drogueria: location,
+                VlrDomicilio: homeService,
+                Ciudad: location,
+                nombreCiudad: nameOfCity,
+                Subtotal: orderSubTotal,
+                Bono: {
+                    Aplica: bonus,
+                },
+                Cupon: coupon,
+                Id_Servicio: platform + deviceOs,
+            }
+
+            const body =
+                FormUrlEncoded({
+                    formaDePago: paymentMethod,
+                    Direccion: address,
+                    Drogueria: location,
+                    VlrDomicilio: homeService,
+                    Ciudad: location,
+                    nombreCiudad: nameOfCity,
+                    Subtotal: orderSubTotal,
+                    Id_Servicio: platform + deviceOs,
+                }) + '&' +
+                TwoLevelFormUrlEncoded({ Bono: { ...fields.Bono } }) +
+                TwoLevelFormUrlEncoded({ Cliente: { ...fields.Cliente } }) +
+                TwoLevelFormUrlEncoded({ Cupon: { ...fields.Cupon } }) +
+                ArrayFormUrlEncoded({ Productos: { ...fields.Productos } })
+
+            let response = await fetchAsync(`${URL.HOST}/economia/api/pedidos/pedidoWebShopping/`, HTTP_REQUEST_METHOD.POST, { body, headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } });
+            if (response.message.hasOwnProperty("Success")) {
+                response.error = true;
+            }
+            return response;
+        },
     },
     PUT: {
 
@@ -289,6 +343,30 @@ const TwoLevelFormUrlEncoded = (params) => {
         }
     }
     return urlEncoded;
+}
+
+const ArrayFormUrlEncoded = (params) =>
+{
+   let urlEncoded = '';
+   for (const key in params) {
+       if (params.hasOwnProperty(key)) {
+           for (const childkey in params[key]) {
+               if (params[key].hasOwnProperty(childkey)) {
+                   for (const childOfChildKey in params[key][childkey]) {
+                       if (params[key][childkey].hasOwnProperty(childOfChildKey)) {
+                           urlEncoded += encodeURIComponent(`${key}[${childkey}][${childOfChildKey}]`) + '=' + encodeURIComponent(params[key][childkey][childOfChildKey]) + '&';
+                       }
+                   }
+               }
+           }
+       }
+   }
+
+   
+
+   return urlEncoded;
+
+   
 }
 
 // Esta funcion es para formatear la data de cupon

@@ -9,20 +9,20 @@ import { useGlobal } from '../managers/store/Context';
 
 
 
-const OrderCategoryComponent = () => {
-    return (
-        <>
-            <ul className="mt-2 order_category_list">
-                {new Array(3).fill().map((value, i) => {
-                    return (
-                        <li key={i}>  <a href="/"> <i className="icon-g-80" /> Cuidado de la piel</a> </li>
-                    );
-                })}
-            </ul>
-            <a href="/">Borrar todo</a>
-        </>
-    );
-}
+// const OrderCategoryComponent = () => {
+//     return (
+//         <>
+//             <ul className="mt-2 order_category_list">
+//                 {new Array(3).fill().map((value, i) => {
+//                     return (
+//                         <li key={i}>  <a href="/"> <i className="icon-g-80" /> Cuidado de la piel</a> </li>
+//                     );
+//                 })}
+//             </ul>
+//             <a href="/">Borrar todo</a>
+//         </>
+//     );
+// }
 
 
 

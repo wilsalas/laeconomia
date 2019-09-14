@@ -71,8 +71,8 @@ const SearchHeaderComponent = () => {
                                                                             <div className="panel panel-default">
                                                                                 <div className="panel-heading ">
                                                                                     <h4 className="panel-title ">
-                                                                                        <a href={`/droguery/${btoa(item.codigo)}`}>
-                                                                                            {FormatPointsSupensive(item.descripcion)}
+                                                                                        <a href={`/droguery/${btoa(item.codigo)}`} title={item.descripcion}>
+                                                                                            {FormatPointsSupensive(item.descripcion, 35)}
                                                                                         </a>
                                                                                         {/* <a title={item.descripcion} data-toggle="collapse" data-parent={"#accordion" + i} href={"#collapse" + i} className="collapsible-search">
                                                                                             {FormatPointsSupensive(item.descripcion)}

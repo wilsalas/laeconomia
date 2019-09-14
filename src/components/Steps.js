@@ -8,13 +8,13 @@ import {
 } from 'reactstrap';
 import { useGlobal } from '../managers/store/Context';
 import { API, FormatCoupon } from '../managers/api/ApiManager';
-import { AlertSwal } from '../managers/helpers/HelperManager';
+import { AlertSwal, FormatCOPNumber } from '../managers/helpers/HelperManager';
 
 const StepLoginComponent = () => {
     return (
         <div className="animated fadeIn">
             <br />
-            <LoginComponent isLoginOrRegister />
+            <LoginComponent />
         </div>
     );
 }
@@ -135,7 +135,8 @@ const StepPaymentMethodComponent = props => {
 
     const [selectedItem, setSelectedItem] = useState("");
     const [getCupon, setCupon] = useState("");
-    const [, dispatch] = useGlobal();
+    const [getListCupon, setListCupon] = useState({});
+    const [state, dispatch] = useGlobal();
     const [delivery] = useState([
         {
             icon: 'money',
@@ -147,20 +148,20 @@ const StepPaymentMethodComponent = props => {
         }
 
     ]);
-    const [onlineMethod] = useState([
-        {
-            icon: 'pse',
-            title: 'PSE'
-        },
-        {
-            icon: 'credit_cart',
-            title: 'Tarjeta de Crédito'
-        },
-        {
-            icon: 'cobru',
-            title: 'Saldo Cobru'
-        }
-    ]);
+    // const [onlineMethod] = useState([
+    //     {
+    //         icon: 'pse',
+    //         title: 'PSE'
+    //     },
+    //     {
+    //         icon: 'credit_cart',
+    //         title: 'Tarjeta de Crédito'
+    //     },
+    //     {
+    //         icon: 'cobru',
+    //         title: 'Saldo Cobru'
+    //     }
+    // ]);
 
     // select method avaliable
     const SeletedPaymentMethod = classname => setSelectedItem(classname);
@@ -172,7 +173,7 @@ const StepPaymentMethodComponent = props => {
 
     const funGetCouponIsValidOrNot = async e => {
         e.preventDefault();
-        setCupon(e.target.value);
+        let nameCupon = e.target.value;
         let resCouponIsValidOrNot = await API.GET.RetrieveWhetherCouponIsValidOrNot(
             e.target.value,
             props.getProfile.nit,
@@ -180,8 +181,51 @@ const StepPaymentMethodComponent = props => {
             props.getProfile.email,
             props.getProfile.auth_token);
         if (!resCouponIsValidOrNot.error) {
-            console.log("cupon", FormatCoupon(resCouponIsValidOrNot.message.data[0]));
-            dispatch({ type: "STEP_ACTIVE", step: 4 })
+            if (!resCouponIsValidOrNot.message.Success) {
+                AlertSwal("ERROR_CUPON", "Nombre del cupon no existe");
+                setCupon("ERROR_CUPON");
+            } else {
+                let couponResponse = FormatCoupon(resCouponIsValidOrNot.message.data[0]);
+
+
+
+                if ((couponResponse.type === 0) && (atob(localStorage.getItem("generateOrder")) < couponResponse.minAmount)) {
+                    AlertSwal("ERROR_CUPON", `El cupón ${couponResponse.name} solo es válido para compras mínimas de ${FormatCOPNumber(couponResponse.minAmount)}.`);
+                    setCupon("ERROR_CUPON");
+                }
+                else {
+                    let products = JSON.parse(localStorage.getItem("cart")), _products = [];
+                    for (let index = 0; index < products.length; index++) {
+                        _products.push({
+                            codigo: products[index].codigo,
+                            price: products[index].Ahora,
+                            cantidad: products[index].countProduct,
+                        })
+                    }
+                    const resTypeOfCoupon = await API.POST.PerformValidateTypeOfCoupon(couponResponse.type, _products)
+                    if (resTypeOfCoupon.error) {
+                        AlertSwal("ERROR_CUPON", `Este cupón no es válido para ser redimido.`);
+                        setCupon("ERROR_CUPON");
+                    }
+                    else if (resTypeOfCoupon.message.ValorProductos < couponResponse.minAmount) {
+                        // If the total of the order is not greater than min value of the coupon, the coupon will be invalid
+                        AlertSwal("ERROR_CUPON", `El cupón ${nameCupon} solo es válido para compras mínimas de ${FormatCOPNumber(couponResponse.minAmount)}. Aplica para ${couponResponse.description}.`);
+                        setCupon("ERROR_CUPON");
+                    } else {
+                        let order = JSON.parse(atob(localStorage.getItem("generateOrder")));
+                        localStorage.setItem("generateOrder", btoa(JSON.stringify({
+                            totalBuy: (order.totalBuy - couponResponse.value),
+                            discount: couponResponse.value,
+                            getDomicilie: order.getDomicilie
+                        })));
+                        setCupon("SUCCESS_CUPON");
+                        setListCupon(resCouponIsValidOrNot.message.data[0]);
+
+                        // restar el precio del cupon con el valor total de la orden
+                    }
+                }
+            }
+            //dispatch({ type: "STEP_ACTIVE", step: 4 })
             // setListAdress(resRetrieveAddressList.message.data)
         } else {
             if (resCouponIsValidOrNot.message === "TOKEN_ERROR") {
@@ -191,6 +235,74 @@ const StepPaymentMethodComponent = props => {
 
     }
 
+    const funGenerateOrder = async () => {
+
+
+        if (selectedItem === "") {
+            AlertSwal("SELECTED_PAYMENT_METHOD", "Seleccione un metodo de pago");
+        } else {
+            let newOrder = JSON.parse(atob(localStorage.getItem("generateOrder"))), newProductsCart = [], newCupon = {};
+
+            JSON.parse(localStorage.getItem("cart")).forEach((item, i) => {
+                newProductsCart.push({
+                    codigo: item.codigo,
+                    descripcion: item.descripcion,
+                    price: item.Ahora,
+                    stock: item.stock,
+                    IdUnidad: item.IdUnidad,
+                    cantidad: item.countProduct,
+                })
+            })
+
+           
+
+            if (Object.keys(getListCupon).length > 0) {
+                newCupon = getListCupon;
+                newCupon.Aplica = true;
+            } else {
+                newCupon.Aplica = false;
+            }
+
+
+            // console.log("datos enviados",
+            // localStorage.getItem("city"),
+            // localStorage.getItem("nameCity"),
+            // props.getProfile.nit,
+            // props.getProfile.nombres,
+            // props.getProfile.email,
+            // props.getProfile.auth_token,
+            // state.adress,
+            // selectedItem,
+            // newOrder.totalBuy,
+            // newOrder.getDomicilie,
+            // newProductsCart,
+            // newCupon);
+
+
+            let resPerformPurchase = await API.POST.PerformPurchase(
+                localStorage.getItem("city"),
+                localStorage.getItem("nameCity"),
+                props.getProfile.nit,
+                props.getProfile.nombres,
+                props.getProfile.email,
+                props.getProfile.auth_token,
+                state.adress,
+                selectedItem,
+                newOrder.totalBuy,
+                newOrder.getDomicilie,
+                newProductsCart,
+                newCupon
+            )
+            if (!resPerformPurchase.error) {
+                dispatch({ type: "STEP_ACTIVE", step: 4 })
+                dispatch({ type: "GET_ORDER", order: resPerformPurchase.message[0] })
+                AlertSwal("ORDER_SUCCESS", `Su pedido se realizó exitosamente y será enviado a la dirección: ${state.adress}`, `Pedido ${resPerformPurchase.message[0].numeroPedido}`);
+            } else {
+                AlertSwal("ERROR_SERVER");
+            }
+        }
+    }
+
     return (
         <>
             <br />
@@ -198,27 +310,27 @@ const StepPaymentMethodComponent = props => {
                 <h5 className="mt-2 text-center " >MEDIOS DE PAGO</h5>
                 <div className="tt-login-form">
                     <Row className="text-center justify-content-center">
-                        <Col md={4} xs={12} className="mt-3">
-                            <div className="tt-item card-img-step " style={{ height: '100%' }}>
-                                <h6 className="" >PAGA CONTRAENTREGA</h6>
-                                <Row className="justify-content-center">
-                                    {delivery.map((value, i) => {
-                                        return (
-                                            <Col md={4} xs={4} key={i} onClick={() => SeletedPaymentMethod(value.title)}>
-                                                <Card className={`card-step ${value.title === selectedItem ? 'col-active-step' : ''}`}>
-                                                    <CardBody>
-                                                        <img width="100%" style={{ height: 45 }} src={`./assets/payment_methods/${value.icon}.png`} alt="Card1" />
-                                                    </CardBody>
-                                                </Card>
-                                                <CardTitle className={`mt-2 ${value.title === selectedItem ? 'col-active-title-step' : ''}`}>{value.title}</CardTitle>
-                                            </Col>
-                                        );
-                                    })}
-                                </Row>
-                            </div>
+                        {/* <Col md={12} xs={12} className="mt-3"> */}
+                        <div className="tt-item card-img-step " style={{ height: '100%' }}>
+                            <h6 className="" >PAGA CONTRAENTREGA</h6>
+                            <Row className="justify-content-center">
+                                {delivery.map((value, i) => {
+                                    return (
+                                        <Col md={4} xs={4} key={i} onClick={() => SeletedPaymentMethod(value.title)}>
+                                            <Card className={`card-step ${value.title === selectedItem ? 'col-active-step' : ''}`}>
+                                                <CardBody>
+                                                    <img width="100%" style={{ height: 45 }} src={`./assets/payment_methods/${value.icon}.png`} alt="Card1" />
+                                                </CardBody>
+                                            </Card>
+                                            <CardTitle className={`mt-2 ${value.title === selectedItem ? 'col-active-title-step' : ''}`}>{value.title}</CardTitle>
+                                        </Col>
+                                    );
+                                })}
+                            </Row>
+                        </div>
 
-                        </Col>
-                        <Col md={4} xs={12} className="mt-3">
+                        {/* </Col> */}
+                        {/* <Col md={4} xs={12} className="mt-3">
                             <div className="tt-item card-img-step" style={{ height: '100%' }}>
                                 <h6 className="text-center" >PAGA ONLINE</h6>
                                 <Row className="justify-content-center">
@@ -238,7 +350,7 @@ const StepPaymentMethodComponent = props => {
 
                             </div>
 
-                        </Col>
+                        </Col> */}
                         <Col md={8} xs={12} className="mt-3">
                             <div className="tt-item m card-img-step" style={{ height: '90%' }}>
                                 <Row className="mb-3">
@@ -252,6 +364,7 @@ const StepPaymentMethodComponent = props => {
                                             <Input
                                                 maxLength="15"
                                                 onBlur={e => funGetCouponIsValidOrNot(e)}
+                                                onChange={e => setCupon("")}
                                                 placeholder="INGR3S4TUCUP0N" style={{
                                                     borderRadius: '11px 0px 0px 11px',
                                                     borderRight: 'none'
@@ -260,7 +373,11 @@ const StepPaymentMethodComponent = props => {
                                                 <InputGroupText className="input-group-personal" style={{
                                                     borderRadius: '0px 11px 11px 0px'
                                                 }}>
-                                                    <img src={`/assets/icon_success.png`} width="20px" height="20px" alt="img-response" />
+
+                                                    {
+                                                        getCupon !== "" &&
+                                                        <img src={`/assets/${getCupon === "ERROR_CUPON" ? "icon_error.png" : "icon_success.png"}`} width="20px" height="20px" alt="img-response" />
+                                                    }
                                                 </InputGroupText>
                                             </InputGroupAddon>
                                         </InputGroup>
@@ -271,7 +388,7 @@ const StepPaymentMethodComponent = props => {
 
                         <Col md={8} xs={12} className="mt-3">
                             <Row className="float-right">
-                                <Button >
+                                <Button onClick={() => funGenerateOrder()}>
                                     Continuar
                                     </Button>
                             </Row>
@@ -295,7 +412,11 @@ const StepPaymentMethodComponent = props => {
     );
 }
 
-const StepSumaryBuyComponent = () => {
+const StepSumaryBuyComponent = props => {
+    const [state] = useGlobal();
+    let pricesAntes = [], subTotalAntes = 0;
+    let products = JSON.parse(localStorage.getItem("cart")),
+        newOrder = JSON.parse(atob(localStorage.getItem("generateOrder")));
     return (
         <>
             <Container >
@@ -306,25 +427,25 @@ const StepSumaryBuyComponent = () => {
                             <div className="tt-item item1-sumary">
                                 <div className="sumary-content-text">
                                     <p>RESUMEN<br />FACTURA</p>
-                                    <span>Pedido No.: <br /> <span>0000001</span></span>
+                                    <span>Pedido No.: <br /> <span>{state.order.numeroPedido}</span></span>
                                 </div>
                                 <hr />
                                 <ul className="list_sumary_items">
                                     <li>
                                         <p >Nombre:</p>
-                                        <p>Juan Camilo Montoya Cera</p>
+                                        <p>{props.getProfile.nombres}</p>
                                     </li>
                                     <li>
                                         <p className="mt-3">Dirección:</p>
-                                        <p>Cra 51B 80 58</p>
+                                        <p>{state.adress}</p>
                                     </li>
                                     <li>
                                         <p className="mt-3">Ciudad:</p>
-                                        <p>Barranquilla</p>
+                                        <p>{state.order.DescripcionCiudad}</p>
                                     </li>
                                     <li>
                                         <p className="mt-3">Hora y fecha:</p>
-                                        <p>Jueves 2 de Mayo, 2019. 3:36 p.m.</p>
+                                        <p>{state.order.Fecha}</p>
                                     </li>
                                 </ul>
                             </div>
@@ -334,13 +455,17 @@ const StepSumaryBuyComponent = () => {
                                 <h6 className="mt-4 text-center" >RESUMEN DEL PEDIDO</h6>
                                 <table className="table sumary_table">
                                     <tbody>
-                                        {new Array(10).fill().map((value, i) => {
+                                        {products.map((item, i) => {
+                                            pricesAntes.push(item.Antes * item.countProduct);
+                                            subTotalAntes = pricesAntes.reduce((total, num) => total + num);
+                                            let viewPrice = (item.VlrMinimo < subTotalAntes) ? item.Ahora : item.Antes;
+                                            let calcutateSubtotalPrice = (item.VlrMinimo < subTotalAntes) ? (item.Ahora * item.countProduct) : (item.Ahora * item.Antes);
                                             return (
                                                 <tr key={i}>
-                                                    <td >Altex lámina antibrillo x 50 unidades</td>
-                                                    <td>Cant.: <span>100</span></td>
-                                                    <td>Valor Uni:  <span>100</span></td>
-                                                    <td>Sub-total: <span>$2’999.990</span></td>
+                                                    <td >{item.descripcion}</td>
+                                                    <td>Cant.: <span>{item.countProduct}</span></td>
+                                                    <td>Valor Uni:  <span>{FormatCOPNumber(viewPrice)}</span></td>
+                                                    <td>Sub-total: <span>{FormatCOPNumber(calcutateSubtotalPrice)}</span></td>
                                                 </tr>
                                             );
                                         })}
@@ -355,17 +480,23 @@ const StepSumaryBuyComponent = () => {
                                     <Col md={4} xs={12}>
                                         <div className="sumary-content-text-value">
                                             <p>Domicilio:</p>
-                                            <span>$5.500</span>
+                                            <span>{FormatCOPNumber(newOrder.getDomicilie)}</span>
                                         </div>
-                                        <hr />
-                                        <div className="sumary-content-text-value">
-                                            <p>Descuento:</p>
-                                            <span>-$10.000</span>
-                                        </div>
+                                        {
+                                            newOrder.discount > 0 &&
+                                            <>
+                                                <hr />
+                                                <div className="sumary-content-text-value">
+                                                    <p>Descuento:</p>
+                                                    <span>-{FormatCOPNumber(newOrder.discount)}</span>
+                                                </div>
+                                            </>
+                                        }
+
                                         <hr />
                                         <div className=" sumary-content-text-value">
                                             <p>TOTAL:</p>
-                                            <span>$23’999.000</span>
+                                            <span>{FormatCOPNumber(newOrder.totalBuy)}</span>
                                         </div>
                                     </Col>
                                 </Row>

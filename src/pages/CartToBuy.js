@@ -81,12 +81,22 @@ export default function CartToBuy() {
         dispatch({ type: 'COUNT_TOTAL_PRODUCT', totalProduct })
     }
 
-    const funSumSubTotal = (ahora, antes, countProduct) => {
-        pricesAntes.push(antes * countProduct);
+    const funSumSubTotal = (item) => {
+        pricesAntes.push(item.Antes * item.countProduct);
         subTotalAntes = pricesAntes.reduce((total, num) => total + num);
-        newPrices.push(ahora * countProduct)
+        newPrices.push((item.VlrMinimo < subTotalAntes ? item.Ahora : item.Antes) * item.countProduct)
         subTotal = newPrices.reduce((total, num) => total + num);
         totalBuy = getDomicilie + subTotal;
+        localStorage.setItem("generateOrder", btoa(JSON.stringify({
+            totalBuy,
+            discount: 0,
+            getDomicilie
+        })));
+    }
+
+    const funBtnDeleteCart = (e, codigo) => {
+        e.preventDefault();
+        funDeleteProductCart(codigo);
     }
 
     return (
@@ -99,13 +109,18 @@ export default function CartToBuy() {
                             <table id="tbl-prod">
                                 <tbody className="tbody-cart-buy">
                                     {getProducts.map((item, i) => {
-                                        funSumSubTotal(item.Ahora, item.Antes, item.countProduct);
+                                        funSumSubTotal(item);
+
+
+                                        let viewPrice = (item.VlrMinimo < subTotalAntes) ? item.Ahora : item.Antes;
+                                        let calcutateSubtotalPrice = (item.VlrMinimo < subTotalAntes) ? (item.Ahora * item.countProduct) : (item.Ahora * item.Antes);
+
                                         return (
                                             <tr key={i}>
                                                 <td>
-                                                    <div className="tt-product-img" style={{position:'relative'}}>
+                                                    <div className="tt-product-img" style={{ position: 'relative' }}>
                                                         <img src={`${URL_IMAGE}${item.codigo}.png`} alt={`item${i}`} />
-                                                        {item.Porcentaje > 0 && <div className="div-percent-buy">-{item.Porcentaje}%</div>}
+                                                        {(item.Porcentaje > 0 && item.VlrMinimo < subTotalAntes) && <div className="div-percent-buy">-{item.Porcentaje}%</div>}
                                                     </div>
                                                 </td>
                                                 <td>
@@ -115,7 +130,7 @@ export default function CartToBuy() {
                                                     <ul className="tt-list-parameters">
                                                         <li>
                                                             <div className="tt-price">
-                                                                {FormatCOPNumber(item.Ahora)}
+                                                                {FormatCOPNumber(viewPrice)}
                                                             </div>
                                                         </li>
                                                         <li>
@@ -129,14 +144,14 @@ export default function CartToBuy() {
                                                         </li>
                                                         <li>
                                                             <div className="tt-price subtotal">
-                                                                {FormatCOPNumber(item.Ahora * item.countProduct)}
+                                                                {FormatCOPNumber(calcutateSubtotalPrice)}
                                                             </div>
                                                         </li>
                                                     </ul>
                                                 </td>
                                                 <td>
                                                     <div className="tt-price">
-                                                        {FormatCOPNumber(item.VlrMinimo < subTotalAntes ? item.Ahora : item.Antes)}
+                                                        {FormatCOPNumber(viewPrice)}
                                                     </div>
                                                 </td>
                                                 <td>
@@ -150,11 +165,11 @@ export default function CartToBuy() {
                                                 </td>
                                                 <td>
                                                     <div className="tt-price subtotal">
-                                                        {FormatCOPNumber(item.Ahora * item.countProduct)}
+                                                        {FormatCOPNumber(calcutateSubtotalPrice)}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="/" className="tt-btn-close" > </a>
+                                                    <a href="# " className="tt-btn-close" onClick={e => funBtnDeleteCart(e, item.codigo)} > </a>
                                                 </td>
                                             </tr>
 
@@ -200,8 +215,10 @@ export default function CartToBuy() {
                                             </tr>
                                         </tbody>
                                     </table>
-
-                                    <Button block onClick={() => window.location.href = "/processbuy"}>Realizar compra</Button>
+                                    {
+                                        totalBuy > 0 &&
+                                        <Button block onClick={() => window.location.href = "/processbuy"}>Realizar compra</Button>
+                                    }
                                 </div>
                             </CardBody>
                         </Card>

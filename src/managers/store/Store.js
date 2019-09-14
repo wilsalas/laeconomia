@@ -6,7 +6,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 products: action.products ? action.products : [],
-                subCategorie: action.subCategorie ? action.subCategorie: ""
+                subCategorie: action.subCategorie ? action.subCategorie : ""
             };
         case 'SEARCH_PRODUCT':
             return {
@@ -44,6 +44,11 @@ const reducer = (state, action) => {
                 ...state,
                 adress: action.adress
             };
+        case 'GET_ORDER':
+            return {
+                ...state,
+                order: action.order ? action.order : [],
+            };
         default:
             return state;
     }
@@ -59,7 +64,8 @@ const Store = () => {
         refreshTokenModal: false,
         modalAdress: false,
         step: 1,
-        adress: ""
+        adress: "",
+        order:[]
     });
     return [state, dispatch]
 }
