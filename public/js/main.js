@@ -2009,25 +2009,25 @@
   };
   //input-counter
   function ttInputCounter() {
-    blocks.ttInputCounter.find('.minus-btn, .plus-btn').on('click', function (e) {
-      var $input = $(this).parent().find('input');
-      var count = parseInt($input.val(), 10) + parseInt(e.currentTarget.className === 'plus-btn' ? 1 : -1, 10);
-      $input.val(count).change();
-    });
-    blocks.ttInputCounter.find("input").change(function () {
-      var _ = $(this);
-      var min = 1;
-      var val = parseInt(_.val(), 10);
-      var max = parseInt(_.attr('size'), 10);
-      val = Math.min(val, max);
-      val = Math.max(val, min);
-      _.val(val);
-    })
-      .on("keypress", function (e) {
-        if (e.keyCode === 13) {
-          e.preventDefault();
-        }
-      });
+    // blocks.ttInputCounter.find('.minus-btn, .plus-btn').on('click', function (e) {
+    //   var $input = $(this).parent().find('input');
+    //   var count = parseInt($input.val(), 10) + parseInt(e.currentTarget.className === 'plus-btn' ? 1 : -1, 10);
+    //   $input.val(count).change();
+    // });
+    // blocks.ttInputCounter.find("input").change(function () {
+    //   var _ = $(this);
+    //   var min = 1;
+    //   var val = parseInt(_.val(), 10);
+    //   var max = parseInt(_.attr('size'), 10);
+    //   val = Math.min(val, max);
+    //   val = Math.max(val, min);
+    //   _.val(val);
+    // })
+    //   .on("keypress", function (e) {
+    //     if (e.keyCode === 13) {
+    //       e.preventDefault();
+    //     }
+    //   });
   };
   //popup on pages product single
   function ttVideoPopup() {
@@ -3146,12 +3146,10 @@ jQuery(function ($) {
   });
   $('#ModalVerifyAge').on('click', '.js-btn-close', function () {
     $.cookie('modalverifyage', '2', { expires: 7 });
-    console.log("click");
     return false;
   });
   $('#ModalDiscount').on('click', '.js-reject-discount', function () {
     $.cookie('modaldiscount', '3', { expires: 7 });
-    console.log("click");
     return false;
   });
   var $body = $('body'),
@@ -3218,7 +3216,6 @@ jQuery(function ($) {
     //   const x = e.pageX - slider.offsetLeft;
     //   const walk = (x - startX) * 3; //scroll-fast
     //   slider.scrollLeft = scrollLeft - walk;
-    //   // console.log(walk);
     // });
   // }
 

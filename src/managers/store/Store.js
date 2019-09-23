@@ -6,7 +6,8 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 products: action.products ? action.products : [],
-                subCategorie: action.subCategorie ? action.subCategorie : ""
+                subCategorie: action.subCategorie ? action.subCategorie : "",
+                typeSearch: action.typeSearch ? action.typeSearch : "",
             };
         case 'SEARCH_PRODUCT':
             return {
@@ -49,6 +50,12 @@ const reducer = (state, action) => {
                 ...state,
                 order: action.order ? action.order : [],
             };
+        case 'TEXT_SEARCH':
+            return {
+                ...state,
+                textSearch: action.textSearch
+            };
+
         default:
             return state;
     }
@@ -65,7 +72,8 @@ const Store = () => {
         modalAdress: false,
         step: 1,
         adress: "",
-        order:[]
+        order: [],
+        textSearch: ""
     });
     return [state, dispatch]
 }

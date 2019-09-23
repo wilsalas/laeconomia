@@ -4,6 +4,7 @@ import BannerComponent from '../components/Banner';
 import SliderComponent from '../components/Slider';
 import { InterestContentComponent } from '../components/ContentProducts';
 import { ROUTES } from '../managers/api/ApiManager';
+import { ModalDictionary } from '../components/PopUp';
 
 export default function Dictionary() {
     return (
@@ -12,6 +13,7 @@ export default function Dictionary() {
             <SearchMedicineComponent />
             <InterestContentComponent />
             <BannerComponent />
+            <ModalDictionary />
         </>
     );
 }

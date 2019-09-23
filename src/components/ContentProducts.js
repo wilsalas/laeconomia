@@ -4,20 +4,22 @@ import { Container, Col, TabContent, TabPane, Nav, NavItem, NavLink, Row, Spinne
 import { VerticalProductComponent, HorizontalProductComponent, HorizontalBrandsComponent } from './Product';
 import { API } from '../managers/api/ApiManager';
 import { useGlobal } from '../managers/store/Context';
+import { funRenderSpinner } from '../managers/helpers/HelperManager';
 
 
 const TabContentComponent = props => {
-
 
     const [state, dispatch] = useGlobal();
     const [getRetrieveOffers, setRetrieveOffers] = useState([]);
     const [getRetrieveTopOffers, setRetrieveTopOffers] = useState([]);
     const [getActiveTab, setActiveTab] = useState("0");
     const [getLoading, setLoading] = useState(false);
+    const [getTypeSearch, setTypeSearch] = useState("");
     const getCol = props.col ? 4 : 3;
     const getMaxwidth = props.maxwidth ? 2 : 1;
     const getPage = 12;
     const [getPageSubcategorie, setPageSubcategorie] = useState(1);
+
 
     // get products  from code and initialize
     useEffect(() => {
@@ -25,42 +27,58 @@ const TabContentComponent = props => {
             funRetrieveOffers();
             funRetrieveTopOffers();
         } else {
-            funRetrieveProductFromCode(atob(props.codeProduct), props.type);
+            funRetrieveProductFromCode(props.type, atob(props.codeProduct));
+
         }
     }, [props.codeProduct, props.type]);
 
-    // get productos from subcategories
+    // set data products from store 
     useEffect(() => {
         setRetrieveOffers(state.products);
         setRetrieveTopOffers(state.products);
-    }, [state.products]);
+        setTypeSearch(state.typeSearch);
+    }, [state.products, state.typeSearch]);
 
 
-    const funRetrieveProductFromCode = async (code, type = "droguery") => {
-        let resRetrieveProductFromCode = type !== "baby" ? await API.GET.RetrieveProductFromCode(localStorage.getItem("city"), code) :
-            await API.GET.RetrieveProductsFromSubcategory(localStorage.getItem("city"), code);
-        if (Array.isArray(resRetrieveProductFromCode.message)) setRetrieveOffers(resRetrieveProductFromCode.message);
+    const funRetrieveProductFromCode = async (type = "productUnique", codigo, city = localStorage.getItem("city")) => {
+        let resRetrieveProductFromCode;
+        if (type !== "productSubCategoryCode") {
+            // search product from code unique
+            resRetrieveProductFromCode = await API.GET.RetrieveProductFromCode(city, codigo)
+        } else {
+            // search product from subcategorie code
+            resRetrieveProductFromCode = await API.GET.RetrieveProductsFromSubcategory(city, codigo);
+        }
+        if (!resRetrieveProductFromCode.error) {
+            setRetrieveOffers(resRetrieveProductFromCode.message);
+            setRetrieveTopOffers(resRetrieveProductFromCode.message);
+        }
     }
 
     const funProductForSubCategories = async () => {
-        let codeSubCategorie = state.subCategorie !== "" ? state.subCategorie : atob(props.codeProduct)
+        let codeSubCategorie = state.subCategorie !== "" ? state.subCategorie : atob(props.codeProduct);
         setPageSubcategorie(getPageSubcategorie + 1);
-        dispatch({ type: "GET_PRODUCT" })
+        dispatch({ type: "GET_PRODUCT" });
         let resSubCategories = await API.GET.RetrieveProductsFromSubcategory(localStorage.getItem("city"), codeSubCategorie, { page: getPageSubcategorie });
-        if (Array.isArray(resSubCategories.message)) dispatch({ type: "GET_PRODUCT", products: resSubCategories.message, subCategorie: codeSubCategorie })
+        if (!resSubCategories.error) {
+            dispatch({ type: "GET_PRODUCT", products: resSubCategories.message, subCategorie: codeSubCategorie, typeSearch: "productSubCategoryCode" });
+        }
     }
 
 
     const funRetrieveOffers = async (itemsPerPage = getPage) => {
         let resRetrieveOffers = await API.GET.RetrieveOffers(localStorage.getItem("city"), itemsPerPage);
-        if (Array.isArray(resRetrieveOffers.message)) setRetrieveOffers(resRetrieveOffers.message);
+        if (!resRetrieveOffers.error) {
+            setRetrieveOffers(resRetrieveOffers.message);
+        }
         setLoading(false);
-
     }
 
     const funRetrieveTopOffers = async (itemsPerPage = getPage) => {
         let resRetrieveTopOffers = await API.GET.RetrieveTopOffers(localStorage.getItem("city"), itemsPerPage);
-        if (Array.isArray(resRetrieveTopOffers.message)) setRetrieveTopOffers(resRetrieveTopOffers.message);
+        if (!resRetrieveTopOffers.error) {
+            setRetrieveTopOffers(resRetrieveTopOffers.message);
+        }
         setLoading(false);
     }
 
@@ -74,7 +92,9 @@ const TabContentComponent = props => {
 
     //  more products
     const funMoreProducts = () => {
-        if (props.type === "droguery" || props.type === "baby") {
+
+
+        if (props.type === "productSubCategoryCode" || getTypeSearch === "productSubCategoryCode") {
             funProductForSubCategories();
         } else {
             setLoading(true)
@@ -84,12 +104,6 @@ const TabContentComponent = props => {
                     break;
                 case '1':
                     funRetrieveTopOffers(getPage + getRetrieveTopOffers.length)
-                    break;
-                case '2':
-                    funRetrieveOffers(getPage + getRetrieveOffers.length)
-                    break;
-                case '3':
-                    funRetrieveTopOffers(getPage + getRetrieveTopOffers.length);
                     break;
                 default:
                     break;
@@ -105,23 +119,13 @@ const TabContentComponent = props => {
                     <Nav tabs className="justify-content-center">
                         <NavItem>
                             <NavLink className={classnames({ active: getActiveTab === '0' })} onClick={() => { funToggle('0'); }}>
-                                OFERTAS DEL DÍA
-                        </NavLink>
+                                LAS MEJORES OFERTAS
+                            </NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink className={classnames({ active: getActiveTab === '1' })} onClick={() => { funToggle('1'); }}>
-                                NUEVOS PRODUCTOS
-                        </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink className={classnames({ active: getActiveTab === '2' })} onClick={() => { funToggle('2'); }}>
-                                MÁS COMPRADOS
-                        </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink className={classnames({ active: getActiveTab === '3' })} onClick={() => { funToggle('3'); }}>
-                                MÁS PEDIDOS
-                        </NavLink>
+                                LO MÁS COMPRADO
+                            </NavLink>
                         </NavItem>
                     </Nav>
                     <TabContent activeTab={getActiveTab} >
@@ -130,12 +134,6 @@ const TabContentComponent = props => {
                         </TabPane>
                         <TabPane tabId="1" >
                             <VerticalProductComponent products={getRetrieveTopOffers} col={getCol} maxwidth={getMaxwidth} />
-                        </TabPane>
-                        <TabPane tabId="2" >
-                            <VerticalProductComponent products={getRetrieveOffers} col={getCol} maxwidth={getMaxwidth} />
-                        </TabPane>
-                        <TabPane tabId="3" >
-                            <VerticalProductComponent products={getRetrieveOffers} col={getCol} maxwidth={getMaxwidth} />
                         </TabPane>
                     </TabContent>
 
@@ -153,7 +151,7 @@ const InterestContentComponent = () => {
 
     const [getTranslate, setTranslate] = useState(0);
     const [getVelocity] = useState(885);
-    const [getPage, setPage] = useState(2);
+    const [getPage, setPage] = useState(3);
     const [getLimitPage, setLimitPage] = useState(0);
     const [getRetrieveOffersInterest, setRetrieveOffersInterest] = useState([]);
     const [getLoading, setLoading] = useState(false);
@@ -164,7 +162,9 @@ const InterestContentComponent = () => {
 
     const funRetrieveOffers = async (itemsPerPage = 12) => {
         let resRetrieveOffers = await API.GET.RetrieveOffers(localStorage.getItem("city"), itemsPerPage);
-        if (Array.isArray(resRetrieveOffers.message)) setRetrieveOffersInterest(resRetrieveOffers.message);
+        if (!resRetrieveOffers.error) {
+            setRetrieveOffersInterest(resRetrieveOffers.message);
+        }
         setLoading(false);
     }
 
@@ -188,11 +188,56 @@ const InterestContentComponent = () => {
     }
 
     const funAddMoreProduct = () => {
-        setPage(getPage + 2);
         setLoading(true);
         funRetrieveOffers(getRetrieveOffersInterest.length + getRetrieveOffersInterest.length)
+        setPage(getPage + 3);
     }
 
+
+    const funRenderProductInterest = () => {
+        let render;
+        if (getRetrieveOffersInterest.length < 1) {
+            render =
+                <>
+                    <Col md={1} className="column-btns-product-center"></Col>
+                    <Col md={10}>
+                        {funRenderSpinner()}
+                    </Col>
+                    <Col md={1} className="column-btns-product-center"></Col>
+                </>
+        } else {
+            render =
+                <>
+                    <Col md={1} className="column-btns-product-center">
+                        {getLimitPage > 0 &&
+                            <button className="btn-left-product btn-products-arrow d-none d-md-block" onClick={() => funButtonSlider(1)}>
+                                <i className="fas fa-angle-left"></i>
+                            </button>
+                        }
+                    </Col>
+                    <Col md={10}>
+                        <Row>
+                            <Col md={10}>
+                                <h5 className="h5-title">TE PODRÍA INTERESAR</h5>
+                            </Col>
+                            <Col md={2} className="align-inline-flex-content-getColumn">
+                                <button className="btn-lg btn-outline-primary rounded-pill" onClick={() => funAddMoreProduct()}>Ver mas {getLoading && <Spinner size={'sm'} color="light" />}</button>
+                            </Col>
+                        </Row>
+                        <HorizontalProductComponent products={getRetrieveOffersInterest} col={3} />
+                    </Col>
+                    <Col md={1} className="column-btns-product-center">
+                        {
+                            getLimitPage < getPage &&
+                            <button className="btn-rigth-product  btn-products-arrow d-none d-md-block" onClick={() => funButtonSlider(0)} >
+                                <i className="fas fa-angle-right"></i>
+                            </button>
+                        }
+                    </Col>
+                </>
+        }
+        return render;
+    }
 
     return (
         <>
@@ -200,28 +245,7 @@ const InterestContentComponent = () => {
                 <Row className="mt-4">
                     <Col md={12}>
                         <Row>
-                            <Col md={1} className="column-btns-product-center">
-                                {getLimitPage > 0 &&
-                                    <button className="btn-left-product btn-products-arrow" onClick={() => funButtonSlider(1)}>{'<'}</button>
-                                }
-                            </Col>
-                            <Col md={10}>
-                                <Row>
-                                    <Col md={10}>
-                                        <h5 className="h5-title">TE PODRÍA INTERESAR</h5>
-                                    </Col>
-                                    <Col md={2} className="align-inline-flex-content-getColumn">
-                                        <button className="btn-lg btn-outline-primary rounded-pill" onClick={() => funAddMoreProduct()}>Ver mas {getLoading && <Spinner size={'sm'} color="light" />}</button>
-                                    </Col>
-                                </Row>
-                                <HorizontalProductComponent products={getRetrieveOffersInterest} col={3} />
-                            </Col>
-                            <Col md={1} className="column-btns-product-center">
-                                {
-                                    getLimitPage < getPage &&
-                                    <button className="btn-rigth-product  btn-products-arrow" onClick={() => funButtonSlider(0)} >{'>'}</button>
-                                }
-                            </Col>
+                            {funRenderProductInterest()}
                         </Row>
                     </Col>
                 </Row>
@@ -241,7 +265,7 @@ const SponsorShipsComponent = () => {
 
 
     const funButtonSlider = direction => {
-        let container = document.querySelector(".container-interest"),
+        let container = document.querySelector(".container-sponsor"),
             translate = getTranslate,
             limitPage = getLimitPage;
 
@@ -260,7 +284,6 @@ const SponsorShipsComponent = () => {
 
     const funAddMoreProduct = () => {
         setPage(getPage + 1);
-        console.log("Uno mas agregado", getPage);
     }
 
     return (
@@ -271,7 +294,9 @@ const SponsorShipsComponent = () => {
                         <Row>
                             <Col md={1} className="column-btns-product-center">
                                 {getLimitPage > 0 &&
-                                    <button className="btn-left-product btn-products-arrow" onClick={() => funButtonSlider(1)}>{'<'}</button>
+                                    <button className="btn-left-product btn-products-arrow" onClick={() => funButtonSlider(1)}>
+                                        <i className="fas fa-angle-left"></i>
+                                    </button>
                                 }
                             </Col>
                             <Col md={10}>
@@ -288,7 +313,9 @@ const SponsorShipsComponent = () => {
                             <Col md={1} className="column-btns-product-center">
                                 {
                                     getLimitPage < getPage &&
-                                    <button className="btn-rigth-product  btn-products-arrow" onClick={() => funButtonSlider(0)} >{'>'}</button>
+                                    <button className="btn-rigth-product  btn-products-arrow" onClick={() => funButtonSlider(0)} >
+                                        <i className="fas fa-angle-right"></i>
+                                    </button>
                                 }
                             </Col>
                         </Row>

@@ -22,8 +22,7 @@ textarea:focus, textarea.form-control:focus, input.form-control:focus, input[typ
     border-color: #ced4da;
 }
 
-
-input,select{
+input, select {
     color: #a5a5a5 !important;
 }
 
@@ -36,15 +35,14 @@ input,select{
 }
 
 .header-input {
-    
     border-radius: 20px 0px 0px 0px !important;
     /* background-color: white !important; */
     font-weight: 500 !important;
     color: #a5a5a5;
     height: 40px;
 }
+
 .header-input-border {
-    
     border-radius: 20px 0px 0px 20px !important;
     /* background-color: white !important; */
     font-weight: 500 !important;
@@ -79,14 +77,13 @@ input,select{
 }
 
 textarea {
-    
     background-color: white !important;
     font-weight: 500 !important;
     color: #a5a5a5 !important;
     border-radius: 11px !important;
 }
 
-.header-input::placeholder, .header-input:focus, .header-input-border::placeholder, .header-input-border:focus,  textarea::placeholder , input::placeholder {
+.header-input::placeholder, .header-input:focus, .header-input-border::placeholder, .header-input-border:focus, textarea::placeholder, input::placeholder {
     color: #a5a5a5 !important;
 }
 
@@ -152,8 +149,46 @@ header .tt-cart .tt-dropdown-toggle .tt-badge-cart {
     font-size: 9px !important;
 }
 
-.input-group-personal{
+.input-group-personal {
     background-color: white !important;
+}
+
+.list-group-item-personalized:hover , .list-group-item:hover{
+    color: white !important;
+    background-color: #1b42cb !important;
+}
+
+.list-group-item {
+    border-right: none !important;
+    border-left: none !important;
+   cursor: pointer;
+}
+
+.list-group-item:first-child {
+    border-radius: 0 !important;
+    border-top: none !important;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    
+}
+
+.list-group-item:last-child {
+    border-radius: 0 !important;
+}
+
+
+.categoriesHorizontalCol{
+    max-width: 20% !important;
+}
+
+.ul-style{
+    list-style: circle;
+}
+
+.text-information-red{
+    color: #CC000F !important;
+}
+.text-information-blue{
+    color: #1b42cb !important;
 }
 
 /* Style for Tabs */
@@ -317,6 +352,20 @@ a:not([href]):not([tabindex]) {
     box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
 }
 
+.card-tab-categories {
+    width: 175px;
+    height: 210px;
+    border: none;
+    border-radius: 8px !important;
+    display: flex;
+    justify-content: center;
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
+}
+
+.icon-categories {
+    border-radius: 8px !important;
+}
+
 .div-percent {
     width: 20%;
     background-color: #ff2c6e;
@@ -422,7 +471,7 @@ a:not([href]):not([tabindex]) {
     border-left: none;
     border-radius: 0px !important;
     font-weight: 500 !important;
-    color:  #657272 !important;
+    color: #657272 !important;
     border-color: #ced4da;
 }
 
@@ -446,7 +495,6 @@ a:not([href]):not([tabindex]) {
 /* Style for account */
 
 .account-input {
-    
     /* background-color: white !important; */
     font-weight: 500 !important;
     color: #a5a5a5 !important;
@@ -526,7 +574,7 @@ a:not([href]):not([tabindex]) {
     padding-bottom: 5px;
 }
 
-.collapsible-search:hover{
+.collapsible-search:hover {
     background: #1b41cb;
     padding-left: 2%;
     padding-right: 2%;
@@ -535,22 +583,20 @@ a:not([href]):not([tabindex]) {
     color: white;
 }
 
-
-.collapsible-search-title{
+.collapsible-search-title {
     padding-left: 8px;
     color: rgb(27, 66, 203);
 }
 
-.collapsible-col{
+.collapsible-col {
     height: 200px;
     overflow: auto;
 }
 
-.content-row-collapsible{
+.content-row-collapsible {
     height: 400px;
     overflow: auto;
 }
-
 
 h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"]) {
     font-size: 12px;
@@ -751,7 +797,6 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
 /* input for payment methods  */
 
 .payment-input {
-    
     background-color: white !important;
     font-weight: 300 !important;
     color: #a5a5a5 !important;
@@ -921,9 +966,19 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     .h-prod {
         max-width: 60% !important;
     }
-    .content-search{
+    .content-search {
         height: auto;
         overflow: auto;
     }
-    
+
+    .categoriesHorizontal{
+        overflow-x: auto !important;
+    }
+    .categoriesHorizontalCol{
+        max-width: 100% !important;
+    }
+
+    .productsHorizontal{
+        overflow-x: auto !important;
+    }
 }

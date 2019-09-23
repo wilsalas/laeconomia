@@ -12,7 +12,7 @@ export default function BaCare() {
     return (
         <>
             <SliderComponent routes={ROUTES.MAIN} banner />
-            <GroupCategoryComponent codeProduct={codeProduct} type="baby" />
+            <GroupCategoryComponent codeProduct={codeProduct} type="productSubCategoryCode" />
             <BannerComponent />
         </>
     );

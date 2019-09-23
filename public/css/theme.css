@@ -21750,11 +21750,11 @@ html.ie.gecko body.modal-open {
   vertical-align: middle;
 }
 
-@media (min-width: 576px) {
+/* @media (min-width: 576px) {
   .modal .modal-dialog {
     max-width: inherit;
   }
-}
+} */
 
 .modal-body{
   top:-20px;
@@ -32989,7 +32989,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: color 0.2s linear;
 } */
 
-h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
+/* h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
   color: #1b42cb;
 }
 
@@ -33125,7 +33125,7 @@ h6:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     line-height: 26px;
     padding-bottom: 6px;
   }
-}
+} */
 
 .tt-title-subpages:not(.noborder) {
   border-bottom: 1px solid #e9e7e7;

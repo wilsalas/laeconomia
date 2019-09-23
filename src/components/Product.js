@@ -6,7 +6,7 @@ import { useGlobal } from '../managers/store/Context';
 const VerticalProductComponent = props => {
 
     if (props.products.length < 1) {
-        return funRenderSpinner();
+        return <div className="mt-3">{funRenderSpinner()}</div>;
     }
 
     return (
@@ -25,13 +25,8 @@ const VerticalProductComponent = props => {
 
 
 const HorizontalProductComponent = props => {
-    
-    if (props.products.length < 1) {
-        return funRenderSpinner();
-    }
-
     return (
-        <div className="outer" id="content">
+        <div className="outer productsHorizontal" id="content">
             <div className="container-inner container-interest">
                 {props.products.map((value, i) => {
                     return (
@@ -44,6 +39,9 @@ const HorizontalProductComponent = props => {
         </div>
     )
 };
+
+
+
 
 
 const HorizontalBrandsComponent = props => {
@@ -60,6 +58,33 @@ const HorizontalBrandsComponent = props => {
                                 background: 'rgb(73, 159, 73)',
                                 borderRadius: '24px'
                             }}> </div>
+                        </Col>
+                    );
+                })}
+            </div>
+        </div>
+    )
+};
+
+
+const HorizontalCategoriesComponent = props => {
+    return (
+        <div className="outer categoriesHorizontal" id="content">
+            <div className="container-inner container-categories">
+                {props.products.map((value, i) => {
+                    let codeSubCategorie = value.subCategories[Math.floor((Math.random() * value.subCategories.length) + 0)].subID;
+                    return (
+                        <Col key={i} md={2} className="mt-3 mb-3 categoriesHorizontalCol">
+                            <a href={`/droguery/${btoa(codeSubCategorie)}/${btoa("productSubCategoryCode")}`} title={value.name}>
+                                <Card className="text-center card-tab-categories p-3" >
+                                    <CardImg top className="mt-5 rounded icon-categories" src={value.icono} alt={`Card image categories`}
+                                        onError={(e) => { e.target.src = `/assets/icon_not_found.png` }}
+                                    />
+                                    <CardBody className="div-cardbody mt-2 mb-2">
+                                        <CardTitle style={{ fontSize: 12 }} title={value.name}>{FormatPointsSupensive(value.name, 10)}</CardTitle>
+                                    </CardBody>
+                                </Card>
+                            </a>
                         </Col>
                     );
                 })}
@@ -87,7 +112,7 @@ const Product = props => {
             let isAdd = false;
             products.forEach((item, i) => {
                 if (item.codigo === product.codigo) {
-                    item.countProduct += countProduct
+                    item.countProduct += item.stock >= countProduct ? countProduct : item.stock
                     isAdd = true;
                 }
             })
@@ -104,7 +129,7 @@ const Product = props => {
     const funCountProduct = products => {
         let totalProduct = 0;
         products.forEach(item => totalProduct += item.countProduct);
-        dispatch({ type: 'COUNT_TOTAL_PRODUCT', totalProduct })
+        dispatch({ type: 'COUNT_TOTAL_PRODUCT', totalProduct });
     }
 
     return props.codigo ? (
@@ -117,7 +142,7 @@ const Product = props => {
                 <CardTitle >{FormatCOPNumber(props.Ahora)}</CardTitle>
                 <CardSubtitle>{FormatCOPNumber(props.Antes)}</CardSubtitle>
                 <CardText title={props.descripcion}>{FormatPointsSupensive(props.descripcion)}</CardText>
-                <CardText>Mililitro a $999.999</CardText>
+                <CardText>{(props.medida && props.medida !== "") && `${props.medida} ${props.precioMedida}`}</CardText>
                 <CardText>{props.Categoria}</CardText>
                 <button className="btn-lg btn-outline-primary rounded-pill" onClick={() => funAddCart(props, 1)}>Agregar</button>
             </CardBody>
@@ -129,5 +154,6 @@ const Product = props => {
 export {
     VerticalProductComponent,
     HorizontalProductComponent,
-    HorizontalBrandsComponent
+    HorizontalBrandsComponent,
+    HorizontalCategoriesComponent
 };

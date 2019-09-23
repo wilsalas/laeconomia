@@ -25,12 +25,12 @@ const StepFacturationComponent = props => {
     const [getItemSelect, setItemSelect] = useState("");
     const [getInputSelect, setInputSelect] = useState("");
     const [getTypeSelect, setTypeSelect] = useState("");
-
     useEffect(() => {
         if (getListAdress.length < 1) {
             funPerformRetrieveAddressList();
         }
-    })
+    });
+
 
     // get all citys
     const funPerformRetrieveAddressList = async () => {
@@ -254,29 +254,12 @@ const StepPaymentMethodComponent = props => {
                 })
             })
 
-           
-
             if (Object.keys(getListCupon).length > 0) {
                 newCupon = getListCupon;
                 newCupon.Aplica = true;
             } else {
                 newCupon.Aplica = false;
             }
-
-
-            // console.log("datos enviados",
-            // localStorage.getItem("city"),
-            // localStorage.getItem("nameCity"),
-            // props.getProfile.nit,
-            // props.getProfile.nombres,
-            // props.getProfile.email,
-            // props.getProfile.auth_token,
-            // state.adress,
-            // selectedItem,
-            // newOrder.totalBuy,
-            // newOrder.getDomicilie,
-            // newProductsCart,
-            // newCupon);
 
 
             let resPerformPurchase = await API.POST.PerformPurchase(

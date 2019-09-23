@@ -51,11 +51,15 @@ export const AlertSwal = (message, textValue = "", titleValue = "") => {
         title = titleValue
         text = textValue;
         icon = "success";
+    } else if (message === "CANT_PRODUCT") {
+        text = "La cantidad solicitada, no esta disponible.";
+        icon = "info";
     } else if (message === "ERROR_SERVER") {
         title = "Ups!"
         text = "Ha ocurrido un error inesperado en la aplicación. por favor intente nuevamente";
         icon = "error";
     }
+
 
 
     swal({ title, text, icon, button: "Entendido" })
@@ -93,9 +97,9 @@ export const FormatCOPNumber = (number, commas = false) => {
     }
 }
 
-export const FormatPointsSupensive = (element, point = 27) => element.substring(0, point) + "...";
+export const FormatPointsSupensive = (element, point = 27) => element.length >= point ?   element.substring(0, point) + "..." : element;
 
-export const funRenderSpinner = (type = "md") => <div style={{ display: 'flex', justifyContent: 'center' }}><Spinner size={type} color="primary" /> </div>
+export const funRenderSpinner = (type = "sm") => <div style={{ display: 'flex', justifyContent: 'center' }}><Spinner size={type} color="primary" /> </div>
 
 
 // function get value formater string or number

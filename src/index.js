@@ -4,6 +4,7 @@ import './index.css';
 import '../src/styles/styles.css';
 import App from './pages/App';
 import Account from './pages/Account';
+import Information from './pages/Information';
 import DrogueryVirtual from './pages/DrogueryVirtual';
 import BaCare from './pages/BaCare';
 import Dictionary from './pages/Dictionary';
@@ -26,19 +27,20 @@ ReactDOM.render(
                 <Header />
                 <Switch>
                     <Route exact path='/' component={App} />
-                    <Route path='/droguery/:code?' component={DrogueryVirtual} />
                     <Route path='/babycare' component={BaCare} />
                     <Route path='/dictionary' component={Dictionary} />
                     <Route path='/subsidiary' component={Subsidiary} />
-                    <Route path='/account/:page' component={Account} />
                     <Route path='/buys' component={CartToBuy} />
                     <Route path='/processbuy' component={ProcessToBuy} />
                     <Route path='/detail' component={ProductDetail} />
+                    <Route path='/account/:page' component={Account} />
+                    <Route path='/information/:page' component={Information} />
+                    <Route path='/droguery/:code?/:type?' component={DrogueryVirtual} />
                     <Route render={() => <Redirect to="/" />} />
                 </Switch >
                 <Footer />
                 <ModalLocation />
-                <ModalRefreshTokenLogin/>
+                <ModalRefreshTokenLogin />
             </RootProvider>
         </>
     </Router>

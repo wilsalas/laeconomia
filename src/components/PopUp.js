@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Col, Modal, ModalHeader, ModalBody, Input, Label, Form, FormGroup, Row } from 'reactstrap';
+import { Button, Col, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup, Row } from 'reactstrap';
 import { API } from '../managers/api/ApiManager';
 import { useGlobal } from '../managers/store/Context';
 import { AlertSwal } from '../managers/helpers/HelperManager';
@@ -360,7 +360,7 @@ const ModalRefreshTokenLogin = () => {
             <Modal returnFocusAfterClose isOpen={state.refreshTokenModal} >
                 <ModalHeader toggle={() => funModalCloset()}></ModalHeader>
                 <ModalBody>
-                    <LoginComponent />
+                    <LoginComponent modalLogin />
                 </ModalBody>
             </Modal>
         </>
@@ -386,11 +386,43 @@ const ModalAdress = props => {
     )
 }
 
+const ModalDictionary = () => {
+
+    const [getOpenModalDictionary, setOpenModalDictionary] = useState(true);
+    const funModalCloset = () => setOpenModalDictionary(false);
+
+    return (
+        <>
+            <Modal returnFocusAfterClose isOpen={getOpenModalDictionary}  >
+                <ModalHeader toggle={() => funModalCloset()}><b>Condiciones Legales</b></ModalHeader>
+                <ModalBody>
+                    <p>
+                        La información incluida en esta página sobre nuestros medicamentos está dirigida exclusivamente a los médicos y profesionales de la salud.
+
+                        No es para uso del público en general y no puede tomarse como una orientación para automedicarse, complementar, reemplazar o cambiar las indicaciones de tratamiento que haya recibido de un médico.
+
+                        Los tratamientos de salud, en especial cuando incluyen medicamentos de prescripción (aquellos que sólo se venden con receta médica), deben ser definidos, orientados y vigilados en todo momento por un médico.
+
+                        En consecuencia, si usted no es médico o profesional de la salud, debe abstenerse de consultar la información incluida aquí sobre medicamentos.
+
+                        En caso de que decida seguir adelante, es claro que lo hace con pleno conocimiento de lo que ello implica y, por tanto, Droguería La Economía no asume ninguna responsabilidad por el uso que usted le dé a dicha información.
+                   </p>
+                </ModalBody>
+
+                <ModalFooter>
+                    <Button color="primary" onClick={() => funModalCloset()}>Estoy de acuerdo</Button>
+                </ModalFooter>
+            </Modal>
+        </>
+    )
+}
+
 export {
     ModalLocation,
     ModalProfile,
     ModalRefreshTokenLogin,
-    ModalAdress
+    ModalAdress,
+    ModalDictionary
 }
 
 

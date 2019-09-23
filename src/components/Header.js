@@ -37,7 +37,7 @@ export default function HeaderComponent() {
     const funSelectedCity = (e, codeCity, nameCity) => {
         e.preventDefault();
         localStorage.setItem("city", codeCity);
-        localStorage.setItem("nameCity",nameCity);
+        localStorage.setItem("nameCity", nameCity);
         window.location.reload();
     }
 
@@ -51,11 +51,11 @@ export default function HeaderComponent() {
         if (!resProfile.error) {
             dispatch({ type: "INFORMATION_PROFILE", informationProfile: resProfile.message.data });
             setOpenProfile(true)
-        }else {
+        } else {
             if (resProfile.message === "TOKEN_ERROR") {
                 dispatch({ type: "REFRESH_TOKEN_MODAL", refreshTokenModal: true });
             } else {
-                AlertSwal("ERROR_SERVER");                
+                AlertSwal("ERROR_SERVER");
             }
         }
     }
@@ -329,14 +329,14 @@ export default function HeaderComponent() {
                 </div>
 
                 {/* Page selected */}
-                <div className="tt-breadcrumb">
+                {/* <div className="tt-breadcrumb">
                     <div className="container">
                         <ul>
                             <li><a href="index.html">Home</a></li>
                             <li>Listing</li>
                         </ul>
                     </div>
-                </div>
+                </div> */}
 
 
                 {/* -- Stuck menu -- */}
@@ -350,7 +350,7 @@ export default function HeaderComponent() {
                             </Col>
                             <Col md={2} className="mb-2">
                                 <div className="tt-header-row mt-2">
-                                    {/* <div className="tt-stuck-parent-menu" style={{ display: 'none' }} /> */}
+                                    <div className="tt-stuck-parent-menu" style={{ display: 'none' }} />
                                     <div className="tt-stuck-parent-multi tt-parent-box" />
                                     <div className="tt-stuck-parent-search tt-parent-box" />
                                     <div className="tt-stuck-parent-account tt-parent-box" />

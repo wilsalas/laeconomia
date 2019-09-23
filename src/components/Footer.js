@@ -51,10 +51,8 @@ export default () => {
                                     </h4>
                                     <div className="tt-collapse-content">
                                         <ul className="tt-list">
-                                            <li><a href="listing-collection.html">Quiénes somos</a></li>
-                                            <li><a href="listing-collection.html">Nuestra misión</a></li>
-                                            <li><a href="listing-collection.html">Nuestra visíon</a></li>
-                                            <li><a href="listing-collection.html">Nuestra historia</a></li>
+                                            <li><a href="/information/about">Quiénes somos</a></li>
+                                            <li><a href="/information/history">Misión, Visión e Historia</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -66,9 +64,9 @@ export default () => {
                                     </h4>
                                     <div className="tt-collapse-content">
                                         <ul className="tt-list">
-                                            <li><a href="account_order.html">Aviso de privacidad</a></li>
-                                            <li><a href="page404.html">Políticas y términos de uso</a></li>
-                                            <li><a href="page404.html">Habeas data</a></li>
+                                            <li><a href="/information/privacy">Aviso de privacidad</a></li>
+                                            <li><a href="/information/terms">Políticas y términos de uso</a></li>
+                                            <li><a href="/information/hebeasdata">Habeas data</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -80,9 +78,13 @@ export default () => {
                                     </h4>
                                     <div className="tt-collapse-content">
                                         <ul className="tt-list">
-                                            <li><a href="account_order.html">¡Haz parte del club <span className="badge badge-primary">Registrarse</span></a></li>
-                                            <li><a href="page404.html">Políticas y términos de uso</a></li>
-                                            <li><a href="page404.html">Habeas data</a></li>
+                                            <li>
+                                                <a target="_blank" rel="noopener noreferrer" href="http://clubvidasana.co/registrate/">¡Haz parte del club
+                                                    <span className="badge badge-primary ml-1">Registrarse</span>
+                                                </a>
+                                            </li>
+                                            <li><a target="_blank" rel="noopener noreferrer" href="http://clubvidasana.co/informacion/">Información Del Club</a></li>
+                                            <li><a target="_blank" rel="noopener noreferrer" href="http://clubvidasana.co/aliados/">Beneficios Del Club</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -91,11 +93,11 @@ export default () => {
                                 <div className="tt-newsletter">
                                     <div className="tt-mobile-collapse">
                                         <h4 className="tt-collapse-title tt-collapse-title-blue">
-                                            LA EMPRESA
+                                            CONTÁCTO
                                         </h4>
                                         <div className="tt-collapse-content">
                                             <address>
-                                                <p>Contactenos: <a href="mailto:info@mydomain.com">hola@mydomain.com</a></p>
+                                                <p>Contactenos: <a className="text-information-blue" href="mailto:habeasdata@eticos.com">habeasdata@eticos.com</a></p>
                                             </address>
                                         </div>
                                     </div>

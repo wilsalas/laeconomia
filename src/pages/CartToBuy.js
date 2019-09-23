@@ -38,7 +38,7 @@ export default function CartToBuy() {
             products.forEach(item => {
                 if (item.codigo === product.codigo) {
                     if (type === "+") {
-                        item.countProduct += countProduct
+                        item.countProduct += item.stock >= countProduct ? countProduct : item.stock
                     } else {
                         if (item.countProduct === 1) {
                             isRemove = true;
@@ -102,7 +102,7 @@ export default function CartToBuy() {
     return (
         <>
             <Container>
-                <h5 className="mt-4">CARRITO DE COMPRAS</h5>
+                <h5 className="mt-4">{getProducts.length > 0 ? "CARRITO DE COMPRAS" : "NO HAY PRODUCTOS AGREGADOS AL CARRITO"}</h5>
                 <Row>
                     <Col md={8}>
                         <div className="tt-shopcart-table-02">
