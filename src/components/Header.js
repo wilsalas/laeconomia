@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SearchHeaderComponent } from '../components/Search';
 import { API } from '../managers/api/ApiManager';
-import { Row, Col } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import { ModalProfile } from './PopUp';
 import { useGlobal } from '../managers/store/Context';
 import { AlertSwal } from '../managers/helpers/HelperManager';
@@ -16,6 +16,7 @@ export default function HeaderComponent() {
 
 
     useEffect(() => {
+
         RetrieveStores();
         if (localStorage.getItem("usi")) {
             setProfile(JSON.parse(atob(localStorage.getItem("usi"))));
@@ -67,79 +68,12 @@ export default function HeaderComponent() {
         window.location.href = "/";
     }
 
+
+
     return (
         <>
-            <SearchHeaderComponent />
+            <SearchHeaderComponent funLogout={funLogout} getProfile={getProfile} funGetProfile={funGetProfile} />
             <header>
-                {/* MENU MOBILE */}
-                <nav className="panel-menu mobile-main-menu">
-                    <ul>
-                        <li>
-                            <a href="/" >INICIO</a>
-                        </li>
-                        <li>
-                            <a href="/droguery" >DROGUERIA VIRTUAL</a>
-                            {/* <ul>
-                                {new Array(10).fill().map((value, i) => {
-                                    return (
-                                        <li key={i}>
-                                            <a href="/">CATEGORÍA {i}</a>
-                                            <ul>
-                                                <li><a href="/">Item 1</a></li>
-                                                <li><a href="/">Item 2</a></li>
-                                                <li><a href="/">Item 3</a></li>
-                                            </ul>
-                                        </li>
-                                    )
-                                })}
-                            </ul> */}
-                        </li>
-                        <li>
-                            <a href="/babycare">CUIDADO DEL BEBÉ</a>
-                        </li>
-                        <li>
-                            <a href="/dictionary" >DICCIONARIO</a>
-                        </li>
-                        <li>
-                            <a href="/subsidiary">SUCURSALES</a>
-                        </li>
-                        <li>
-                            <a href="http://clubvidasana.co/" target="_blank" rel="noopener noreferrer" className="btn-club-vida-mobile">
-                                CLUB VIDA SANA
-                            </a>
-                        </li>
-                    </ul>
-                    <div className="mm-navbtn-names">
-                        <div className="mm-closebtn">Cerrar</div>
-                        <div className="mm-backbtn">Atrás</div>
-                    </div>
-                </nav>
-
-                {/* MENU DESKTOP  */}
-                <div className="tt-mobile-header">
-                    <div className="container-fluid">
-                        <div className="tt-header-row">
-                            <div className="tt-mobile-parent-menu">
-                                <div className="tt-menu-toggle">
-                                    <i className="icon-03"></i>
-                                </div>
-                            </div>
-                            {/* <!-- city --> */}
-                            <div className="tt-mobile-parent-multi tt-parent-box"></div>
-                            {/* <!-- /city --> */}
-                            {/* <!-- subsidiary --> */}
-                            <div className="tt-mobile-parent-search tt-parent-box"></div>
-                            {/* <!-- /subsidiary --> */}
-                            {/* <!-- account --> */}
-                            <div className="tt-mobile-parent-account tt-parent-box"></div>
-                            {/* <!-- /account --> */}
-                            {/* <!-- cart --> */}
-                            <div className="tt-mobile-parent-cart tt-parent-box"></div>
-                            {/* <!-- /cart --> */}
-                        </div>
-                    </div>
-                </div>
-
                 {/* -- tt-desktop-header -- */}
                 <div className="tt-desktop-header">
                     <div className="container">
@@ -178,21 +112,16 @@ export default function HeaderComponent() {
                                                         </div>
                                                     </div> */}
                                                 </li>
-
                                                 <li className="dropdown tt-megamenu-col-01 ">
                                                     <a href="/babycare">CUIDADO DEL BEBÉ</a>
                                                 </li>
-
                                                 <li className="dropdown tt-megamenu-col-01">
                                                     <a href="/dictionary" >DICCIONARIO</a>
                                                 </li>
-
                                                 <li className="dropdown tt-megamenu-col-01">
                                                     <a href="/subsidiary">SUCURSALES</a>
                                                 </li>
-
                                                 <a href="http://clubvidasana.co/" target="_blank" rel="noopener noreferrer" className="btn-club-vida ">CLUB VIDA SANA</a>
-
                                             </ul>
                                         </nav>
                                     </div>
@@ -213,7 +142,9 @@ export default function HeaderComponent() {
                                             </div>
                                             <div className="tt-dropdown-inner" style={{ height: 300, overflow: 'auto' }}>
                                                 <ul>
-                                                    {citys.map((item, i) => <li key={i} className="selected_li" ><a href="/" onClick={e => funSelectedCity(e, item.Ciudad, item.Descripcion)} >{item.Descripcion}</a></li>)}
+                                                    {citys.map((item, i) => <li key={i} className="selected_li" >
+                                                        <a href="/" onClick={e => funSelectedCity(e, item.Ciudad, item.Descripcion)} >{item.Descripcion}</a>
+                                                    </li>)}
                                                 </ul>
                                             </div>
                                         </div>
@@ -230,7 +161,6 @@ export default function HeaderComponent() {
 
                                     </div>
                                 </div>
-
 
                                 {/* tt-account */}
                                 <div className="tt-desctop-parent-account tt-parent-box">
@@ -340,38 +270,34 @@ export default function HeaderComponent() {
 
 
                 {/* -- Stuck menu -- */}
-                <div className="tt-stuck-nav">
-                    <div className="container">
+                <div className="tt-stuck-nav ">
+                    <div className="d-md-none d-lg-none">
 
+                        <SearchHeaderComponent funLogout={funLogout} getProfile={getProfile} funGetProfile={funGetProfile} />
+                    </div>
+                    <Container className="mb-2 d-none d-md-block">
                         {/* Search component */}
-                        <Row>
+                        <Row >
                             <Col md={10}>
-                                <SearchHeaderComponent />
+                                <SearchHeaderComponent funLogout={funLogout} getProfile={getProfile} funGetProfile={funGetProfile} />
                             </Col>
-                            <Col md={2} className="mb-2">
+                            <Col md={2}>
                                 <div className="tt-header-row mt-2">
-                                    <div className="tt-stuck-parent-menu" style={{ display: 'none' }} />
-                                    <div className="tt-stuck-parent-multi tt-parent-box" />
+                                    <div className="tt-stuck-parent-multi tt-parent-box " />
                                     <div className="tt-stuck-parent-search tt-parent-box" />
                                     <div className="tt-stuck-parent-account tt-parent-box" />
                                     <div className="tt-stuck-parent-cart tt-parent-box" />
                                 </div>
-
                             </Col>
                         </Row>
-                    </div>
+                    </Container>
                 </div>
+
 
                 {/* Loading circle part */}
                 <div id="loader-wrapper">
                     <div id="loader">
-                        <div className="dot"></div>
-                        <div className="dot"></div>
-                        <div className="dot"></div>
-                        <div className="dot"></div>
-                        <div className="dot"></div>
-                        <div className="dot"></div>
-                        <div className="dot"></div>
+                        {new Array(7).fill().map((item, i) => <div key={i} className="dot"></div>)}
                     </div>
                 </div>
 

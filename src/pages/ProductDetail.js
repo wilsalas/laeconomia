@@ -83,7 +83,7 @@ export default function ProductDetails() {
 
                                 <div className="content-detail-product">
                                     <p className="text-price-blue">{FormatCOPNumber(getDetailProduct.Ahora)}</p>
-                                    <div className="div-percent-product">-{getDetailProduct.Porcentaje}%</div>
+                                    <div className="div-percent-product">{getDetailProduct.Porcentaje}%</div>
                                     <p className="text-subray">{FormatCOPNumber(getDetailProduct.Antes)}</p>
                                     <p className="text-gray">{(getDetailProduct.medida && getDetailProduct.medida !== "") && `${getDetailProduct.medida} ${getDetailProduct.precioMedida}`}</p>
                                 </div>

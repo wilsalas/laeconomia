@@ -521,14 +521,14 @@
     modalAddToCart();
   };
   // Mobile Menu
-  if (blocks.mobileMenuToggle.length) {
-    blocks.mobileMenuToggle.initMM({
-      enable_breakpoint: true,
-      mobile_button: true,
-      breakpoint: 1025,
-      menu_class: 'mobile-main-menu'
-    });
-  };
+  // if (blocks.mobileMenuToggle.length) {
+  //   blocks.mobileMenuToggle.initMM({
+  //     enable_breakpoint: false,
+  //     mobile_button: false,
+  //     breakpoint: 1025,
+  //     menu_class: 'mobile-main-menu'
+  //   });
+  // };
   //header top panel
   if ($ttTopPanel.length) {
     ttTopPanel();

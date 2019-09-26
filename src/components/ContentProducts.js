@@ -136,8 +136,9 @@ const TabContentComponent = props => {
                             <VerticalProductComponent products={getRetrieveTopOffers} col={getCol} maxwidth={getMaxwidth} />
                         </TabPane>
                     </TabContent>
-
-                    <button className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }} onClick={() => funMoreProducts()}>
+                    <button disabled={(getRetrieveOffers.length < 1 || getRetrieveTopOffers.length < 1)}
+                        className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }}
+                        onClick={() => funMoreProducts()}>
                         Cargar más {getLoading && <Spinner size={'sm'} color="light" />}
                     </button>
                 </div>
@@ -217,22 +218,20 @@ const InterestContentComponent = () => {
                     </Col>
                     <Col md={10}>
                         <Row>
-                            <Col md={10}>
+                            <Col md={10} xs={6}>
                                 <h5 className="h5-title">TE PODRÍA INTERESAR</h5>
                             </Col>
-                            <Col md={2} className="align-inline-flex-content-getColumn">
-                                <button className="btn-lg btn-outline-primary rounded-pill" onClick={() => funAddMoreProduct()}>Ver mas {getLoading && <Spinner size={'sm'} color="light" />}</button>
+                            <Col md={2} xs={6} className="align-inline-flex-content-getColumn text-right">
+                                <button className="btn-lg btn-outline-primary rounded-pill btn-more d-md-none d-lg-none"
+                                    onClick={() => funAddMoreProduct()}>Ver mas {getLoading && <Spinner size={'sm'} color="light" />}</button>
                             </Col>
                         </Row>
                         <HorizontalProductComponent products={getRetrieveOffersInterest} col={3} />
                     </Col>
                     <Col md={1} className="column-btns-product-center">
-                        {
-                            getLimitPage < getPage &&
-                            <button className="btn-rigth-product  btn-products-arrow d-none d-md-block" onClick={() => funButtonSlider(0)} >
-                                <i className="fas fa-angle-right"></i>
-                            </button>
-                        }
+                        <button className="btn-rigth-product  btn-products-arrow d-none d-md-block" onClick={() => getLimitPage < getPage ? funButtonSlider(0) : funAddMoreProduct()} >
+                            <i className={`fas ${(getLimitPage < getPage) ? 'fa-angle-right' : 'fa-plus'}`}></i>
+                        </button>
                     </Col>
                 </>
         }
@@ -242,7 +241,7 @@ const InterestContentComponent = () => {
     return (
         <>
             <Container fluid>
-                <Row className="mt-4">
+                <Row className="mt-5">
                     <Col md={12}>
                         <Row>
                             {funRenderProductInterest()}
@@ -289,7 +288,7 @@ const SponsorShipsComponent = () => {
     return (
         <>
             <Container fluid>
-                <Row className="mt-4">
+                <Row className="mt-5">
                     <Col md={12}>
                         <Row>
                             <Col md={1} className="column-btns-product-center">
@@ -301,11 +300,11 @@ const SponsorShipsComponent = () => {
                             </Col>
                             <Col md={10}>
                                 <Row>
-                                    <Col md={10}>
+                                    <Col md={10} xs={6}>
                                         <h5 className="h5-title">MARCAS PATROCINADORAS</h5>
                                     </Col>
-                                    <Col md={2} className="align-inline-flex-content-getColumn">
-                                        <button className="btn-lg btn-outline-primary rounded-pill" onClick={() => funAddMoreProduct()}>Ver mas</button>
+                                    <Col md={2} xs={6} className="align-inline-flex-content-getColumn text-right">
+                                        <button className="btn-lg btn-outline-primary rounded-pill btn-more" onClick={() => funAddMoreProduct()}>Ver mas</button>
                                     </Col>
                                 </Row>
                                 <HorizontalBrandsComponent listCount={12} col={2} />

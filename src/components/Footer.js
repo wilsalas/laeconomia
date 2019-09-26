@@ -15,7 +15,7 @@ export default () => {
                                                 ESTÁ EN CONTACTO CON NOSOTROS
                                             </h4>
                                             <div className="tt-collapse-content">
-                                                <form className="form-inline form-default" method="post">
+                                                <form className="form-inline form-default" action="/">
                                                     <div className="form-group">
                                                         <input type="text" name="email" className="form-control" placeholder="Ingresa tu correo" />
                                                         <button className="btn btn-contact">

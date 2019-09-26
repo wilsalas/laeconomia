@@ -153,7 +153,7 @@ header .tt-cart .tt-dropdown-toggle .tt-badge-cart {
     background-color: white !important;
 }
 
-.list-group-item-personalized:hover , .list-group-item:hover{
+.list-group-item-personalized:hover, .list-group-item:hover {
     color: white !important;
     background-color: #1b42cb !important;
 }
@@ -161,34 +161,51 @@ header .tt-cart .tt-dropdown-toggle .tt-badge-cart {
 .list-group-item {
     border-right: none !important;
     border-left: none !important;
-   cursor: pointer;
+    cursor: pointer;
 }
 
 .list-group-item:first-child {
     border-radius: 0 !important;
     border-top: none !important;
-    border-bottom: 1px solid rgba(0,0,0,.125);
-    
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
 }
 
 .list-group-item:last-child {
     border-radius: 0 !important;
 }
 
-
-.categoriesHorizontalCol{
+.categoriesHorizontalCol {
     max-width: 20% !important;
 }
 
-.ul-style{
+.ul-style {
     list-style: circle;
 }
 
-.text-information-red{
+.text-information-red {
     color: #CC000F !important;
 }
-.text-information-blue{
+
+.text-information-blue {
     color: #1b42cb !important;
+}
+
+.tt-dropdown-obj .tt-dropdown-toggle, .tt-menu-toggle i {
+    color: #b2c3c3 !important;
+}
+
+.tt-login-form {
+    margin-top: 0px !important;
+}
+
+.tt-menu-toggle {
+    border: none !important;
+    background: transparent !important;
+}
+
+.btn-more {
+    height: 32px !important;
+    padding: 0px 20px 0px !important;
 }
 
 /* Style for Tabs */
@@ -230,7 +247,7 @@ a:not([href]):not([tabindex]) {
 
 .btn-club-vida {
     border: 1px solid !important;
-    padding: 3px !important;
+    padding: 2px 10px 2px 10px !important;
     border-color: rgb(255, 44, 110) !important;
     color: rgb(255, 44, 110) !important;
     border-radius: 50px !important;
@@ -698,17 +715,6 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     font-weight: 500;
 }
 
-@media screen and (max-width: 899px) {
-    .progressbar {
-        margin-left: -10%;
-        counter-reset: step;
-    }
-    .text-progress {
-        font-size: 9px;
-        font-weight: 500;
-    }
-}
-
 /* Steps for styles */
 
 .card-step {
@@ -917,16 +923,60 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     height: 140px !important;
 }
 
-.v-prod1 {
-    max-width: 21% !important;
-}
-
-.v-prod2 {
-    max-width: 29% !important;
-}
-
 .h-prod {
     max-width: 22% !important;
+}
+
+/* Styles for SidebarMenu */
+
+.sidenav {
+    height: 100vh;
+    width: 0;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    /* background-color: white; */
+    background-color: #1b41cbeb;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 16px;
+    /* color: #b2c3c3; */
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #1b41cb;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.tt-shopcart-table-02 .tt-btn-close {
+    font-size: 18px !important;
+}
+
+@media (min-width:900px) {
+    .v-prod1 {
+        max-width: 21% !important;
+    }
+    .v-prod2 {
+        max-width: 29% !important;
+    }
 }
 
 @media (max-width:899px) {
@@ -960,9 +1010,9 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     .tt-stuck-parent-menu {
         display: block !important;
     }
-    .v-prod1, .v-prod2 {
-        max-width: 90% !important;
-    }
+    /* .v-prod1, .v-prod2 {
+        max-width: 100% !important;
+    } */
     .h-prod {
         max-width: 60% !important;
     }
@@ -970,15 +1020,49 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
         height: auto;
         overflow: auto;
     }
-
-    .categoriesHorizontal{
+    .categoriesHorizontal {
         overflow-x: auto !important;
     }
-    .categoriesHorizontalCol{
+    .categoriesHorizontalCol {
         max-width: 100% !important;
     }
-
-    .productsHorizontal{
+    .productsHorizontal {
         overflow-x: auto !important;
+    }
+    .tt-badge-cart {
+        background-color: rgb(255, 44, 110) !important;
+        color: white;
+        border-radius: 50px;
+        position: absolute;
+        top: -5px;
+        font-size: 11px;
+        height: 16px;
+        width: 16px;
+        line-height: 16px;
+    }
+    .item-register-form {
+        width: 100% !important;
+    }
+    .btn-lg {
+        padding: 0px 30px 0px !important;
+    }
+    .card-img-logo-personalized {
+        height: 60px !important;
+    }
+
+    .progressbar {
+        margin-left: -10%;
+        counter-reset: step;
+    }
+    .text-progress {
+        font-size: 9px;
+        font-weight: 500;
+    }
+}
+
+
+@media (max-width:899px) and (orientation: landscape) {
+    .card-img-logo-personalized {
+        height: 120px !important;
     }
 }

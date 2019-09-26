@@ -13,7 +13,7 @@ const VerticalProductComponent = props => {
         <Row className="justify-content-center" >
             {props.products.map((value, i) => {
                 return (
-                    <Col key={i} md={props.col} className={`mt-2 mb-2 v-prod${props.maxwidth}`} >
+                    <Col key={i} md={props.col} xs={6} className={`mt-2 mb-2 v-prod${props.maxwidth}`} >
                         <Product {...value} />
                     </Col>
                 );
@@ -134,10 +134,15 @@ const Product = props => {
 
     return props.codigo ? (
         <Card className="text-center card-tab-products" >
-            {props.Porcentaje > 0 && <div className="div-percent">-{props.Porcentaje}%</div>}
-            <CardImg top style={{ cursor: 'pointer' }} src={`${URL_IMAGE}${props.codigo}.png`}
+            {props.Porcentaje > 0 && <div className="div-percent">{props.Porcentaje}%</div>}
+            <CardImg
+                top
+                className="card-img-logo-personalized"
+                style={{ cursor: 'pointer' }} src={`${URL_IMAGE}${props.codigo}.png`}
                 onError={(e) => { e.target.src = `${URL_IMAGE}no-disponible.png` }}
-                alt={`Card image cap ${props.codigo}`} onClick={() => funSaveDetailProduct()} />
+                alt={`Card image cap ${props.codigo}`}
+                onClick={() => funSaveDetailProduct()}
+            />
             <CardBody className="div-cardbody">
                 <CardTitle >{FormatCOPNumber(props.Ahora)}</CardTitle>
                 <CardSubtitle>{FormatCOPNumber(props.Antes)}</CardSubtitle>

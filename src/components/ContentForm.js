@@ -62,14 +62,14 @@ const LoginComponent = props => {
                                         <Input className="account-input" type="password" name="password" placeholder="Ingresa tu contraseña" required />
                                     </FormGroup>
                                     <Row>
-                                        <Col className="col-auto mr-auto">
+                                        <Col className=" mr-auto">
                                             <FormGroup>
                                                 <Button className="btn btn-border">Ingresar</Button>
                                             </FormGroup>
                                         </Col>
-                                        <Col className="col-auto align-self-end">
+                                        <Col className=" align-self-end ">
                                             <FormGroup>
-                                                <ul className="additional-links">
+                                                <ul className="additional-links mb-2">
                                                     <li><a href="/recoverypass"><em> ¿Olvidaste tu contraseña? </em></a></li>
                                                 </ul>
                                             </FormGroup>
@@ -84,7 +84,7 @@ const LoginComponent = props => {
             render =
                 <>
                     <Col md={12} xs={12}>
-                        <div className="tt-item" style={{ width: props.modalLogin ? '100%' : '40%', margin: '0 auto' }}>
+                        <div className="tt-item item-register-form" style={{ width: props.modalLogin ? '100%' : '40%', margin: '0 auto' }}>
                             Ingresa correctamente la información de los siguientes campos:
                             <div className="form-default form-top">
                                 <Form onSubmit={e => funLogin(e)}>

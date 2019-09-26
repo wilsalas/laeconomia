@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     Container, Col, Form, Row, InputGroup,
     Input, InputGroupAddon, Button, ListGroup, ListGroupItem
@@ -8,18 +8,21 @@ import { FormatPointsSupensive, funRenderSpinner } from '../managers/helpers/Hel
 import { useGlobal } from '../managers/store/Context';
 
 
-const SearchHeaderComponent = () => {
+const SearchHeaderComponent = props => {
 
     const [state, dispatch] = useGlobal();
     const [getSearch, setSearch] = useState([]);
     const [getLoading, setLoading] = useState(false);
-
-
+    const [getCountProduct, setCountProduct] = useState(0);
+    const getSideNav = useRef(null);
 
     useEffect(() => {
         setSearch(state.searchProducts);
     }, [state.searchProducts]);
 
+    useEffect(() => {
+        setCountProduct(state.totalProduct);
+    }, [state.totalProduct])
 
     useEffect(() => {
         if (state.textSearch === "") {
@@ -42,24 +45,72 @@ const SearchHeaderComponent = () => {
         setLoading(false)
     }
 
+
+    const funSideNav = (closet = false) => getSideNav.current.style.width = closet ? "0" : "220px";
+
     return (
         <>
             <Container >
-                <Row className="mt-4 mb-1" >
+
+                {/* MENU MOBILE */}
+                <div ref={getSideNav} className="sidenav d-md-none d-lg-none">
+                    <a href="# " className="closebtn" onClick={() => funSideNav(true)}>&times;</a>
+                    <a href="/" >INICIO</a>
+                    <a href="/droguery" >DROGUERIA VIRTUAL</a>
+                    <a href="/babycare">CUIDADO DEL BEBÉ</a>
+                    <a href="/dictionary" >DICCIONARIO</a>
+                    <a href="/subsidiary">SUCURSALES</a>
+                    {props.getProfile.nit &&
+                        <a href="/profile" onClick={e => { e.preventDefault(); funSideNav(true); props.funGetProfile(e) }} >PERFIL</a>
+                    }
+                    {!props.getProfile.nit &&
+                        <a href="/account/login">INICIAR SESIÓN</a>
+                    }
+                    {!props.getProfile.nit &&
+                        <a href="/account/register">REGISTRARSE</a>
+                    }
+                    {props.getProfile.nit &&
+                        <a href="/" onClick={e => props.funLogout(e)}>CERRAR SESIÓN</a>
+                    }
+                </div>
+
+                <Row className="mt-3 mb-2" >
                     <Col md={2} xs={12}>
-                        <a href="/">
+
+                        <Row className="d-md-none d-lg-none text-center">
+                            <Col xs={3} className="text-left" >
+                                <div className="tt-menu-toggle" onClick={() => funSideNav()}>
+                                    <i className="icon-03"></i>
+                                </div>
+                            </Col>
+                            <Col xs={6}>
+                                <a href="/">
+                                    <img alt="la economia" src="/assets/logo_economia.png" className="logo-header" />
+                                </a>
+                            </Col>
+                            <Col xs={3} >
+                                <button className="tt-dropdown-toggle tt-menu-toggle " onClick={() => window.location.href = "/buys"}>
+                                    <i className="icon-f-47" />
+
+                                    <span className="tt-badge-cart">{getCountProduct}</span>
+                                </button>
+                            </Col>
+
+                        </Row>
+                        <a className=" d-none d-md-block " href="/">
                             <img alt="la economia" src="/assets/logo_economia.png" className="logo-header" />
                         </a>
                     </Col>
                     <Col md={10} xs={12}>
-                        <Form onSubmit={e => funSearch(e)}>
-                            <Row>
+                        <Form onSubmit={e => funSearch(e)} >
+                            <Row className="mb-1">
                                 <Col md={11} xs={10}>
                                     <InputGroup>
                                         <Input
                                             placeholder={'¿Qué está buscando?'}
                                             className={`header-input${state.textSearch === "" ? '-border' : ''}`}
                                             onChange={e => {
+                                                funSearch(e);
                                                 dispatch({ type: "TEXT_SEARCH", textSearch: e.target.value });
                                             }}
                                             value={state.textSearch}
@@ -195,7 +246,7 @@ const SearchMedicineComponent = () => {
                             </InputGroupAddon>
                         </InputGroup>
                         {
-                            getOpenContent && <div className="content-search" style={{ width: '98.5%', top: 83 }}>
+                            getOpenContent && <div className="content-search" style={{ width: '98.5%', top: 60 }}>
                                 {getLoadingDictionary && funRenderSpinner("sm")}
                                 {
                                     (getSearchDictionary.length > 0 && !getLoadingDictionary) &&
