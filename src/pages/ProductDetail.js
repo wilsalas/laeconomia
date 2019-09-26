@@ -1,24 +1,68 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Container, Col, Row
 } from 'reactstrap';
 import BannerComponent from '../components/Banner';
 import { InterestContentComponent } from '../components/ContentProducts';
-import { FormatCOPNumber } from '../managers/helpers/HelperManager';
+import { FormatCOPNumber, AlertSwal } from '../managers/helpers/HelperManager';
+import { useGlobal } from '../managers/store/Context';
 
 
 
 export default function ProductDetails() {
 
+    const [, dispatch] = useGlobal();
     const [getDetailProduct, setDetailProduct] = useState([]);
+    const [getCountProducto, setCountProducto] = useState(1);
 
     useEffect(() => {
-        if (localStorage.getItem("dp")) {
-            setDetailProduct(JSON.parse(atob(localStorage.getItem("dp"))))
+        if (localStorage.getItem("dproduct")) {
+            setDetailProduct(JSON.parse(atob(localStorage.getItem("dproduct"))))
         }
     }, [])
-    
-console.log(getDetailProduct);
+
+
+    const funBtnsAddCart = (cantProduct, type) => {
+        if (type === "+") {
+            if (getCountProducto < cantProduct) {
+                setCountProducto(getCountProducto + 1);
+            } else {
+                AlertSwal("CANT_PRODUCT");
+            }
+        } else {
+            if (getCountProducto !== 1) {
+                setCountProducto(getCountProducto - 1);
+            }
+        }
+    }
+
+    const funAddCart = (product, countProduct = 0) => {
+        if (getCountProducto > 0) {
+            let products = JSON.parse(localStorage.getItem("cart"));
+            if (products) {
+                let isAdd = false;
+                products.forEach((item, i) => {
+                    if (item.codigo === product.codigo) {
+                        item.countProduct += item.stock >= countProduct ? countProduct : item.stock
+                        isAdd = true;
+                    }
+                })
+                if (!isAdd) {
+                    products.push({ ...product, countProduct });
+                }
+            } else {
+                products = [{ ...product, countProduct }];
+            }
+            localStorage.setItem("cart", JSON.stringify(products));
+            funCountProduct(products);
+        }
+    }
+
+    const funCountProduct = products => {
+        let totalProduct = 0;
+        products.forEach(item => totalProduct += item.countProduct);
+        dispatch({ type: 'COUNT_TOTAL_PRODUCT', totalProduct });
+    }
 
     return (
         <>
@@ -29,43 +73,45 @@ console.log(getDetailProduct);
                     </Col>
                     <Col md={6}>
                         <ul className="list-detail-product">
-                            <li>
-                                <h6>Unidad: {getDetailProduct.IdUnidad} <br /> {getDetailProduct.Cant} unidades disponibles</h6>
+                            <li >
+                                <h6 className="mt-1 mb-1">Unidad: {getDetailProduct.IdUnidad} <br /> {getDetailProduct.stock} unidades disponibles</h6>
                             </li>
-                            <li className="margin-top-detail-product">
-                                <h3>{getDetailProduct.descripcion}</h3>
+                            <li className="margin-top-detail-product mt-1">
+                                <h3 title={getDetailProduct.descripcion}>{getDetailProduct.descripcion}</h3>
                             </li>
-                            <li className="margin-top-detail-product">
+                            <li className="margin-top-detail-product mt-1">
 
                                 <div className="content-detail-product">
                                     <p className="text-price-blue">{FormatCOPNumber(getDetailProduct.Ahora)}</p>
                                     <div className="div-percent-product">{getDetailProduct.Porcentaje}%</div>
                                     <p className="text-subray">{FormatCOPNumber(getDetailProduct.Antes)}</p>
-                                    <p className="text-gray">Mililitro a $999.999</p>
+                                    <p className="text-gray">{(getDetailProduct.medida && getDetailProduct.medida !== "") && `${getDetailProduct.medida} ${getDetailProduct.precioMedida}`}</p>
                                 </div>
 
                             </li>
-                            <li className="margin-top-detail-product">
+                            {/* <li className="margin-top-detail-product">
                                 <p className="mt-4">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
                                 nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam,
                                 quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
                                 sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci.
                                     </p>
-                            </li>
+                            </li> */}
                             <li className="margin-top-detail-product">
                                 <Row>
                                     <Col md={6} className="mt-4">
                                         <div className="detach-quantity-desctope">
                                             <div className="tt-input-counter style-01" style={{ maxWidth: '100%' }}>
-                                                <span className="minus-btn" />
-                                                <input type="text" defaultValue={1} size={100} className="border-heigth" />
-                                                <span className="plus-btn" />
+                                                <span className="minus-btn" onClick={() => funBtnsAddCart(getDetailProduct.stock, "-")} />
+                                                <input type="text" value={getCountProducto} className="border-heigth" readOnly />
+                                                <span className="plus-btn" onClick={() => funBtnsAddCart(getDetailProduct.stock, "+")} />
                                             </div>
                                         </div>
                                     </Col>
 
                                     <Col md={6} className="mt-4">
-                                        <button className="btn-lg btn-outline-primary rounded-pill border-heigth btn-block">Agregar</button>
+                                        <button className="btn-lg btn-outline-primary rounded-pill border-heigth btn-block"
+                                            onClick={() => funAddCart(getDetailProduct, getCountProducto)}
+                                        >Agregar</button>
 
                                     </Col>
                                 </Row>

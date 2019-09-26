@@ -5,10 +5,14 @@ import BannerComponent from '../components/Banner';
 import { ROUTES } from '../managers/api/ApiManager';
 
 export default function BaCare() {
+
+    // code baby care higiene oral
+    const codeProduct = btoa('07005');
+
     return (
         <>
             <SliderComponent routes={ROUTES.MAIN} banner />
-            <GroupCategoryComponent />
+            <GroupCategoryComponent codeProduct={codeProduct} type="productSubCategoryCode" />
             <BannerComponent />
         </>
     );

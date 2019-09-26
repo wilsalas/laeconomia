@@ -1,18 +1,19 @@
 import React from 'react';
 import { Card, CardBody, CardTitle, CardSubtitle, CardImg, CardText, Row, Col } from 'reactstrap';
-import { FormatCOPNumber, funRenderSpinner,FormatPointsSupensive } from '../managers/helpers/HelperManager';
+import { FormatCOPNumber, funRenderSpinner, FormatPointsSupensive } from '../managers/helpers/HelperManager';
+import { useGlobal } from '../managers/store/Context';
 
 const VerticalProductComponent = props => {
 
     if (props.products.length < 1) {
-        return funRenderSpinner();
+        return <div className="mt-3">{funRenderSpinner()}</div>;
     }
 
     return (
         <Row className="justify-content-center" >
             {props.products.map((value, i) => {
                 return (
-                    <Col key={i} md={props.col} className={`mt-2 mb-2 v-prod${props.maxwidth}`} >
+                    <Col key={i} md={props.col} xs={6} className={`mt-2 mb-2 v-prod${props.maxwidth}`} >
                         <Product {...value} />
                     </Col>
                 );
@@ -24,13 +25,8 @@ const VerticalProductComponent = props => {
 
 
 const HorizontalProductComponent = props => {
-
-    if (props.products.length < 1) {
-        return funRenderSpinner();
-    }
-
     return (
-        <div className="outer" id="content">
+        <div className="outer productsHorizontal" id="content">
             <div className="container-inner container-interest">
                 {props.products.map((value, i) => {
                     return (
@@ -43,6 +39,9 @@ const HorizontalProductComponent = props => {
         </div>
     )
 };
+
+
+
 
 
 const HorizontalBrandsComponent = props => {
@@ -68,29 +67,89 @@ const HorizontalBrandsComponent = props => {
 };
 
 
+const HorizontalCategoriesComponent = props => {
+    return (
+        <div className="outer categoriesHorizontal" id="content">
+            <div className="container-inner container-categories">
+                {props.products.map((value, i) => {
+                    let codeSubCategorie = value.subCategories[Math.floor((Math.random() * value.subCategories.length) + 0)].subID;
+                    return (
+                        <Col key={i} md={2} className="mt-3 mb-3 categoriesHorizontalCol">
+                            <a href={`/droguery/${btoa(codeSubCategorie)}/${btoa("productSubCategoryCode")}`} title={value.name}>
+                                <Card className="text-center card-tab-categories p-3" >
+                                    <CardImg top className="mt-5 rounded icon-categories" src={value.icono} alt={`Card image categories`}
+                                        onError={(e) => { e.target.src = `/assets/icon_not_found.png` }}
+                                    />
+                                    <CardBody className="div-cardbody mt-2 mb-2">
+                                        <CardTitle style={{ fontSize: 12 }} title={value.name}>{FormatPointsSupensive(value.name, 10)}</CardTitle>
+                                    </CardBody>
+                                </Card>
+                            </a>
+                        </Col>
+                    );
+                })}
+            </div>
+        </div>
+    )
+};
+
+
 
 const Product = props => {
 
+    const [, dispatch] = useGlobal();
     let URL_IMAGE = `https://www.droguerialaeconomia.com/economia/site/img/`;
 
+
     const funSaveDetailProduct = () => {
-        localStorage.setItem("dp", btoa(JSON.stringify(props)));
+        localStorage.setItem("dproduct", btoa(JSON.stringify(props)));
         window.location.href = "/detail"
+    }
+
+    const funAddCart = (product, countProduct = 0) => {
+        let products = JSON.parse(localStorage.getItem("cart"));
+        if (products) {
+            let isAdd = false;
+            products.forEach((item, i) => {
+                if (item.codigo === product.codigo) {
+                    item.countProduct += item.stock >= countProduct ? countProduct : item.stock
+                    isAdd = true;
+                }
+            })
+            if (!isAdd) {
+                products.push({ ...product, countProduct });
+            }
+        } else {
+            products = [{ ...product, countProduct }];
+        }
+        localStorage.setItem("cart", JSON.stringify(products));
+        funCountProduct(products);
+    }
+
+    const funCountProduct = products => {
+        let totalProduct = 0;
+        products.forEach(item => totalProduct += item.countProduct);
+        dispatch({ type: 'COUNT_TOTAL_PRODUCT', totalProduct });
     }
 
     return props.codigo ? (
         <Card className="text-center card-tab-products" >
-            <div className="div-percent">{props.Porcentaje}%</div>
-            <CardImg top style={{ cursor: 'pointer' }} src={`${URL_IMAGE}${props.codigo}.png`}
+            {props.Porcentaje > 0 && <div className="div-percent">{props.Porcentaje}%</div>}
+            <CardImg
+                top
+                className="card-img-logo-personalized"
+                style={{ cursor: 'pointer' }} src={`${URL_IMAGE}${props.codigo}.png`}
                 onError={(e) => { e.target.src = `${URL_IMAGE}no-disponible.png` }}
-                alt={`Card image cap ${props.codigo}`} onClick={() => funSaveDetailProduct()} />
+                alt={`Card image cap ${props.codigo}`}
+                onClick={() => funSaveDetailProduct()}
+            />
             <CardBody className="div-cardbody">
                 <CardTitle >{FormatCOPNumber(props.Ahora)}</CardTitle>
                 <CardSubtitle>{FormatCOPNumber(props.Antes)}</CardSubtitle>
                 <CardText title={props.descripcion}>{FormatPointsSupensive(props.descripcion)}</CardText>
-                <CardText>Mililitro a $999.999</CardText>
+                <CardText>{(props.medida && props.medida !== "") && `${props.medida} ${props.precioMedida}`}</CardText>
                 <CardText>{props.Categoria}</CardText>
-                <button className="btn-lg btn-outline-primary rounded-pill" onClick={(e) => console.log(e.target)}>Agregar</button>
+                <button className="btn-lg btn-outline-primary rounded-pill" onClick={() => funAddCart(props, 1)}>Agregar</button>
             </CardBody>
         </Card>
     ) : null
@@ -100,5 +159,6 @@ const Product = props => {
 export {
     VerticalProductComponent,
     HorizontalProductComponent,
-    HorizontalBrandsComponent
+    HorizontalBrandsComponent,
+    HorizontalCategoriesComponent
 };

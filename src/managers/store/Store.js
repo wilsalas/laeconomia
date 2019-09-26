@@ -5,13 +5,57 @@ const reducer = (state, action) => {
         case 'GET_PRODUCT':
             return {
                 ...state,
-                products: action.products ? action.products : []
+                products: action.products ? action.products : [],
+                subCategorie: action.subCategorie ? action.subCategorie : "",
+                typeSearch: action.typeSearch ? action.typeSearch : "",
             };
         case 'SEARCH_PRODUCT':
             return {
                 ...state,
                 searchProducts: action.searchProducts
             };
+        case 'COUNT_TOTAL_PRODUCT':
+            localStorage.setItem("countProduct", action.totalProduct)
+            return {
+                ...state,
+                totalProduct: action.totalProduct
+            };
+        case 'INFORMATION_PROFILE':
+            return {
+                ...state,
+                informationProfile: action.informationProfile
+            };
+        case 'REFRESH_TOKEN_MODAL':
+            return {
+                ...state,
+                refreshTokenModal: action.refreshTokenModal
+            };
+        case 'MODAL_ADRESS':
+            return {
+                ...state,
+                modalAdress: action.modalAdress
+            };
+        case 'STEP_ACTIVE':
+            return {
+                ...state,
+                step: action.step
+            };
+        case 'ADRESS':
+            return {
+                ...state,
+                adress: action.adress
+            };
+        case 'GET_ORDER':
+            return {
+                ...state,
+                order: action.order ? action.order : [],
+            };
+        case 'TEXT_SEARCH':
+            return {
+                ...state,
+                textSearch: action.textSearch
+            };
+
         default:
             return state;
     }
@@ -20,7 +64,16 @@ const reducer = (state, action) => {
 const Store = () => {
     const [state, dispatch] = useReducer(reducer, {
         products: [],
-        searchProducts: []
+        subCategorie: "",
+        searchProducts: [],
+        totalProduct: localStorage.getItem('countProduct') ? localStorage.getItem('countProduct') : 0,
+        informationProfile: {},
+        refreshTokenModal: false,
+        modalAdress: false,
+        step: 1,
+        adress: "",
+        order: [],
+        textSearch: ""
     });
     return [state, dispatch]
 }

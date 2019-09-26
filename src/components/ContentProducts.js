@@ -1,19 +1,25 @@
 import classnames from 'classnames';
 import React, { useState, useEffect } from 'react';
-import { Container, Col, TabContent, TabPane, Nav, NavItem, NavLink, Row } from 'reactstrap';
+import { Container, Col, TabContent, TabPane, Nav, NavItem, NavLink, Row, Spinner } from 'reactstrap';
 import { VerticalProductComponent, HorizontalProductComponent, HorizontalBrandsComponent } from './Product';
 import { API } from '../managers/api/ApiManager';
 import { useGlobal } from '../managers/store/Context';
+import { funRenderSpinner } from '../managers/helpers/HelperManager';
 
 
 const TabContentComponent = props => {
 
-    const [state,] = useGlobal();
+    const [state, dispatch] = useGlobal();
     const [getRetrieveOffers, setRetrieveOffers] = useState([]);
     const [getRetrieveTopOffers, setRetrieveTopOffers] = useState([]);
     const [getActiveTab, setActiveTab] = useState("0");
+    const [getLoading, setLoading] = useState(false);
+    const [getTypeSearch, setTypeSearch] = useState("");
     const getCol = props.col ? 4 : 3;
     const getMaxwidth = props.maxwidth ? 2 : 1;
+    const getPage = 12;
+    const [getPageSubcategorie, setPageSubcategorie] = useState(1);
+
 
     // get products  from code and initialize
     useEffect(() => {
@@ -21,32 +27,59 @@ const TabContentComponent = props => {
             funRetrieveOffers();
             funRetrieveTopOffers();
         } else {
-            funRetrieveProductFromCode(atob(props.codeProduct));
-        }
-    }, [props.codeProduct]);
+            funRetrieveProductFromCode(props.type, atob(props.codeProduct));
 
-    // get productos from subcategories
+        }
+    }, [props.codeProduct, props.type]);
+
+    // set data products from store 
     useEffect(() => {
         setRetrieveOffers(state.products);
         setRetrieveTopOffers(state.products);
-    }, [state.products]);
+        setTypeSearch(state.typeSearch);
+    }, [state.products, state.typeSearch]);
 
 
-    const funRetrieveProductFromCode = async code => {
-        let resRetrieveProductFromCode = await API.GET.RetrieveProductFromCode(localStorage.getItem("city"), code);
-        if (Array.isArray(resRetrieveProductFromCode.message)) setRetrieveOffers(resRetrieveProductFromCode.message);
+    const funRetrieveProductFromCode = async (type = "productUnique", codigo, city = localStorage.getItem("city")) => {
+        let resRetrieveProductFromCode;
+        if (type !== "productSubCategoryCode") {
+            // search product from code unique
+            resRetrieveProductFromCode = await API.GET.RetrieveProductFromCode(city, codigo)
+        } else {
+            // search product from subcategorie code
+            resRetrieveProductFromCode = await API.GET.RetrieveProductsFromSubcategory(city, codigo);
+        }
+        if (!resRetrieveProductFromCode.error) {
+            setRetrieveOffers(resRetrieveProductFromCode.message);
+            setRetrieveTopOffers(resRetrieveProductFromCode.message);
+        }
     }
 
-    const funRetrieveOffers = async () => {
-        let resRetrieveOffers = await API.GET.RetrieveOffers(localStorage.getItem("city"));
-        if (Array.isArray(resRetrieveOffers.message)) setRetrieveOffers(resRetrieveOffers.message);
-        // console.log(res.message);
-
+    const funProductForSubCategories = async () => {
+        let codeSubCategorie = state.subCategorie !== "" ? state.subCategorie : atob(props.codeProduct);
+        setPageSubcategorie(getPageSubcategorie + 1);
+        dispatch({ type: "GET_PRODUCT" });
+        let resSubCategories = await API.GET.RetrieveProductsFromSubcategory(localStorage.getItem("city"), codeSubCategorie, { page: getPageSubcategorie });
+        if (!resSubCategories.error) {
+            dispatch({ type: "GET_PRODUCT", products: resSubCategories.message, subCategorie: codeSubCategorie, typeSearch: "productSubCategoryCode" });
+        }
     }
 
-    const funRetrieveTopOffers = async () => {
-        let resRetrieveTopOffers = await API.GET.RetrieveTopOffers(localStorage.getItem("city"));
-        if (Array.isArray(resRetrieveTopOffers.message)) setRetrieveTopOffers(resRetrieveTopOffers.message);
+
+    const funRetrieveOffers = async (itemsPerPage = getPage) => {
+        let resRetrieveOffers = await API.GET.RetrieveOffers(localStorage.getItem("city"), itemsPerPage);
+        if (!resRetrieveOffers.error) {
+            setRetrieveOffers(resRetrieveOffers.message);
+        }
+        setLoading(false);
+    }
+
+    const funRetrieveTopOffers = async (itemsPerPage = getPage) => {
+        let resRetrieveTopOffers = await API.GET.RetrieveTopOffers(localStorage.getItem("city"), itemsPerPage);
+        if (!resRetrieveTopOffers.error) {
+            setRetrieveTopOffers(resRetrieveTopOffers.message);
+        }
+        setLoading(false);
     }
 
 
@@ -57,7 +90,28 @@ const TabContentComponent = props => {
     }
 
 
-    const funMoreProducts = () => { }
+    //  more products
+    const funMoreProducts = () => {
+
+
+        if (props.type === "productSubCategoryCode" || getTypeSearch === "productSubCategoryCode") {
+            funProductForSubCategories();
+        } else {
+            setLoading(true)
+            switch (getActiveTab) {
+                case '0':
+                    funRetrieveOffers(getPage + getRetrieveOffers.length)
+                    break;
+                case '1':
+                    funRetrieveTopOffers(getPage + getRetrieveTopOffers.length)
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+
     return (
         <>
             <Container>
@@ -65,41 +119,28 @@ const TabContentComponent = props => {
                     <Nav tabs className="justify-content-center">
                         <NavItem>
                             <NavLink className={classnames({ active: getActiveTab === '0' })} onClick={() => { funToggle('0'); }}>
-                                OFERTAS DEL DÍA
-                        </NavLink>
+                                LAS MEJORES OFERTAS
+                            </NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink className={classnames({ active: getActiveTab === '1' })} onClick={() => { funToggle('1'); }}>
-                                NUEVOS PRODUCTOS
-                        </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink className={classnames({ active: getActiveTab === '2' })} onClick={() => { funToggle('2'); }}>
-                                MÁS COMPRADOS
-                        </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink className={classnames({ active: getActiveTab === '3' })} onClick={() => { funToggle('3'); }}>
-                                MÁS PEDIDOS
-                        </NavLink>
+                                LO MÁS COMPRADO
+                            </NavLink>
                         </NavItem>
                     </Nav>
                     <TabContent activeTab={getActiveTab} >
                         <TabPane tabId="0" >
-                            <VerticalProductComponent products={getRetrieveOffers.slice(0, getRetrieveOffers.length)} col={getCol} maxwidth={getMaxwidth} />
+                            <VerticalProductComponent products={getRetrieveOffers} col={getCol} maxwidth={getMaxwidth} />
                         </TabPane>
                         <TabPane tabId="1" >
-                            <VerticalProductComponent products={getRetrieveTopOffers.slice(0, getRetrieveTopOffers.length)} col={getCol} maxwidth={getMaxwidth} />
-                        </TabPane>
-                        <TabPane tabId="2" >
-                            <VerticalProductComponent products={getRetrieveOffers.slice(0, getRetrieveOffers.length)} col={getCol} maxwidth={getMaxwidth} />
-                        </TabPane>
-                        <TabPane tabId="3" >
-                            <VerticalProductComponent products={getRetrieveOffers.slice(0, getRetrieveOffers.length)} col={getCol} maxwidth={getMaxwidth} />
+                            <VerticalProductComponent products={getRetrieveTopOffers} col={getCol} maxwidth={getMaxwidth} />
                         </TabPane>
                     </TabContent>
-
-                    <button className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }} onClick={() => funMoreProducts()}>Cargar más</button>
+                    <button disabled={(getRetrieveOffers.length < 1 || getRetrieveTopOffers.length < 1)}
+                        className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }}
+                        onClick={() => funMoreProducts()}>
+                        Cargar más {getLoading && <Spinner size={'sm'} color="light" />}
+                    </button>
                 </div>
             </Container>
         </>
@@ -111,20 +152,21 @@ const InterestContentComponent = () => {
 
     const [getTranslate, setTranslate] = useState(0);
     const [getVelocity] = useState(885);
-    const [getPage, setPage] = useState(24);
+    const [getPage, setPage] = useState(3);
     const [getLimitPage, setLimitPage] = useState(0);
-    const [getRetrieveOffers, setRetrieveOffers] = useState([]);
-
+    const [getRetrieveOffersInterest, setRetrieveOffersInterest] = useState([]);
+    const [getLoading, setLoading] = useState(false);
 
     useEffect(() => {
         funRetrieveOffers();
     }, []);
 
-    const funRetrieveOffers = async () => {
-        let resRetrieveOffers = await API.GET.RetrieveOffers(localStorage.getItem("city"));
-        if (Array.isArray(resRetrieveOffers.message)) setRetrieveOffers(resRetrieveOffers.message);
-        // console.log(res.message);
-
+    const funRetrieveOffers = async (itemsPerPage = 12) => {
+        let resRetrieveOffers = await API.GET.RetrieveOffers(localStorage.getItem("city"), itemsPerPage);
+        if (!resRetrieveOffers.error) {
+            setRetrieveOffersInterest(resRetrieveOffers.message);
+        }
+        setLoading(false);
     }
 
 
@@ -144,43 +186,65 @@ const InterestContentComponent = () => {
         setTranslate(translate);
         setLimitPage(limitPage)
         container.style.transform = `translateX(${translate}px)`;
-        console.log("lIMIT PAGE:", limitPage);
-
     }
 
     const funAddMoreProduct = () => {
-        setPage(getPage + 1);
-        console.log("Uno mas agregado", getPage);
+        setLoading(true);
+        funRetrieveOffers(getRetrieveOffersInterest.length + getRetrieveOffersInterest.length)
+        setPage(getPage + 3);
+    }
+
+
+    const funRenderProductInterest = () => {
+        let render;
+        if (getRetrieveOffersInterest.length < 1) {
+            render =
+                <>
+                    <Col md={1} className="column-btns-product-center"></Col>
+                    <Col md={10}>
+                        {funRenderSpinner()}
+                    </Col>
+                    <Col md={1} className="column-btns-product-center"></Col>
+                </>
+        } else {
+            render =
+                <>
+                    <Col md={1} className="column-btns-product-center">
+                        {getLimitPage > 0 &&
+                            <button className="btn-left-product btn-products-arrow d-none d-md-block" onClick={() => funButtonSlider(1)}>
+                                <i className="fas fa-angle-left"></i>
+                            </button>
+                        }
+                    </Col>
+                    <Col md={10}>
+                        <Row>
+                            <Col md={10} xs={6}>
+                                <h5 className="h5-title">TE PODRÍA INTERESAR</h5>
+                            </Col>
+                            <Col md={2} xs={6} className="align-inline-flex-content-getColumn text-right">
+                                <button className="btn-lg btn-outline-primary rounded-pill btn-more d-md-none d-lg-none"
+                                    onClick={() => funAddMoreProduct()}>Ver mas {getLoading && <Spinner size={'sm'} color="light" />}</button>
+                            </Col>
+                        </Row>
+                        <HorizontalProductComponent products={getRetrieveOffersInterest} col={3} />
+                    </Col>
+                    <Col md={1} className="column-btns-product-center">
+                        <button className="btn-rigth-product  btn-products-arrow d-none d-md-block" onClick={() => getLimitPage < getPage ? funButtonSlider(0) : funAddMoreProduct()} >
+                            <i className={`fas ${(getLimitPage < getPage) ? 'fa-angle-right' : 'fa-plus'}`}></i>
+                        </button>
+                    </Col>
+                </>
+        }
+        return render;
     }
 
     return (
         <>
             <Container fluid>
-                <Row className="mt-4">
+                <Row className="mt-5">
                     <Col md={12}>
                         <Row>
-                            <Col md={1} className="column-btns-product-center">
-                                {getLimitPage > 0 &&
-                                    <button className="btn-left-product btn-products-arrow" onClick={() => funButtonSlider(1)}>{'<'}</button>
-                                }
-                            </Col>
-                            <Col md={10}>
-                                <Row>
-                                    <Col md={10}>
-                                        <h5 className="h5-title">TE PODRÍA INTERESAR</h5>
-                                    </Col>
-                                    <Col md={2} className="align-inline-flex-content-getColumn">
-                                        <button className="btn-lg btn-outline-primary rounded-pill" onClick={() => funAddMoreProduct()}>Ver mas</button>
-                                    </Col>
-                                </Row>
-                                <HorizontalProductComponent products={getRetrieveOffers.slice(0, getRetrieveOffers.length)} col={3} />
-                            </Col>
-                            <Col md={1} className="column-btns-product-center">
-                                {
-                                    getLimitPage < getPage &&
-                                    <button className="btn-rigth-product  btn-products-arrow" onClick={() => funButtonSlider(0)} >{'>'}</button>
-                                }
-                            </Col>
+                            {funRenderProductInterest()}
                         </Row>
                     </Col>
                 </Row>
@@ -200,7 +264,7 @@ const SponsorShipsComponent = () => {
 
 
     const funButtonSlider = direction => {
-        let container = document.querySelector(".container-interest"),
+        let container = document.querySelector(".container-sponsor"),
             translate = getTranslate,
             limitPage = getLimitPage;
 
@@ -215,33 +279,32 @@ const SponsorShipsComponent = () => {
         setTranslate(translate);
         setLimitPage(limitPage)
         container.style.transform = `translateX(${translate}px)`;
-        console.log("lIMIT PAGE:", limitPage);
-
     }
 
     const funAddMoreProduct = () => {
         setPage(getPage + 1);
-        console.log("Uno mas agregado", getPage);
     }
 
     return (
         <>
             <Container fluid>
-                <Row className="mt-4">
+                <Row className="mt-5">
                     <Col md={12}>
                         <Row>
                             <Col md={1} className="column-btns-product-center">
                                 {getLimitPage > 0 &&
-                                    <button className="btn-left-product btn-products-arrow" onClick={() => funButtonSlider(1)}>{'<'}</button>
+                                    <button className="btn-left-product btn-products-arrow" onClick={() => funButtonSlider(1)}>
+                                        <i className="fas fa-angle-left"></i>
+                                    </button>
                                 }
                             </Col>
                             <Col md={10}>
                                 <Row>
-                                    <Col md={10}>
+                                    <Col md={10} xs={6}>
                                         <h5 className="h5-title">MARCAS PATROCINADORAS</h5>
                                     </Col>
-                                    <Col md={2} className="align-inline-flex-content-getColumn">
-                                        <button className="btn-lg btn-outline-primary rounded-pill" onClick={() => funAddMoreProduct()}>Ver mas</button>
+                                    <Col md={2} xs={6} className="align-inline-flex-content-getColumn text-right">
+                                        <button className="btn-lg btn-outline-primary rounded-pill btn-more" onClick={() => funAddMoreProduct()}>Ver mas</button>
                                     </Col>
                                 </Row>
                                 <HorizontalBrandsComponent listCount={12} col={2} />
@@ -249,7 +312,9 @@ const SponsorShipsComponent = () => {
                             <Col md={1} className="column-btns-product-center">
                                 {
                                     getLimitPage < getPage &&
-                                    <button className="btn-rigth-product  btn-products-arrow" onClick={() => funButtonSlider(0)} >{'>'}</button>
+                                    <button className="btn-rigth-product  btn-products-arrow" onClick={() => funButtonSlider(0)} >
+                                        <i className="fas fa-angle-right"></i>
+                                    </button>
                                 }
                             </Col>
                         </Row>

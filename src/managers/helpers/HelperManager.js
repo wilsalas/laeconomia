@@ -5,7 +5,7 @@ import { Spinner } from 'reactstrap';
 
 
 
-export const AlertSwal = (message, textValue = "") => {
+export const AlertSwal = (message, textValue = "", titleValue = "") => {
     let title = "", text = "", icon = "";
     if (message === "Usuario o contraseña invalida.") {
         text = "El correo electrónico o la contraseña son incorrectos.";
@@ -25,10 +25,42 @@ export const AlertSwal = (message, textValue = "") => {
     } else if (message === "TERMS") {
         text = "Para continuar con el registro debes aceptar los términos y condiciones.";
         icon = "info";
-    } else if (message === "REGISTER_SUCESS") {
+    } else if (message === "REGISTER_SUCCESS") {
         text = "Se ha completado el proceso de registro.";
         icon = "success";
+    } else if (message === "UPDATE_SUCCESS") {
+        text = "Perfil de usuario actualizado con éxito.";
+        icon = "success";
+    } else if (message === "PASSWORD_NOT_MATCH") {
+        text = "La contraseña y la confirmacion no coinciden, verifiquelo e intentelo nuevamente.";
+        icon = "warning";
+    } else if (message === "ADDRESS_SUCCESS") {
+        text = "Nueva dirección añadida con éxito.";
+        icon = "success";
+    } else if (message === "ADDRESS_SELECTED") {
+        text = textValue;
+        icon = "warning";
+    } else if (message === "SELECTED_PAYMENT_METHOD") {
+        text = textValue;
+        icon = "warning";
+    } else if (message === "ERROR_CUPON") {
+        title = "Atención"
+        text = textValue;
+        icon = "error";
+    } else if (message === "ORDER_SUCCESS") {
+        title = titleValue
+        text = textValue;
+        icon = "success";
+    } else if (message === "CANT_PRODUCT") {
+        text = "La cantidad solicitada, no esta disponible.";
+        icon = "info";
+    } else if (message === "ERROR_SERVER") {
+        title = "Ups!"
+        text = "Ha ocurrido un error inesperado en la aplicación. por favor intente nuevamente";
+        icon = "error";
     }
+
+
 
     swal({ title, text, icon, button: "Entendido" })
 };
@@ -65,6 +97,12 @@ export const FormatCOPNumber = (number, commas = false) => {
     }
 }
 
-export const FormatPointsSupensive = element => element.substring(0, 27) + "...";
+export const FormatPointsSupensive = (element, point = 27) => element.length >= point ?   element.substring(0, point) + "..." : element;
 
-export const funRenderSpinner = (type = "md") => <div style={{ display: 'flex', justifyContent: 'center' }}><Spinner size={type} color="primary" /> </div>
+export const funRenderSpinner = (type = "sm") => <div style={{ display: 'flex', justifyContent: 'center' }}><Spinner size={type} color="primary" /> </div>
+
+
+// function get value formater string or number
+export const GetDigits = (text, isDataNumeric = false) => {
+    return isDataNumeric ? parseInt(text.toString().replace(/\D/g, "")) : text.toString().replace(/\D/g, "");
+}

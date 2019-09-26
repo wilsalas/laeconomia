@@ -1,5 +1,5 @@
 import React from 'react';
-import PromoComponent from '../components/Promo';
+// import PromoComponent from '../components/Promo';
 import SliderComponent from '../components/Slider';
 import { CategoryComponent } from '../components/Category';
 import { TabContentComponent, InterestContentComponent, SponsorShipsComponent } from '../components/ContentProducts';
@@ -12,7 +12,7 @@ export default function App() {
       <SliderComponent routes={ROUTES.MAIN} />
       <CategoryComponent />
       <TabContentComponent />
-      <PromoComponent />
+      {/* <PromoComponent /> */}
       <SponsorShipsComponent />
       <InterestContentComponent />
       <BannerComponent />
