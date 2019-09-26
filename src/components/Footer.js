@@ -11,7 +11,7 @@ export default () => {
                                 <div className="tt-newsletter-layout-01">
                                     <div className="tt-newsletter">
                                         <div className="tt-mobile-collapse">
-                                            <h4 className="tt-collapse-title text-white" >
+                                            <h4 className="tt-collapse-title footer-text-title" >
                                                 ESTÁ EN CONTACTO CON NOSOTROS
                                             </h4>
                                             <div className="tt-collapse-content">
@@ -30,10 +30,10 @@ export default () => {
                             </div>
                             <div className="col-md-auto">
                                 <ul className="tt-social-icon">
-                                    <li><a className="icon-g" target="_blank" href="/" > <i className="fab fa-facebook-f"></i> </a></li>
-                                    <li><a className="icon-g" target="_blank" href="/" > <i className="fab fa-twitter"></i> </a></li>
-                                    <li><a className="icon-g" target="_blank" href="/" > <i className="fab fa-instagram"></i> </a></li>
-                                    <li><a className="icon-g" target="_blank" href="/" > <i className="fab fa-youtube"></i> </a></li>
+                                    <li><a className="icon-g" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/drogueriaslaeconomia" > <i className="fab fa-facebook-f"></i> </a></li>
+                                    <li><a className="icon-g" target="_blank" rel="noopener noreferrer" href="https://twitter.com/laeconomiadro" > <i className="fab fa-twitter"></i> </a></li>
+                                    <li><a className="icon-g" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/droguerialaeconomia/" > <i className="fab fa-instagram"></i> </a></li>
+                                    <li><a className="icon-g" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/DeogueriaLaEconomia" > <i className="fab fa-youtube"></i> </a></li>
                                 </ul>
                             </div>
                         </div>
@@ -113,7 +113,7 @@ export default () => {
                         <div className="row">
                             <div className="col-md-8">
                                 <div className="tt-box-copyright">
-                                    © Trixel S.A.S. 2019. Todos los derechos reservados
+                                    © Drogueria La Economía. Todos los derechos reservados
                                 </div>
                             </div>
                             <div className="col-md-4">

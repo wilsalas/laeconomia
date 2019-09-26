@@ -74,7 +74,7 @@ export default function ProductDetails() {
                     <Col md={6}>
                         <ul className="list-detail-product">
                             <li >
-                                <h6 className="mt-1 mb-1">Unidad: {getDetailProduct.IdUnidad} <br /> {getDetailProduct.stock} unidades disponibles</h6>
+                                <h6 className="mt-1 mb-1"> {getDetailProduct.stock} Unidades disponibles</h6>
                             </li>
                             <li className="margin-top-detail-product mt-1">
                                 <h3 title={getDetailProduct.descripcion}>{getDetailProduct.descripcion}</h3>
@@ -83,7 +83,7 @@ export default function ProductDetails() {
 
                                 <div className="content-detail-product">
                                     <p className="text-price-blue">{FormatCOPNumber(getDetailProduct.Ahora)}</p>
-                                    <div className="div-percent-product">{getDetailProduct.Porcentaje}%</div>
+                                    {getDetailProduct.Porcentaje>0 && <div className="div-percent-product">{getDetailProduct.Porcentaje}%</div>}
                                     <p className="text-subray">{FormatCOPNumber(getDetailProduct.Antes)}</p>
                                     <p className="text-gray">{(getDetailProduct.medida && getDetailProduct.medida !== "") && `${getDetailProduct.medida} ${getDetailProduct.precioMedida}`}</p>
                                 </div>

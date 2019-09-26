@@ -977,6 +977,9 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     .v-prod2 {
         max-width: 29% !important;
     }
+    .footer-text-title{
+        color:  white !important;
+    }
 }
 
 @media (max-width:899px) {
@@ -1058,6 +1061,7 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
         font-size: 9px;
         font-weight: 500;
     }
+  
 }
 
 

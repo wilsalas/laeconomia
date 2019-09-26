@@ -127,7 +127,7 @@ const SearchHeaderComponent = props => {
                                                         }}>
 
                                                             <ListGroup>
-                                                                {getLoading && funRenderSpinner("sm")}
+                                                                {getLoading && <div className="mt-2"> {funRenderSpinner("sm")} </div>}
                                                                 {!getLoading && getSearch.map((item, i) => {
                                                                     return (
                                                                         <ListGroupItem key={i}
@@ -247,7 +247,7 @@ const SearchMedicineComponent = () => {
                         </InputGroup>
                         {
                             getOpenContent && <div className="content-search" style={{ width: '98.5%', top: 60 }}>
-                                {getLoadingDictionary && funRenderSpinner("sm")}
+                                {getLoadingDictionary && <div className="mt-2">{funRenderSpinner("sm")} </div>}
                                 {
                                     (getSearchDictionary.length > 0 && !getLoadingDictionary) &&
                                     <ListGroup style={{ height: '33.5vh', overflow: 'auto' }}>
