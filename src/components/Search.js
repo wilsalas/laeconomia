@@ -4,7 +4,7 @@ import {
     Input, InputGroupAddon, Button, ListGroup, ListGroupItem
 } from 'reactstrap';
 import { API } from '../managers/api/ApiManager';
-import { FormatPointsSupensive, funRenderSpinner } from '../managers/helpers/HelperManager';
+import {  funRenderSpinner } from '../managers/helpers/HelperManager';
 import { useGlobal } from '../managers/store/Context';
 
 
@@ -120,7 +120,7 @@ const SearchHeaderComponent = props => {
                                                 {/* <hr /> */}
                                                 <Container>
                                                     <Row className="content-row-collapsible">
-                                                        <Col md={4} className="content-search-border-rigth collapsible-col" style={{
+                                                        <Col md={12} className="content-search-border-rigth collapsible-col" style={{
                                                             padding: 0,
                                                             height: '33vh',
                                                             overflow: 'auto'
@@ -133,48 +133,13 @@ const SearchHeaderComponent = props => {
                                                                         <ListGroupItem key={i}
                                                                             onClick={() => window.location.href = `/droguery/${btoa(item.codigo)}/${btoa("productUnique")}`}
                                                                         >
-                                                                            {FormatPointsSupensive(item.descripcion, 25)}
+                                                                            {item.descripcion}
                                                                         </ListGroupItem>
                                                                     )
                                                                 })}
                                                             </ListGroup>
                                                         </Col>
-                                                        <Col md={4} className="content-search-border-rigth collapsible-col">
-                                                            <p className="mb-2 mt-3">MARCAS RELACIONADAS</p>
-                                                            <ul style={{ padding: 0 }}>
-                                                                <li>
-                                                                    <a href="/">
-                                                                        Aspirina
-                                                                </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="/">
-                                                                        Aspirina
-                                                                </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="/">
-                                                                        Aspirina
-                                                                </a>
-                                                                </li>
-
-                                                            </ul>
-                                                        </Col>
-                                                        <Col md={4} className="collapsible-col">
-                                                            <p className="mb2 mt-3">CATEGORÍAS RELACIONADAS</p>
-                                                            <ul style={{ padding: 0 }}>
-                                                                <li>
-                                                                    <a href="/">
-                                                                        Lo más buscado
-                                                                </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="/">
-                                                                        Promociones del mes
-                                                                </a>
-                                                                </li>
-                                                            </ul>
-                                                        </Col>
+                                                       
                                                     </Row>
                                                 </Container>
                                             </div>
