@@ -148,6 +148,105 @@ const TabContentComponent = props => {
 }
 
 
+const TabContentDrogueryComponent = props => {
+
+    const [state, dispatch] = useGlobal();
+    const [getActiveTab, setActiveTab] = useState("0");
+    const [getTabProductsSubCategories, setTabProductsSubCategories] = useState([])
+    const [getProductsSubCategories, setProductsSubCategories] = useState([])
+    const getCol = props.col ? 4 : 3;
+    const getMaxwidth = props.maxwidth ? 2 : 1;
+    const [getLoading, setLoading] = useState(false);
+    const [getPageSubcategorie, setPageSubcategorie] = useState(2);
+    const [getCodeSubCategorie, setCodeSubCategorie] = useState(0);
+
+
+    useEffect(() => {
+        setTabProductsSubCategories(state.productsSubCategories)
+    }, [state.productsSubCategories]);
+
+
+
+
+    const funToggle = (tab, codeSubCategorie) => {
+        if (getActiveTab !== tab) {
+            setActiveTab(tab);
+            funProductForSubCategories(codeSubCategorie)
+        }
+    }
+
+
+    const funProductForSubCategories = async (codeSubCategorie, page) => {
+        setLoading(true);
+        let resSubCategories = await API.GET.RetrieveProductsFromSubcategory(localStorage.getItem("city"), codeSubCategorie, { page });
+        if (!resSubCategories.error) {
+            setProductsSubCategories(resSubCategories.message)
+            // dispatch({ type: "GET_PRODUCT", products: resSubCategories.message, subCategorie: codeSubCategorie, typeSearch: "productSubCategoryCode" });
+        }
+        setLoading(false);
+    }
+
+    //  more products
+    const funMoreProducts = () => {
+
+        setPageSubcategorie(getPageSubcategorie + 1);
+        funProductForSubCategories(getCodeSubCategorie, getPageSubcategorie);
+    }
+
+
+    console.log(getTabProductsSubCategories)
+
+
+
+    return (
+        <>
+            <Container>
+                <div style={{ display: 'grid' }} className="mt-4">
+                    <Nav tabs className="justify-content-center nav-content-categories">
+                        {getTabProductsSubCategories.map((item, i) => {
+
+//                             if(getActiveTab === "0"){
+
+                                
+// console.log(item.subID, item.subID);
+
+//                                 funToggle(0, item.subID); setCodeSubCategorie(item.subID);
+//                                 return false;
+//                             }
+
+
+
+
+                            return (
+                                <>
+                                    <NavItem className="ml-3">
+                                        <NavLink className={classnames({ active: getActiveTab === i })} onClick={() => { funToggle(i, item.subID); setCodeSubCategorie(item.subID) }}>
+                                            {item.subName}
+                                        </NavLink>
+                                    </NavItem>
+                                </>
+                            )
+                        })}
+                    </Nav>
+
+                    <TabContent activeTab={getActiveTab} >
+                        <TabPane tabId={getActiveTab} >
+                            <VerticalProductComponent droguery products={getProductsSubCategories} col={getCol} maxwidth={getMaxwidth} />
+                        </TabPane>
+                    </TabContent>
+
+                    <button disabled={(getProductsSubCategories.length < 1)}
+                        className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }}
+                        onClick={() => funMoreProducts()}>
+                        Cargar más {getLoading && <Spinner size={'sm'} color="light" />}
+                    </button>
+                </div>
+            </Container>
+        </>
+    );
+}
+
+
 const InterestContentComponent = () => {
 
     const [getTranslate, setTranslate] = useState(0);
@@ -330,7 +429,8 @@ const SponsorShipsComponent = () => {
 export {
     TabContentComponent,
     InterestContentComponent,
-    SponsorShipsComponent
+    SponsorShipsComponent,
+    TabContentDrogueryComponent
 }
 
 

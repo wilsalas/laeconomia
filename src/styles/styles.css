@@ -87,6 +87,11 @@ textarea {
     color: #a5a5a5 !important;
 }
 
+.hr-categories{
+    height: 5px;
+    background-image: linear-gradient(to top, #ffffff, #f2f2f2);
+}
+
 .btn-search-header {
     border-radius: 0px 20px 20px 0px !important;
     background-color: #1b42cb !important;
@@ -383,6 +388,17 @@ a:not([href]):not([tabindex]) {
     border-radius: 8px !important;
 }
 
+.icon-categories-circle {
+    width: 105px;
+    height: 105px;
+    object-fit: contain;
+    border-radius: 50px !important;
+}
+
+.content-categories-circle{
+    height:26vh;
+}
+
 .div-percent {
     width: 20%;
     background-color: #ff2c6e;
@@ -394,6 +410,17 @@ a:not([href]):not([tabindex]) {
     border-radius: 5px 5px 5px 5px;
     font-size: 13px;
     text-align: center;
+}
+
+.nav-content-categories {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: nowrap;
+    padding-left: 0px;
+    margin-bottom: 0;
+    list-style: none;
+    overflow-x: auto;
 }
 
 .div-percent-buy {
@@ -1020,7 +1047,6 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
         max-width: 60% !important;
     }
     .content-search {
-        height: auto;
         overflow: auto;
     }
     .categoriesHorizontal {
@@ -1061,7 +1087,9 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
         font-size: 9px;
         font-weight: 500;
     }
-  
+    .content-categories-circle{
+        height:30vh;
+    }
 }
 
 

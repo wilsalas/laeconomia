@@ -55,7 +55,11 @@ const reducer = (state, action) => {
                 ...state,
                 textSearch: action.textSearch
             };
-
+        case 'LIST_PRODUCTS_SUBCATEGORIES':
+            return {
+                ...state,
+                productsSubCategories: action.productsSubCategories
+            };
         default:
             return state;
     }
@@ -73,7 +77,8 @@ const Store = () => {
         step: 1,
         adress: "",
         order: [],
-        textSearch: ""
+        textSearch: "",
+        productsSubCategories:[]
     });
     return [state, dispatch]
 }

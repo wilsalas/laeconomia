@@ -89,13 +89,13 @@ export default function ProductDetails() {
                                 </div>
 
                             </li>
-                            {/* <li className="margin-top-detail-product">
+                            <li className="margin-top-detail-product">
                                 <p className="mt-4">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
                                 nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam,
                                 quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
                                 sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci.
                                     </p>
-                            </li> */}
+                            </li>
                             <li className="margin-top-detail-product">
                                 <Row>
                                     <Col md={6} className="mt-4">

@@ -5,7 +5,7 @@ import { useGlobal } from '../managers/store/Context';
 
 const VerticalProductComponent = props => {
 
-    if (props.products.length < 1) {
+    if (props.products.length < 1 && !props.droguery) {
         return <div className="mt-3">{funRenderSpinner()}</div>;
     }
 
@@ -94,6 +94,39 @@ const HorizontalCategoriesComponent = props => {
 };
 
 
+const HorizontalCategoriesCircleComponent = props => {
+
+
+    const [,dispatch] = useGlobal();
+
+    const funSendListProductsSubCategories = (e, productsSubCategories) => {
+        e.preventDefault();
+        dispatch({ type: "LIST_PRODUCTS_SUBCATEGORIES", productsSubCategories });
+    }
+
+
+    return (
+        <div className="outer categoriesHorizontal content-categories-circle" id="content">
+            <div className="container-inner container-categories">
+                {props.products.map((value, i) => {
+                    return (
+                        <Col key={i} md={2} className="categoriesHorizontalCol">
+                            <a href="# " onClick={e => funSendListProductsSubCategories(e, value.subCategories)}>
+                                <img className="rounded icon-categories-circle" src={value.icono} alt="img circle categories"
+                                    onError={(e) => { e.target.src = `/assets/icon_not_found.png` }}
+                                />
+                                <CardBody className="div-cardbody mt-2 mb-2">
+                                    <CardTitle style={{ fontSize: 10 }} title={value.name}>{value.name.replace(/\n/g, "<br>")}</CardTitle>
+                                </CardBody>
+                            </a>
+                        </Col>
+                    );
+                })}
+            </div>
+        </div>
+    )
+};
+
 
 const Product = props => {
 
@@ -160,5 +193,6 @@ export {
     VerticalProductComponent,
     HorizontalProductComponent,
     HorizontalBrandsComponent,
-    HorizontalCategoriesComponent
+    HorizontalCategoriesComponent,
+    HorizontalCategoriesCircleComponent
 };
