@@ -81,7 +81,7 @@ const HorizontalCategoriesComponent = props => {
                                         onError={(e) => { e.target.src = `/assets/icon_not_found.png` }}
                                     />
                                     <CardBody className="div-cardbody mt-2 mb-2">
-                                        <CardTitle style={{ fontSize: 12 }} title={value.name}>{FormatPointsSupensive(value.name, 10)}</CardTitle>
+                                        <CardTitle style={{ fontSize: 12 }} title={value.name}>{value.name.replace(/\n/g, "<br>")}</CardTitle>
                                     </CardBody>
                                 </Card>
                             </a>

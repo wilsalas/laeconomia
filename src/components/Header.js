@@ -132,9 +132,9 @@ export default function HeaderComponent() {
                                 {/* tt-langue and tt-currency */}
                                 <div className="tt-desctop-parent-multi tt-parent-box">
                                     <div className="tt-multi-obj tt-dropdown-obj">
-                                        <button className="tt-dropdown-toggle" data-tooltip="Ciudad" data-tposition="bottom">
+                                    <button className="tt-dropdown-toggle" data-tooltip="Ciudad" data-tposition="bottom">
                                             {/* <i className="icon-f-79" /> */}
-                                            Elije tu ciudad
+                                            {localStorage.getItem("nameCity")}
                                         </button>
                                         <div className="tt-dropdown-menu">
                                             <div className="tt-mobile-add">
