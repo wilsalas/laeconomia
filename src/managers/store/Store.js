@@ -35,6 +35,16 @@ const reducer = (state, action) => {
                 ...state,
                 modalAdress: action.modalAdress
             };
+        case 'MODAL_VIDA_SANA':
+            return {
+                ...state,
+                modalVidaSana: action.modalVidaSana
+            };
+        case 'MODAL_FORM_VIDA_SANA':
+            return {
+                ...state,
+                modalFormVidaSana: action.modalFormVidaSana
+            };
         case 'STEP_ACTIVE':
             return {
                 ...state,
@@ -78,7 +88,9 @@ const Store = () => {
         adress: "",
         order: [],
         textSearch: "",
-        productsSubCategories:[]
+        productsSubCategories: [],
+        modalVidaSana: false,
+        modalFormVidaSana: false
     });
     return [state, dispatch]
 }

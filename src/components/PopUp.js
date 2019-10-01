@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Col, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup, Row } from 'reactstrap';
-import { API } from '../managers/api/ApiManager';
+import { API, VIDA_SANA_API } from '../managers/api/ApiManager';
 import { useGlobal } from '../managers/store/Context';
 import { AlertSwal } from '../managers/helpers/HelperManager';
 import moment from 'moment';
 import { LoginComponent } from './ContentForm';
+
 
 const Location = props => {
     const [citys, setCitys] = useState([]);
@@ -165,8 +166,8 @@ const Adress = props => {
                                     <Label for="name_adress" >Dirección</Label>
                                     <Input className="account-input" type="text" name="name_adress" placeholder="Ingresa nueva dirección" required />
                                 </FormGroup>
-                                <FormGroup className="text-left"> 
-                                <Label for="name_alias" >Notas, Observaciones</Label>
+                                <FormGroup className="text-left">
+                                    <Label for="name_alias" >Notas, Observaciones</Label>
                                     <Input className="account-input" type="text" name="name_alias" placeholder="Casa, apartamento, oficina, piso, etc." required />
                                 </FormGroup>
                                 <FormGroup>
@@ -419,12 +420,142 @@ const ModalDictionary = () => {
     )
 }
 
+const ModalVidaSana = () => {
+    const [state, dispatch] = useGlobal();
+
+    const funModalCloset = () => {
+        window.location.href = "/";
+        // dispatch({ type: "MODAL_VIDA_SANA", modalVidaSana: false });
+    }
+
+    return (
+        <>
+            <Modal returnFocusAfterClose isOpen={state.modalVidaSana} >
+                <ModalHeader toggle={() => funModalCloset()}></ModalHeader>
+                <ModalBody>
+                    <img src="/assets/vidasana.png" width="100%" alt="img vida sana" />
+                    <Row className="mt-3">
+                        <Col md={12} xs={12}>
+                            <h3>Haz parte de este gran club</h3>
+                        </Col>
+                        <Col md={12} xs={12}>
+                            <p className="mt-2">Acepta y empieza a disfrutar de los descuentos y beneficios que tenemos para ti.</p>
+                        </Col>
+                        <Col md={12} xs={12}>
+                            <Button className="mt-2" color="primary" block onClick={() => { dispatch({ type: "MODAL_FORM_VIDA_SANA", modalFormVidaSana: true }); }}>Aceptar</Button>
+                        </Col>
+                        <Col md={12} xs={12}>
+                            <p className="mt-2">Al aceptar quedará inscrito en nuestro club</p>
+                        </Col>
+                    </Row>
+                </ModalBody>
+            </Modal>
+        </>
+    )
+}
+
+const ModalFormVidaSana = () => {
+    const [state, dispatch] = useGlobal();
+    const [getProfile, setProfile] = useState([]);
+    const [getAdress, setAdress] = useState("");
+    const [getGender, setGender] = useState("M");
+
+    useEffect(() => {
+        if (localStorage.getItem("usi")) {
+            setProfile(JSON.parse(atob(localStorage.getItem("usi"))));
+        }
+    }, []);
+
+
+
+    const funModalCloset = () => {
+        dispatch({ type: "MODAL_FORM_VIDA_SANA", modalFormVidaSana: false });
+    }
+
+
+    const funRegisterVidaSana = async e => {
+        e.preventDefault();
+
+        let resProfile = await API.POST.PerformRetrieveProfileInformation(getProfile.nit, getProfile.nombres, getProfile.email, getProfile.auth_token);
+
+        if(!resProfile.error){
+
+            let profile = resProfile.message.data;
+
+            let resRegisterVidaSana = await VIDA_SANA_API.POST.PerformVidaSanaSignUp(
+                localStorage.getItem("city"),
+                profile.nit,
+                {
+                    document: profile.nit,
+                    firstname: profile.nombres.split(" ")[0],
+                    secondname: '',
+                    lastname: profile.nombres.split(" ")[1],
+                    secondlastname: '',
+                    dateOfBirth: profile.fecha_nacimiento,
+                    address: getAdress,
+                    phone: profile.phone,
+                    cellphone: profile.telefono,
+                    email: profile.email,
+                    terms: true,
+                    gender: getGender,
+                }
+            )
+            if (!resRegisterVidaSana.error) {
+                funModalCloset();
+                dispatch({ type: "MODAL_VIDA_SANA", modalVidaSana: false });
+            }
+    
+            AlertSwal(!resRegisterVidaSana.error ? "REGISTER_SUCCESS" : "ERROR_SERVER");
+        }
+
+    }
+
+
+    return (
+        <>
+            <Modal returnFocusAfterClose isOpen={state.modalFormVidaSana} >
+                <ModalHeader toggle={() => funModalCloset()}></ModalHeader>
+                <ModalBody>
+                    <img src="/assets/vidasana.png" width="100%" alt="img vida sana" />
+                    <Row className="mt-3">
+                        <Col md={12} xs={12}>
+                            <div className="tt-item item-register-form">
+                                <div className="form-default form-top">
+                                    <Form onSubmit={e => funRegisterVidaSana(e)}>
+                                        <FormGroup >
+                                            <Label for="direccion" >Dirección *</Label>
+                                            <Input className="account-input" type="text" name="direccion" required onChange={e => setAdress(e.target.value)} />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Label for="gender">Género *</Label>
+                                            <Input className="account-input" type="select" name="gender" required onChange={e => setGender(e.target.value)}>
+                                                <option value="M">Masculino</option>
+                                                <option value="F">Femenino</option>
+                                            </Input>
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Button className="btn btn-border" block>Registrar</Button>
+                                        </FormGroup>
+                                    </Form>
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                </ModalBody>
+            </Modal>
+        </>
+    )
+}
+
+
 export {
     ModalLocation,
     ModalProfile,
     ModalRefreshTokenLogin,
     ModalAdress,
-    ModalDictionary
+    ModalDictionary,
+    ModalVidaSana,
+    ModalFormVidaSana
 }
 
 

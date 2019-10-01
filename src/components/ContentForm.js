@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AlertSwal, ValidateInputFormEmpty } from '../managers/helpers/HelperManager';
-import { API } from '../managers/api/ApiManager';
+import { API, VIDA_SANA_API } from '../managers/api/ApiManager';
+
 import {
-    Button, Container, Col, Label, Form, FormGroup, Input, Row, CustomInput
+    Button, Container, Col, Label, Form, FormGroup, Input, Row, CustomInput, Spinner
 } from 'reactstrap';
 
 
@@ -104,23 +105,23 @@ const LoginComponent = props => {
                     </Col>
                     {
                         !props.modalLogin &&
-                    
-                    <Col md={12} xs={12}>
-                        <div className="tt-item item-register-form mt-3" style={{ width: props.modalLogin ? '100%' : '40%', margin: '0 auto' }}>
-                            <div className="form-default form-top">
-                                <Row>
-                                    <Col md={6} xs={6}>
-                                       <h6> O CREA UNA CUENTA</h6>
-                                    </Col>
-                                    <Col md={6} xs={6}>
-                                        <FormGroup>
-                                            <a href="/account/register" className="btn btn-top btn-border" style={{marginTop:0}}>Registrarme</a>
-                                        </FormGroup>
-                                    </Col>
-                                </Row>
+
+                        <Col md={12} xs={12}>
+                            <div className="tt-item item-register-form mt-3" style={{ width: props.modalLogin ? '100%' : '40%', margin: '0 auto' }}>
+                                <div className="form-default form-top">
+                                    <Row>
+                                        <Col md={6} xs={6}>
+                                            <h6> O CREA UNA CUENTA</h6>
+                                        </Col>
+                                        <Col md={6} xs={6}>
+                                            <FormGroup>
+                                                <a href="/account/register" className="btn btn-top btn-border" style={{ marginTop: 0 }}>Registrarme</a>
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+                                </div>
                             </div>
-                        </div>
-                    </Col>
+                        </Col>
                     }
                 </>
         }
@@ -144,12 +145,14 @@ const LoginComponent = props => {
 
 const RegisterComponent = () => {
 
-
+    const [getLoading, setLoading] = useState(false);
 
     // determine register app
     const funRegister = async e => {
         e.preventDefault();
-        let { email, name, nit, dateOfBirth, phone, cellphone, password, confirmPassword, terms } = e.target;
+        let { email, name, nit, dateOfBirth, phone, cellphone, password, confirmPassword, terms, terms_vida_sana, gender,
+            adress, lastname } = e.target;
+
 
         let fields = {
             email: email.value,
@@ -161,7 +164,11 @@ const RegisterComponent = () => {
             password: password.value,
             confirm_password: confirmPassword.value,
             acepta_condiciones: terms.checked,
+            gender: gender.value,
+            address: adress.value,
+            lastname: lastname.value
         }
+
 
         if (ValidateInputFormEmpty(fields)) {
             AlertSwal("EMPTY_FIELDS_REGISTER")
@@ -170,15 +177,45 @@ const RegisterComponent = () => {
             if (!terms.checked) {
                 message = "TERMS";
             } else {
+                setLoading(true);
                 let resRegister = await API.POST.PerformSignUp(fields);
                 if (!resRegister.error) {
-                    message = "REGISTER_SUCCESS";
+
+                    if(terms_vida_sana.checked){
+                        let resRegisterVidaSana = await VIDA_SANA_API.POST.PerformVidaSanaSignUp(
+                            localStorage.getItem("city"),
+                            nit.value,
+                            {
+                                document: nit.value,
+                                firstname: name.value,
+                                secondname: '',
+                                lastname: lastname.value,
+                                secondlastname: '',
+                                dateOfBirth: dateOfBirth.value,
+                                address: adress.value,
+                                phone: phone.value,
+                                cellphone: cellphone.value,
+                                email: email.value,
+                                terms: terms_vida_sana.checked,
+                                gender: gender.value,
+                            }
+                        )
+    
+                        if (!resRegisterVidaSana.error) {
+                            message = "REGISTER_SUCCESS";
+                        } else {
+                            message = resRegisterVidaSana.message.message
+                        }
+                    }else{
+                        message = "REGISTER_SUCCESS";
+                    }
                 } else {
                     message = resRegister.message.message
                 }
-            }
 
+            }
             AlertSwal(message);
+            setLoading(false);
         }
     }
 
@@ -202,8 +239,8 @@ const RegisterComponent = () => {
                                             </Col>
                                             <Col md={6}>
                                                 <FormGroup>
-                                                    <Label for="direction">Dirección:</Label>
-                                                    <Input className="account-input" type="text" name="direction" required />
+                                                    <Label for="adress">Dirección:</Label>
+                                                    <Input className="account-input" type="text" name="adress" required />
                                                 </FormGroup>
                                             </Col>
                                         </Row>
@@ -263,6 +300,17 @@ const RegisterComponent = () => {
                                                 </FormGroup>
                                             </Col>
                                         </Row>
+                                        <Row form>
+                                            <Col md={12}>
+                                                <FormGroup>
+                                                    <Label for="gender">Genero:</Label>
+                                                    <Input className="account-input" type="select" name="gender" required>
+                                                        <option value="M">Masculino</option>
+                                                        <option value="F">Femenino</option>
+                                                    </Input>
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
                                         <FormGroup>
                                             <p>
                                                 ETICOS SERRANO GOMEZ LTDA le informa que los datos suministrados a traves de este sitio web seran tratados para efecto de gestionar la informacion que se requiere por usted de nuestra organizacion,
@@ -283,7 +331,7 @@ const RegisterComponent = () => {
                                         </FormGroup>
 
                                         <FormGroup>
-                                            <Button className="btn btn-border btn-block" type="submit">Ingresar</Button>
+                                            <Button className="btn btn-border btn-block" type="submit">Ingresar {getLoading && <Spinner className="ml-2" size="sm" color="light" />} </Button>
                                         </FormGroup>
                                     </Form>
                                 </div>
