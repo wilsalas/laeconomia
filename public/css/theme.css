@@ -481,7 +481,7 @@ template {
   margin-left: auto;
 }
 
-@media (min-width: 576px) {
+/* @media (min-width: 576px) {
   .container {
     max-width: 546px;
   }
@@ -503,7 +503,7 @@ template {
   .container {
     max-width: 1200px;
   }
-}
+} */
 
 .container-fluid {
   width: 100%;
@@ -12076,9 +12076,9 @@ header .tt-dropdown-obj .tt-dropdown-menu {
     transition: transform .3s ease, -webkit-transform .3s ease;
     position: fixed;
   }
-  header .container {
+  /* header .container {
     max-width: inherit;
-  }
+  } */
 }
 
 header .tt-dropdown-obj.active .tt-dropdown-toggle {

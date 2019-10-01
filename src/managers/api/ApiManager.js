@@ -54,7 +54,10 @@ export const REST = {
 
 export const URL = {
     HOST: 'https://www.droguerialaeconomia.com',
-}
+    ETICOS_HOST: 'https://intranet.eticosweb.net',
+    PY_HOST: 'http://panel.laeconomiadrogueria.com',
+    S3: 'https://panel-economia.s3.amazonaws.com/economia/',
+ }
 
 const fetchAsync = async (url, method, { body = {}, headers = {} } = {}) => {
     const form = (method === HTTP_REQUEST_METHOD.GET) ? { method, headers } : { method, headers, body };
@@ -73,6 +76,18 @@ const fetchAsync = async (url, method, { body = {}, headers = {} } = {}) => {
     }
 
     return response;
+}
+
+
+export const PANEL_API =
+{
+   GET: {
+       async RetrieveBanners (banner, isWeb = true) {
+           return await fetchAsync(`${URL.PY_HOST}/api/banners/?banner=${banner}&by_web=${isWeb ? 1 : 0}&active=1`, HTTP_REQUEST_METHOD.GET, {headers: {'content-type': 'application/json', 'x-api-key': '8eYNYttS.H5ffyV33cA5gefgjs8Uk9dlK6T1OZzK7'}})
+       },
+   },
+   POST: {
+   }
 }
 
 
@@ -107,7 +122,8 @@ export const API = {
         },
         async RetrieveProductFromSearch(location, search, { page = 0, itemsPerPage = 12, orderBy = ORDER_BY.DESCRIPTION, offer = IN_OFFER.NO } = {}) {
             // return await fetchAsync(`${URL.HOST}/economia/api/referencias/${location}/${search}/${page}/${itemsPerPage}/${orderBy}/${offer}/`, HTTP_REQUEST_METHOD.GET)
-            return await fetchAsync(`${URL.HOST}/economia/api/busqProductos/${location}?q=${search}`, HTTP_REQUEST_METHOD.GET)
+            // return await fetchAsync(`${URL.HOST}/economia/api/busqProductos/${location}?q=${search}`, HTTP_REQUEST_METHOD.GET)
+            return await fetchAsync(`${URL.HOST}/economia/api/new_referencias/${location}/${search}`, HTTP_REQUEST_METHOD.GET)
         },
         async RetrieveProductsFromSubcategory(location, subcategory, { page = 1, itemsPerPage = 12, orderBy = ORDER_BY.DESCRIPTION } = {}) {
             return await fetchAsync(`${URL.HOST}/economia/api/RefSubCat/${location}/${subcategory}/${page}/${itemsPerPage}/${orderBy}/`, HTTP_REQUEST_METHOD.GET)

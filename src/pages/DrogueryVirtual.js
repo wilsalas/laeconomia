@@ -5,11 +5,15 @@ import { TabContentDrogueryComponent } from '../components/ContentProducts';
 
 
 export default function DrogueryVirtual() {
+
+// code subcategorie alimentos
+const codeProduct = '01001';
+
     return (
         <>
             <CategoryCircleComponent />
             <hr className="hr-categories" />
-            <TabContentDrogueryComponent />
+            <TabContentDrogueryComponent  codeProduct={codeProduct}/>
             {/* <GroupCategoryComponent codeProduct={codeProduct} type={atob(typeSearch)} /> */}
             <BannerComponent />
         </>

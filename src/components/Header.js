@@ -75,7 +75,7 @@ export default function HeaderComponent() {
             <SearchHeaderComponent funLogout={funLogout} getProfile={getProfile} funGetProfile={funGetProfile} />
             <header>
                 {/* -- tt-desktop-header -- */}
-                <div className="tt-desktop-header">
+                <div className="tt-desktop-header d-none d-lg-block d-md-block ">
                     <div className="container">
                         <div className="tt-header-holder">
                             <div className="tt-col-obj tt-obj-menu">
@@ -271,17 +271,17 @@ export default function HeaderComponent() {
 
                 {/* -- Stuck menu -- */}
                 <div className="tt-stuck-nav ">
-                    <div className="d-md-none d-lg-none">
+                    <div className="d-lg-none" >
 
                         <SearchHeaderComponent funLogout={funLogout} getProfile={getProfile} funGetProfile={funGetProfile} />
                     </div>
-                    <Container className="mb-2 d-none d-md-block">
+                    <Container className="mb-2 d-none d-lg-block" >
                         {/* Search component */}
                         <Row >
-                            <Col md={10}>
+                            <Col md={9}>
                                 <SearchHeaderComponent funLogout={funLogout} getProfile={getProfile} funGetProfile={funGetProfile} />
                             </Col>
-                            <Col md={2}>
+                            <Col md={3}>
                                 <div className="tt-header-row mt-2">
                                     <div className="tt-stuck-parent-multi tt-parent-box " />
                                     <div className="tt-stuck-parent-search tt-parent-box" />

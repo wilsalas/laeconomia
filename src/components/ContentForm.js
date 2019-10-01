@@ -85,7 +85,6 @@ const LoginComponent = props => {
                 <>
                     <Col md={12} xs={12}>
                         <div className="tt-item item-register-form" style={{ width: props.modalLogin ? '100%' : '40%', margin: '0 auto' }}>
-                            Ingresa correctamente la información de los siguientes campos:
                             <div className="form-default form-top">
                                 <Form onSubmit={e => funLogin(e)}>
                                     <FormGroup>
@@ -103,6 +102,26 @@ const LoginComponent = props => {
                             </div>
                         </div>
                     </Col>
+                    {
+                        !props.modalLogin &&
+                    
+                    <Col md={12} xs={12}>
+                        <div className="tt-item item-register-form mt-3" style={{ width: props.modalLogin ? '100%' : '40%', margin: '0 auto' }}>
+                            <div className="form-default form-top">
+                                <Row>
+                                    <Col md={6} xs={6}>
+                                       <h6> O CREA UNA CUENTA</h6>
+                                    </Col>
+                                    <Col md={6} xs={6}>
+                                        <FormGroup>
+                                            <a href="/account/register" className="btn btn-top btn-border" style={{marginTop:0}}>Registrarme</a>
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </div>
+                    </Col>
+                    }
                 </>
         }
         return render;
@@ -111,7 +130,7 @@ const LoginComponent = props => {
     return (
         <>
             <Container>
-                <h5 className="mt-4 mb-2 text-center" >{`INGRESA ${props.isLoginOrRegister ? 'O REGÍSTRATE' : ''}`}</h5>
+                <h5 className="mt-4 mb-2 text-center" >{`INICIA SESIÓN ${props.isLoginOrRegister ? 'O REGÍSTRATE' : ''}`}</h5>
                 <div className="tt-login-form">
                     <Row>
                         {funRenderLogin()}

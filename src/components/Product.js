@@ -3,7 +3,8 @@ import { Card, CardBody, CardTitle, CardSubtitle, CardImg, CardText, Row, Col } 
 import { FormatCOPNumber, funRenderSpinner, FormatPointsSupensive } from '../managers/helpers/HelperManager';
 import { useGlobal } from '../managers/store/Context';
 
-const VerticalProductComponent = props => {
+
+const VerticalProductComponent = props  => {
 
     if (props.products.length < 1 && !props.droguery) {
         return <div className="mt-3">{funRenderSpinner()}</div>;
@@ -72,19 +73,19 @@ const HorizontalCategoriesComponent = props => {
         <div className="outer categoriesHorizontal" id="content">
             <div className="container-inner container-categories">
                 {props.products.map((value, i) => {
-                    let codeSubCategorie = value.subCategories[Math.floor((Math.random() * value.subCategories.length) + 0)].subID;
+                    // let codeSubCategorie = value.subCategories[Math.floor((Math.random() * value.subCategories.length) + 0)].subID;
                     return (
                         <Col key={i} md={2} className="mt-3 mb-3 categoriesHorizontalCol">
-                            <a href={`/droguery/${btoa(codeSubCategorie)}/${btoa("productSubCategoryCode")}`} title={value.name}>
+                            {/* <a href={`/droguery/${btoa(codeSubCategorie)}/${btoa("productSubCategoryCode")}`} title={value.name}> */}
                                 <Card className="text-center card-tab-categories p-3" >
                                     <CardImg top className="mt-5 rounded icon-categories" src={value.icono} alt={`Card image categories`}
                                         onError={(e) => { e.target.src = `/assets/icon_not_found.png` }}
                                     />
                                     <CardBody className="div-cardbody mt-2 mb-2">
-                                        <CardTitle style={{ fontSize: 12 }} title={value.name}>{value.name.replace(/\n/g, "<br>")}</CardTitle>
+                                        <CardTitle style={{ fontSize: 9 }} title={value.name}>{value.name.replace(/\n/g, "<br>")}</CardTitle>
                                     </CardBody>
                                 </Card>
-                            </a>
+                            {/* </a> */}
                         </Col>
                     );
                 })}
@@ -116,7 +117,7 @@ const HorizontalCategoriesCircleComponent = props => {
                                     onError={(e) => { e.target.src = `/assets/icon_not_found.png` }}
                                 />
                                 <CardBody className="div-cardbody mt-2 mb-2">
-                                    <CardTitle style={{ fontSize: 10 }} title={value.name}>{value.name.replace(/\n/g, "<br>")}</CardTitle>
+                                    <CardTitle style={{ fontSize: 9 }} title={value.name}>{value.name.replace(/\n/g, "<br>")}</CardTitle>
                                 </CardBody>
                             </a>
                         </Col>
@@ -180,8 +181,10 @@ const Product = props => {
                 <CardTitle >{FormatCOPNumber(props.Ahora)}</CardTitle>
                 <CardSubtitle>{FormatCOPNumber(props.Antes)}</CardSubtitle>
                 <CardText title={props.descripcion}>{FormatPointsSupensive(props.descripcion)}</CardText>
-                <CardText>{(props.medida && props.medida !== "") && `${props.medida} ${props.precioMedida}`}</CardText>
-                <CardText>{props.Categoria}</CardText>
+                <CardText className="mb-2">{(props.medida && props.medida !== "") && `${props.medida} ${props.precioMedida}`}</CardText>
+                <CardText>
+                {/* {props.Categoria} */}
+                </CardText>
                 <button className="btn-lg btn-outline-primary rounded-pill" onClick={() => funAddCart(props, 1)}>Agregar</button>
             </CardBody>
         </Card>

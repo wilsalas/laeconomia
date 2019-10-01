@@ -7,7 +7,7 @@ export default () => {
                 <div className="tt-footer-default tt-color-scheme-02">
                     <div className="container">
                         <div className="row">
-                            <div className="col-12 col-md-9">
+                            {/* <div className="col-12 col-md-9">
                                 <div className="tt-newsletter-layout-01">
                                     <div className="tt-newsletter">
                                         <div className="tt-mobile-collapse">
@@ -27,13 +27,14 @@ export default () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="col-md-auto">
+                            </div> */}
+                            <div className="col-md-auto mx-auto">
                                 <ul className="tt-social-icon">
-                                    <li><a className="icon-g" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/drogueriaslaeconomia" > <i className="fab fa-facebook-f"></i> </a></li>
-                                    <li><a className="icon-g" target="_blank" rel="noopener noreferrer" href="https://twitter.com/laeconomiadro" > <i className="fab fa-twitter"></i> </a></li>
-                                    <li><a className="icon-g" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/droguerialaeconomia/" > <i className="fab fa-instagram"></i> </a></li>
-                                    <li><a className="icon-g" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/DeogueriaLaEconomia" > <i className="fab fa-youtube"></i> </a></li>
+                                   <span className="mr-3">Síguenos</span>
+                                    <li><a className="icon-g mr-3" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/drogueriaslaeconomia" > <i className="fab fa-facebook-f"></i> </a></li>
+                                    <li><a className="icon-g mr-3" target="_blank" rel="noopener noreferrer" href="https://twitter.com/laeconomiadro" > <i className="fab fa-twitter"></i> </a></li>
+                                    <li><a className="icon-g mr-3" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/droguerialaeconomia/" > <i className="fab fa-instagram"></i> </a></li>
+                                    <li><a className="icon-g mr-3" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/DeogueriaLaEconomia" > <i className="fab fa-youtube"></i> </a></li>
                                 </ul>
                             </div>
                         </div>

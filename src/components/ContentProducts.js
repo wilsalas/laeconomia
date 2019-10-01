@@ -9,61 +9,22 @@ import { funRenderSpinner } from '../managers/helpers/HelperManager';
 
 const TabContentComponent = props => {
 
-    const [state, dispatch] = useGlobal();
     const [getRetrieveOffers, setRetrieveOffers] = useState([]);
     const [getRetrieveTopOffers, setRetrieveTopOffers] = useState([]);
     const [getActiveTab, setActiveTab] = useState("0");
     const [getLoading, setLoading] = useState(false);
-    const [getTypeSearch, setTypeSearch] = useState("");
     const getCol = props.col ? 4 : 3;
     const getMaxwidth = props.maxwidth ? 2 : 1;
     const getPage = 12;
-    const [getPageSubcategorie, setPageSubcategorie] = useState(1);
 
 
     // get products  from code and initialize
     useEffect(() => {
-        if (!props.codeProduct) {
             funRetrieveOffers();
             funRetrieveTopOffers();
-        } else {
-            funRetrieveProductFromCode(props.type, atob(props.codeProduct));
+    }, []);
 
-        }
-    }, [props.codeProduct, props.type]);
-
-    // set data products from store 
-    useEffect(() => {
-        setRetrieveOffers(state.products);
-        setRetrieveTopOffers(state.products);
-        setTypeSearch(state.typeSearch);
-    }, [state.products, state.typeSearch]);
-
-
-    const funRetrieveProductFromCode = async (type = "productUnique", codigo, city = localStorage.getItem("city")) => {
-        let resRetrieveProductFromCode;
-        if (type !== "productSubCategoryCode") {
-            // search product from code unique
-            resRetrieveProductFromCode = await API.GET.RetrieveProductFromCode(city, codigo)
-        } else {
-            // search product from subcategorie code
-            resRetrieveProductFromCode = await API.GET.RetrieveProductsFromSubcategory(city, codigo);
-        }
-        if (!resRetrieveProductFromCode.error) {
-            setRetrieveOffers(resRetrieveProductFromCode.message);
-            setRetrieveTopOffers(resRetrieveProductFromCode.message);
-        }
-    }
-
-    const funProductForSubCategories = async () => {
-        let codeSubCategorie = state.subCategorie !== "" ? state.subCategorie : atob(props.codeProduct);
-        setPageSubcategorie(getPageSubcategorie + 1);
-        dispatch({ type: "GET_PRODUCT" });
-        let resSubCategories = await API.GET.RetrieveProductsFromSubcategory(localStorage.getItem("city"), codeSubCategorie, { page: getPageSubcategorie });
-        if (!resSubCategories.error) {
-            dispatch({ type: "GET_PRODUCT", products: resSubCategories.message, subCategorie: codeSubCategorie, typeSearch: "productSubCategoryCode" });
-        }
-    }
+ 
 
 
     const funRetrieveOffers = async (itemsPerPage = getPage) => {
@@ -92,11 +53,6 @@ const TabContentComponent = props => {
 
     //  more products
     const funMoreProducts = () => {
-
-
-        if (props.type === "productSubCategoryCode" || getTypeSearch === "productSubCategoryCode") {
-            funProductForSubCategories();
-        } else {
             setLoading(true)
             switch (getActiveTab) {
                 case '0':
@@ -108,7 +64,7 @@ const TabContentComponent = props => {
                 default:
                     break;
             }
-        }
+        
     }
 
 
@@ -150,7 +106,7 @@ const TabContentComponent = props => {
 
 const TabContentDrogueryComponent = props => {
 
-    const [state, dispatch] = useGlobal();
+    const [state] = useGlobal();
     const [getActiveTab, setActiveTab] = useState("0");
     const [getTabProductsSubCategories, setTabProductsSubCategories] = useState([])
     const [getProductsSubCategories, setProductsSubCategories] = useState([])
@@ -163,8 +119,9 @@ const TabContentDrogueryComponent = props => {
 
     useEffect(() => {
         setTabProductsSubCategories(state.productsSubCategories)
-    }, [state.productsSubCategories]);
-
+        funProductForSubCategories(props.codeProduct)
+        setCodeSubCategorie(props.codeProduct)
+    }, [state.productsSubCategories, props.codeProduct]);
 
 
 
@@ -183,6 +140,7 @@ const TabContentDrogueryComponent = props => {
             setProductsSubCategories(resSubCategories.message)
             // dispatch({ type: "GET_PRODUCT", products: resSubCategories.message, subCategorie: codeSubCategorie, typeSearch: "productSubCategoryCode" });
         }
+
         setLoading(false);
     }
 
@@ -194,47 +152,26 @@ const TabContentDrogueryComponent = props => {
     }
 
 
-    console.log(getTabProductsSubCategories)
-
-
-
     return (
         <>
             <Container>
                 <div style={{ display: 'grid' }} className="mt-4">
                     <Nav tabs className="justify-content-center nav-content-categories">
                         {getTabProductsSubCategories.map((item, i) => {
-
-//                             if(getActiveTab === "0"){
-
-                                
-// console.log(item.subID, item.subID);
-
-//                                 funToggle(0, item.subID); setCodeSubCategorie(item.subID);
-//                                 return false;
-//                             }
-
-
-
-
                             return (
-                                <>
-                                    <NavItem className="ml-3">
-                                        <NavLink className={classnames({ active: getActiveTab === i })} onClick={() => { funToggle(i, item.subID); setCodeSubCategorie(item.subID) }}>
-                                            {item.subName}
-                                        </NavLink>
-                                    </NavItem>
-                                </>
+                                <NavItem className="ml-3" key={i}>
+                                    <NavLink className={classnames({ active: getActiveTab === i })} onClick={() => { funToggle(i, item.subID); setCodeSubCategorie(item.subID) }}>
+                                        {item.subName}
+                                    </NavLink>
+                                </NavItem>
                             )
                         })}
                     </Nav>
-
                     <TabContent activeTab={getActiveTab} >
                         <TabPane tabId={getActiveTab} >
                             <VerticalProductComponent droguery products={getProductsSubCategories} col={getCol} maxwidth={getMaxwidth} />
                         </TabPane>
                     </TabContent>
-
                     <button disabled={(getProductsSubCategories.length < 1)}
                         className="btn-lg btn-outline-primary rounded-pill mx-auto" style={{ margin: 20 }}
                         onClick={() => funMoreProducts()}>
