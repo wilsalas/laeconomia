@@ -91,6 +91,75 @@ export const PANEL_API =
 }
 
 
+export const VIDA_SANA_API =
+{
+   GET: {
+       /**
+        * Returns an one position array, if user does not belongs to Vida Sana, the service returns an empty array
+        *
+        * @param {String} document
+        */
+       async RetrieveWhetherUserBelongsToVidaSanaOrNot (document) {
+           return await fetchAsync(`${URL.ETICOS_HOST}/ServicesEpos/wsepos/api/v1/pacientesclub/${document}`, HTTP_REQUEST_METHOD.GET, {headers: {}})
+       },
+       /**
+        *
+        * @param {String} location
+        * @param {Number} itemsPerPage
+        * @param {String} agreement The agreement code. Default 892300678, this is the Vida Sana agreement
+        */
+       async RetrieveVidaSanaOffers (location, itemsPerPage = 10, agreement = "892300678") {
+           return await fetchAsync(`${URL.HOST}/economia/api/ofertas/${location}/${itemsPerPage}/${agreement}`, HTTP_REQUEST_METHOD.GET)
+       },
+   },
+   POST: {
+       async PerformVidaSanaSignUp (
+           location,
+           createdBy,
+           fields = {
+               document: '',
+               firstname: '',
+               secondname: '',
+               lastname: '',
+               secondlastname: '',
+               dateOfBirth: '',
+               address: '',
+               phone: '',
+               cellphone: '',
+               email: '',
+               terms: false,
+               gender: '',
+           },
+           platform = "WEB"
+           )
+       {
+           const _fields = {
+               idPaciente: fields.document,
+               nombres: `${fields.firstname} ${fields.secondname} ${fields.lastname} ${fields.secondlastname}`,
+               fechaNacimiento: fields.dateOfBirth,
+               direccion: fields.address,
+               telefono: fields.phone,
+               celular: fields.cellphone,
+               primernombre: fields.firstname,
+               segundonombre: fields.secondname,
+               primerapellido: fields.lastname,
+               segundoapellido: fields.secondlastname,
+               email: fields.email,
+               estado: fields.terms ? "A" : "P",
+               centroCostos: location,
+               genero: fields.gender,
+               creadoPor: createdBy,
+               fechaCreacion: "",
+               modificado: fields.document,
+               aceptacondiciones: fields.terms ? "S" : "N",
+               canalconfirmacion: platform,
+           }
+           return await fetchAsync(`${URL.ETICOS_HOST}/ServicesEpos/wsepos/api/v1/sendpacientes/`, HTTP_REQUEST_METHOD.POST, {body: JSON.stringify(_fields), headers: {'content-type': 'application/json' }} )
+       },
+   },
+}
+
+
 export const API = {
     GET: {
 

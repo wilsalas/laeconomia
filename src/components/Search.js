@@ -43,7 +43,7 @@ const SearchHeaderComponent = props => {
             }
         }
         setLoading(false);
-        if(isSendSearch){
+        if(isSendSearch && state.textSearch !== ""){
             funSendSearchProduct(getSearch);
         }
     }
@@ -82,6 +82,8 @@ const SearchHeaderComponent = props => {
                     {props.getProfile.nit &&
                         <a href="/" onClick={e => props.funLogout(e)}>CERRAR SESIÓN</a>
                     }
+                      <a href="# " onClick={e => props.funValidateVidaSana(e)}>CLUB VIDA SANA</a>
+                    
                 </div>
 
                 <Row className="mt-3 mb-2" >
@@ -118,7 +120,7 @@ const SearchHeaderComponent = props => {
                                     <InputGroup>
                                         <Input
                                             placeholder={'¿Qué está buscando?'}
-                                            className={`header-input${state.textSearch === "" ? '-border' : ''} mt-4`}
+                                            className={`header-input${state.textSearch === "" ? '-border' : ''} mt-3`}
                                             onChange={e => {
                                                 if (e.target.value.length > 3) {
                                                     funSearch(e, false);
@@ -163,7 +165,7 @@ const SearchHeaderComponent = props => {
                                     </InputGroup>
                                 </Col>
                                 <Col md={1} xs={2}>
-                                    <InputGroupAddon addonType="append" className="mt-4">
+                                    <InputGroupAddon addonType="append" className="mt-3">
                                         <Button
                                             className="btn-search-header">
                                             <i className="fas fa-search"></i>

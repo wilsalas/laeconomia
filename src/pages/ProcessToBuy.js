@@ -26,7 +26,7 @@ export default function ProcessToBuy() {
     }, []);
 
     useEffect(() => {
-        dispatch({ type: "STEP_ACTIVE", step: localStorage.getItem("usi") ? 4 : 1 })
+        dispatch({ type: "STEP_ACTIVE", step: localStorage.getItem("usi") ? 2 : 1 })
     }, [dispatch]);
 
     const funRenderProgressBar = () => {

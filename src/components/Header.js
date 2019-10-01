@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { SearchHeaderComponent } from '../components/Search';
-import { API } from '../managers/api/ApiManager';
+import { API, VIDA_SANA_API } from '../managers/api/ApiManager';
 import { Container, Row, Col } from 'reactstrap';
 import { ModalProfile } from './PopUp';
 import { useGlobal } from '../managers/store/Context';
 import { AlertSwal } from '../managers/helpers/HelperManager';
+
+
+
+
 
 export default function HeaderComponent() {
 
@@ -68,11 +72,28 @@ export default function HeaderComponent() {
         window.location.href = "/";
     }
 
+    const funValidateVidaSana = async e => {
+        e.preventDefault();
+
+        if (getProfile.nit) {
+            let resRetrieveVidaSanaUser = await VIDA_SANA_API.GET.RetrieveWhetherUserBelongsToVidaSanaOrNot(getProfile.nit);
+         
+            if(resRetrieveVidaSanaUser.message.length > 0){
+                window.location.href="/vidasana"
+            }else{
+                dispatch({ type: "MODAL_VIDA_SANA", modalVidaSana: true });
+            }
+            
+        }else{
+            dispatch({ type: "REFRESH_TOKEN_MODAL", refreshTokenModal: true });
+        }
+
+    }
 
 
     return (
         <>
-            <SearchHeaderComponent funLogout={funLogout} getProfile={getProfile} funGetProfile={funGetProfile} />
+            <SearchHeaderComponent funLogout={funLogout} getProfile={getProfile} funGetProfile={funGetProfile} funValidateVidaSana={funValidateVidaSana} />
             <header>
                 {/* -- tt-desktop-header -- */}
                 <div className="tt-desktop-header d-none d-lg-block d-md-block ">
@@ -121,7 +142,7 @@ export default function HeaderComponent() {
                                                 <li className="dropdown tt-megamenu-col-01">
                                                     <a href="/subsidiary">SUCURSALES</a>
                                                 </li>
-                                                <a href="http://clubvidasana.co/" target="_blank" rel="noopener noreferrer" className="btn-club-vida ">CLUB VIDA SANA</a>
+                                                <a href="# " target="_blank" rel="noopener noreferrer" className="btn-club-vida " onClick={e => funValidateVidaSana(e)}>CLUB VIDA SANA</a>
                                             </ul>
                                         </nav>
                                     </div>
@@ -132,7 +153,7 @@ export default function HeaderComponent() {
                                 {/* tt-langue and tt-currency */}
                                 <div className="tt-desctop-parent-multi tt-parent-box">
                                     <div className="tt-multi-obj tt-dropdown-obj">
-                                    <button className="tt-dropdown-toggle" data-tooltip="Ciudad" data-tposition="bottom">
+                                        <button className="tt-dropdown-toggle" data-tooltip="Ciudad" data-tposition="bottom">
                                             {/* <i className="icon-f-79" /> */}
                                             {localStorage.getItem("nameCity")}
                                         </button>
@@ -273,16 +294,16 @@ export default function HeaderComponent() {
                 <div className="tt-stuck-nav ">
                     <div className="d-lg-none" >
 
-                        <SearchHeaderComponent funLogout={funLogout} getProfile={getProfile} funGetProfile={funGetProfile} />
+                        <SearchHeaderComponent funLogout={funLogout} getProfile={getProfile} funGetProfile={funGetProfile} funValidateVidaSana={funValidateVidaSana} />
                     </div>
                     <Container className="mb-2 d-none d-lg-block" >
                         {/* Search component */}
                         <Row >
                             <Col md={9}>
-                                <SearchHeaderComponent funLogout={funLogout} getProfile={getProfile} funGetProfile={funGetProfile} />
+                                <SearchHeaderComponent funLogout={funLogout} getProfile={getProfile} funGetProfile={funGetProfile} funValidateVidaSana={funValidateVidaSana} />
                             </Col>
                             <Col md={3}>
-                                <div className="tt-header-row mt-2">
+                                <div className="tt-header-row mt-4">
                                     <div className="tt-stuck-parent-multi tt-parent-box " />
                                     <div className="tt-stuck-parent-search tt-parent-box" />
                                     <div className="tt-stuck-parent-account tt-parent-box" />
