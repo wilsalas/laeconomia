@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LoginComponent } from './ContentForm';
 import {
-    Button, Container, Col, Row, Label,
+    Button, Container, Col, Row,
     FormGroup, Input, InputGroup, InputGroupAddon,
     InputGroupText,
     Card, CardBody, CardTitle
@@ -23,8 +23,10 @@ const StepFacturationComponent = props => {
     const [, dispatch] = useGlobal();
     const [getListAdress, setListAdress] = useState([]);
     const [getItemSelect, setItemSelect] = useState("");
-    const [getInputSelect, setInputSelect] = useState("");
-    const [getTypeSelect, setTypeSelect] = useState("");
+    // const [getInputSelect, setInputSelect] = useState("");
+    // const [getTypeSelect, setTypeSelect] = useState("");
+
+
     useEffect(() => {
         if (getListAdress.length < 1) {
             funPerformRetrieveAddressList();
@@ -42,28 +44,22 @@ const StepFacturationComponent = props => {
 
         if (!resRetrieveAddressList.error) {
             setListAdress(resRetrieveAddressList.message.data)
-        } else {
-            if (resRetrieveAddressList.message === "TOKEN_ERROR") {
-                dispatch({ type: "REFRESH_TOKEN_MODAL", refreshTokenModal: true });
-            }
-        }
+        } 
+        // else {
+        //     if (resRetrieveAddressList.message === "TOKEN_ERROR") {
+        //         dispatch({ type: "REFRESH_TOKEN_MODAL", refreshTokenModal: true });
+        //     }
+        // }
     }
 
     const funSelectedAdressType = () => {
         let adress = "";
-        if (getTypeSelect === "default") {
-            if (getItemSelect === "") {
-                return AlertSwal("ADDRESS_SELECTED", "Selecciona una dirección");
-            } else {
-                adress = getItemSelect;
-            }
-        } else if (getTypeSelect === "temporal") {
-            if (getInputSelect === "") {
-                return AlertSwal("ADDRESS_SELECTED", "Ingresa una dirección temporal");
-            } else {
-                adress = getInputSelect;
-            }
+        if (getItemSelect === "") {
+            return AlertSwal("ADDRESS_SELECTED", "Selecciona una dirección");
+        } else {
+            adress = getItemSelect;
         }
+       
         dispatch({ type: "ADRESS", adress });
         dispatch({ type: "STEP_ACTIVE", step: 3 })
     }
@@ -77,9 +73,12 @@ const StepFacturationComponent = props => {
                 <h5 className="mt-4 mb-2 text-center" >INFORMACIÓN DEL ENVÍO</h5>
                 <div className="tt-login-form">
                     <Row className="mx-auto">
-                        <Col md={6} xs={12}>
+                        <Col md={12} xs={12}>
                             <div className="tt-item">
-                                <Row>
+                                
+                            MIS DIRECCIONES 
+                                
+                                {/* <Row>
                                     <Col md={8} xs={8}>
                                         <FormGroup check>
                                             <Label check>
@@ -92,21 +91,20 @@ const StepFacturationComponent = props => {
                                             <button className="btn btn-success" onClick={() => dispatch({ type: "MODAL_ADRESS", modalAdress: true })}> <i className="fas fa-plus"></i></button>
                                         </FormGroup>
                                     </Col>
-                                </Row>
-
+                                </Row> */}
                                 <FormGroup>
                                     <Input type="select" name="adress" className="account-input" onChange={e => setItemSelect(e.target.value)}>
-                                        <option value="">Selecciona tu dirección</option>
+                                    <option  value={''}>Selecciona una dirección</option>
                                         {getListAdress.map((item, i) => <option key={i} value={item.direccion}>{item.nombre_direccion} - {item.direccion}</option>)}
-
                                     </Input>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Button className="btn btn-border" block disabled={(getTypeSelect !== "default")} onClick={() => funSelectedAdressType()}>Seleccionar</Button>
+                                    <Button className="btn btn-border" block onClick={() => funSelectedAdressType()}>Siguiente</Button>
                                 </FormGroup>
                             </div>
                         </Col>
-                        <Col md={6} xs={12}>
+
+                        {/* <Col md={6} xs={12}>
                             <div className="tt-item">
                                 <FormGroup check>
                                     <Label check>
@@ -123,9 +121,52 @@ const StepFacturationComponent = props => {
                                     <Button className="btn btn-border" block disabled={(getTypeSelect !== "temporal")} onClick={() => funSelectedAdressType()}>Seleccionar</Button>
                                 </FormGroup>
                             </div>
-                        </Col>
+                        </Col> */}
                     </Row>
                 </div>
+
+
+                <div className="tt-login-form">
+                    <Row className="mx-auto">
+                        <Col md={12} xs={12}>
+                            <div className="tt-item mt-3">
+                                <Row>
+                                    <Col md={7} xs={7}>
+                                        <FormGroup>
+                                        O AGREGA UNA NUEVA
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md={5} xs={5}>
+                                        <FormGroup>
+                                            <button style={{borderRadius:11}} className="btn btn-primary" onClick={() => dispatch({ type: "MODAL_ADRESS", modalAdress: true })}> Agregar</button>
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Col>
+
+                        {/* <Col md={6} xs={12}>
+                            <div className="tt-item">
+                                <FormGroup check>
+                                    <Label check>
+                                        <Input type="radio" name="adress_default" onClick={() => setTypeSelect("temporal")} />  Dirección temporal
+                                            </Label>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label></Label>
+                                    <Input className="account-input" type="text" name="adress" placeholder="Ingresa nueva dirección"
+                                        onChange={e => setInputSelect(e.target.value)}
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Button className="btn btn-border" block disabled={(getTypeSelect !== "temporal")} onClick={() => funSelectedAdressType()}>Seleccionar</Button>
+                                </FormGroup>
+                            </div>
+                        </Col> */}
+                    </Row>
+                </div>
+
+
             </Container>
         </>
     );
@@ -279,7 +320,8 @@ const StepPaymentMethodComponent = props => {
             if (!resPerformPurchase.error) {
                 dispatch({ type: "STEP_ACTIVE", step: 4 })
                 dispatch({ type: "GET_ORDER", order: resPerformPurchase.message[0] })
-                AlertSwal("ORDER_SUCCESS", `Su pedido se realizó exitosamente y será enviado a la dirección: ${state.adress}`, `Pedido ${resPerformPurchase.message[0].numeroPedido}`);
+                // AlertSwal("ORDER_SUCCESS", `Su pedido se realizó exitosamente y será enviado a la dirección: ${state.adress}`, `Pedido ${resPerformPurchase.message[0].numeroPedido}`);
+                AlertSwal("ORDER_SUCCESS", `Nuestros domiciliarios estarán muy pronto contigo`, `¡Tu compra ha sido exitosa!`);
             } else {
                 AlertSwal("ERROR_SERVER");
             }
@@ -290,12 +332,12 @@ const StepPaymentMethodComponent = props => {
         <>
             <br />
             <Container className="animated fadeIn">
-                <h5 className="mt-2 text-center " >MEDIOS DE PAGO</h5>
+                <h5 className="mt-3 mb-2 text-center " >MEDIOS DE PAGO</h5>
                 <div className="tt-login-form">
                     <Row className="text-center justify-content-center">
                         {/* <Col md={12} xs={12} className="mt-3"> */}
-                        <div className="tt-item card-img-step " style={{ height: '100%' }}>
-                            <h6 className="" >PAGA CONTRAENTREGA</h6>
+                        <div className="tt-item card-img-step " style={{ height: '100%', }}>
+                            <h6 className="mb-2" >PAGA CONTRAENTREGA</h6>
                             <Row className="justify-content-center">
                                 {delivery.map((value, i) => {
                                     return (
@@ -337,12 +379,10 @@ const StepPaymentMethodComponent = props => {
                         <Col md={8} xs={12} className="mt-3">
                             <div className="tt-item m card-img-step" style={{ height: '90%' }}>
                                 <Row className="mb-3">
-                                    <Col md={6} xs={12}>
-
+                                    <Col md={6} xs={4}>
                                         <h6>¿Tienes un cupón de descuento?</h6>
                                     </Col>
-                                    <Col md={6} xs={12}>
-
+                                    <Col md={6} xs={8}>
                                         <InputGroup>
                                             <Input
                                                 maxLength="15"
@@ -356,7 +396,6 @@ const StepPaymentMethodComponent = props => {
                                                 <InputGroupText className="input-group-personal" style={{
                                                     borderRadius: '0px 11px 11px 0px'
                                                 }}>
-
                                                     {
                                                         getCupon !== "" &&
                                                         <img src={`/assets/${getCupon === "ERROR_CUPON" ? "icon_error.png" : "icon_success.png"}`} width="20px" height="20px" alt="img-response" />
@@ -369,13 +408,21 @@ const StepPaymentMethodComponent = props => {
                             </div>
                         </Col>
 
-                        <Col md={8} xs={12} className="mt-3">
+
+                        <Col md={8} xs={12} className="mt-2">
+                            <div className="tt-item m card-img-step" style={{ backgroundColor: '#f2f2f2', borderRadius: 10 }}>
+                                <b><p>Horario de atención y entrega de productos <br /> <b>8:00 am a 6:00 pm</b></p></b>
+
+                            </div>
+                        </Col>
+
+
+                        <Col md={8} xs={12} className="mt-5">
                             <Row className="float-right">
                                 <Button onClick={() => funGenerateOrder()}>
                                     Continuar
                                     </Button>
                             </Row>
-
                             <Row>
                                 <div className="tt-shopcart-btn">
                                     <div className="col-left">
@@ -457,10 +504,10 @@ const StepSumaryBuyComponent = props => {
                                 </table>
                                 <hr />
                                 <Row>
-                                    <Col md={8} xs={12}>
+                                    <Col md={8} xs={3}>
                                     </Col>
 
-                                    <Col md={4} xs={12}>
+                                    <Col md={4} xs={9}>
                                         <div className="sumary-content-text-value">
                                             <p>Domicilio:</p>
                                             <span>{FormatCOPNumber(newOrder.getDomicilie)}</span>

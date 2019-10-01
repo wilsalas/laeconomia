@@ -7,10 +7,10 @@ import {
   CarouselCaption,
 } from 'reactstrap';
 import '../styles/styles.css';
-import { API } from '../managers/api/ApiManager';
+import { PANEL_API, URL } from '../managers/api/ApiManager';
 
 
-const URL = "https://www.droguerialaeconomia.com/economia/site/img/";
+const url = URL.S3;
 
 class Slider extends Component {
 
@@ -22,13 +22,13 @@ class Slider extends Component {
     this.goToIndex = this.goToIndex.bind(this);
     this.onExiting = this.onExiting.bind(this);
     this.onExited = this.onExited.bind(this);
-    this.compareHeight = this.compareHeight.bind(this);
 
   }
 
   async componentDidMount() {
-    let res = await API.GET.RetrieveAdsBanner(this.props.routes);
-    if (Array.isArray(res.message)) this.setState({ retrieveAdsBanner: res.message })
+    let resBanners = await PANEL_API.GET.RetrieveBanners(this.props.typeBanner);
+
+     if (Array.isArray(resBanners.message.data)) this.setState({ retrieveAdsBanner: resBanners.message.data})
   }
 
   onExiting() {
@@ -56,13 +56,7 @@ class Slider extends Component {
     this.setState({ activeIndex: newIndex });
   }
 
-  compareHeight = () => {
-    let height = 600;
-    if (this.props.banner) {
-      height = 250
-    }
-    return height;
-  }
+
 
   render() {
     const { activeIndex } = this.state;
@@ -76,7 +70,7 @@ class Slider extends Component {
           onExiting={this.onExiting}
           onExited={this.onExited}
         >
-          <img src={`${URL+item.Archivo}`} alt="img carousel" width="100%" height={this.compareHeight()} />
+          <img src={`${url+item.photo}`} alt="img carousel" width="100%"/>
           {/* <a href={`${URL}${item.Archivo}`} target="_blank" rel="noopener noreferrer">  <img src={`${URL}${item.Archivo}`} alt="img carousel" width="100%" height={this.compareHeight()} /></a> */}
           <CarouselCaption className="text-danger" captionText={''}  />
         </CarouselItem>

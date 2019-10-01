@@ -157,18 +157,20 @@ const Adress = props => {
             <Row>
                 <Col md={12} xs={12}>
                     <div className="tt-item">
-                        <h2 className="tt-title mb-3">MIS DIRECCIONES</h2>
+                        <h6 className="tt-title mb-3">AGREGAR NUEVA DIRECCIÓN</h6>
                         <div className="form-default form-top">
                             <Form onSubmit={e => funSaveAddress(e)}>
 
-                                <FormGroup>
-                                    <Input className="account-input" type="text" name="name_adress" placeholder="Nombre Descriptivo" required />
+                                <FormGroup className="text-left">
+                                    <Label for="name_adress" >Dirección</Label>
+                                    <Input className="account-input" type="text" name="name_adress" placeholder="Ingresa nueva dirección" required />
+                                </FormGroup>
+                                <FormGroup className="text-left"> 
+                                <Label for="name_alias" >Notas, Observaciones</Label>
+                                    <Input className="account-input" type="text" name="name_alias" placeholder="Casa, apartamento, oficina, piso, etc." required />
                                 </FormGroup>
                                 <FormGroup>
-                                    <Input className="account-input" type="text" name="name_alias" placeholder="Cll/Cra/Via..., Barrio" required />
-                                </FormGroup>
-                                <FormGroup>
-                                    <Button block className="mt-2"><i className="fas fa-check"></i>&nbsp;&nbsp;Guardar </Button>
+                                    <Button block className="mt-2">Agregar </Button>
                                 </FormGroup>
                             </Form>
                         </div>

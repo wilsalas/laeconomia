@@ -4,7 +4,7 @@ import {
     Input, InputGroupAddon, Button, ListGroup, ListGroupItem
 } from 'reactstrap';
 import { API } from '../managers/api/ApiManager';
-import {  funRenderSpinner } from '../managers/helpers/HelperManager';
+import { funRenderSpinner } from '../managers/helpers/HelperManager';
 import { useGlobal } from '../managers/store/Context';
 
 
@@ -32,28 +32,38 @@ const SearchHeaderComponent = props => {
 
 
 
-    const funSearch = async e => {
+    const funSearch = async (e, isSendSearch = false) => {
         e.preventDefault();
         setLoading(true)
         if (state.textSearch !== "") {
             const resSearch = await API.GET.RetrieveProductFromSearch(localStorage.getItem("city"), state.textSearch);
             if (resSearch) {
-                dispatch({ type: "SEARCH_PRODUCT", searchProducts: resSearch.message.referencias });
-                setSearch(resSearch.message.referencias);
+                dispatch({ type: "SEARCH_PRODUCT", searchProducts: resSearch.message.data });
+                setSearch(resSearch.message.data);
             }
         }
-        setLoading(false)
+        setLoading(false);
+        if(isSendSearch){
+            funSendSearchProduct(getSearch);
+        }
     }
 
 
     const funSideNav = (closet = false) => getSideNav.current.style.width = closet ? "0" : "220px";
+
+
+    const funSendSearchProduct = product => {
+        localStorage.setItem("productsSearch", JSON.stringify(product));
+        window.location.href = `/search`;
+    }
+
 
     return (
         <>
             <Container >
 
                 {/* MENU MOBILE */}
-                <div ref={getSideNav} className="sidenav d-md-none d-lg-none">
+                <div ref={getSideNav} className="sidenav ">
                     <a href="# " className="closebtn" onClick={() => funSideNav(true)}>&times;</a>
                     <a href="/" >INICIO</a>
                     <a href="/droguery" >DROGUERIA VIRTUAL</a>
@@ -77,7 +87,7 @@ const SearchHeaderComponent = props => {
                 <Row className="mt-3 mb-2" >
                     <Col md={2} xs={12}>
 
-                        <Row className="d-md-none d-lg-none text-center">
+                        <Row className=" d-lg-none text-center">
                             <Col xs={3} className="text-left" >
                                 <div className="tt-menu-toggle" onClick={() => funSideNav()}>
                                     <i className="icon-03"></i>
@@ -102,15 +112,17 @@ const SearchHeaderComponent = props => {
                         </a>
                     </Col>
                     <Col md={10} xs={12}>
-                        <Form onSubmit={e => funSearch(e)} >
+                        <Form onSubmit={e => funSearch(e,true)} >
                             <Row className="mb-1">
                                 <Col md={11} xs={10}>
                                     <InputGroup>
                                         <Input
                                             placeholder={'¿Qué está buscando?'}
-                                            className={`header-input${state.textSearch === "" ? '-border' : ''}`}
+                                            className={`header-input${state.textSearch === "" ? '-border' : ''} mt-4`}
                                             onChange={e => {
-                                                funSearch(e);
+                                                if (e.target.value.length > 3) {
+                                                    funSearch(e, false);
+                                                }
                                                 dispatch({ type: "TEXT_SEARCH", textSearch: e.target.value });
                                             }}
                                             value={state.textSearch}
@@ -130,8 +142,12 @@ const SearchHeaderComponent = props => {
                                                                 {getLoading && <div className="mt-2"> {funRenderSpinner("sm")} </div>}
                                                                 {!getLoading && getSearch.map((item, i) => {
                                                                     return (
+                                                                        item.rownum &&
                                                                         <ListGroupItem key={i}
-                                                                            onClick={() => window.location.href = `/droguery/${btoa(item.codigo)}/${btoa("productUnique")}`}
+                                                                            // onClick={() => window.location.href = `/droguery/${btoa(item.codigo)}/${btoa("productUnique")}`}
+                                                                             onClick={() => {
+                                                                                funSendSearchProduct(item);
+                                                                                }}
                                                                         >
                                                                             {item.descripcion}
                                                                         </ListGroupItem>
@@ -139,7 +155,7 @@ const SearchHeaderComponent = props => {
                                                                 })}
                                                             </ListGroup>
                                                         </Col>
-                                                       
+
                                                     </Row>
                                                 </Container>
                                             </div>
@@ -147,7 +163,7 @@ const SearchHeaderComponent = props => {
                                     </InputGroup>
                                 </Col>
                                 <Col md={1} xs={2}>
-                                    <InputGroupAddon addonType="append">
+                                    <InputGroupAddon addonType="append" className="mt-4">
                                         <Button
                                             className="btn-search-header">
                                             <i className="fas fa-search"></i>

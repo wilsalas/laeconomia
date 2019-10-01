@@ -61,7 +61,7 @@ input, select {
     height: 250px;
     background-color: white;
     position: absolute;
-    top: 38px;
+    top: 63px;
     z-index: 10;
     border: 1px solid #ced4da;
     border-radius: 0px 0px 20px 20px;
@@ -180,6 +180,7 @@ header .tt-cart .tt-dropdown-toggle .tt-badge-cart {
 }
 
 .categoriesHorizontalCol {
+    text-align: center;
     max-width: 20% !important;
 }
 
@@ -389,14 +390,14 @@ a:not([href]):not([tabindex]) {
 }
 
 .icon-categories-circle {
-    width: 105px;
-    height: 105px;
+    width: 85px;
+    height: 85px;
     object-fit: contain;
     border-radius: 50px !important;
 }
 
 .content-categories-circle{
-    height:26vh;
+    height:20vh;
 }
 
 .div-percent {
@@ -669,9 +670,9 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
 }
 
 .tbody-cart-buy {
-    display: block;
+    /* display: block; */
     height: 30rem;
-    overflow: scroll;
+    overflow: auto;
 }
 
 /* Progress bar steps buys */
@@ -997,9 +998,13 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     font-size: 18px !important;
 }
 
+.card-img-logo-personalized {
+    height: 120px !important;
+}
+
 @media (min-width:900px) {
     .v-prod1 {
-        max-width: 21% !important;
+        max-width: 22% !important;
     }
     .v-prod2 {
         max-width: 29% !important;
@@ -1053,6 +1058,7 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
         overflow-x: auto !important;
     }
     .categoriesHorizontalCol {
+        text-align: center;
         max-width: 100% !important;
     }
     .productsHorizontal {
@@ -1075,9 +1081,9 @@ h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"])
     .btn-lg {
         padding: 0px 30px 0px !important;
     }
-    .card-img-logo-personalized {
+    /* .card-img-logo-personalized {
         height: 60px !important;
-    }
+    } */
 
     .progressbar {
         margin-left: -10%;

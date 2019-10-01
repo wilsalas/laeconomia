@@ -1,18 +1,18 @@
 import React from 'react';
-import SliderComponent from '../components/Slider';
-import { GroupCategoryComponent } from '../components/Category';
+import { CategoryCircleComponent } from '../components/Category';
 import BannerComponent from '../components/Banner';
-import { ROUTES } from '../managers/api/ApiManager';
-
+import { TabContentDrogueryComponent } from '../components/ContentProducts';
 export default function BaCare() {
 
     // code baby care higiene oral
-    const codeProduct = btoa('07005');
+     const codeProduct = '07005';
 
     return (
         <>
-            <SliderComponent routes={ROUTES.MAIN} banner />
-            <GroupCategoryComponent codeProduct={codeProduct} type="productSubCategoryCode" />
+            <CategoryCircleComponent />
+            <hr className="hr-categories" />
+            <TabContentDrogueryComponent codeProduct={codeProduct}/>
+            {/* <GroupCategoryComponent codeProduct={codeProduct} type={atob(typeSearch)} /> */}
             <BannerComponent />
         </>
     );

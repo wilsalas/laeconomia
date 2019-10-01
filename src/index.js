@@ -12,6 +12,7 @@ import Subsidiary from './pages/Subsidiary';
 import CartToBuy from './pages/CartToBuy';
 import ProcessToBuy from './pages/ProcessToBuy';
 import ProductDetail from './pages/ProductDetail';
+import SearchProducts from './pages/ProductsSearch';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { ModalLocation, ModalRefreshTokenLogin } from './components/PopUp';
@@ -34,6 +35,8 @@ ReactDOM.render(
                     <Route path='/processbuy' component={ProcessToBuy} />
                     <Route path='/detail' component={ProductDetail} />
                     <Route path='/account/:page' component={Account} />
+                    <Route path='/search/' component={SearchProducts} />
+                    <Route path='/vidasana/' component={SearchProducts} />
                     <Route path='/information/:page' component={Information} />
                     <Route path='/droguery/:code?/:type?' component={DrogueryVirtual} />
                     <Route render={() => <Redirect to="/" />} />
